@@ -1,29 +1,42 @@
-# Aluguel
-Microserviço de aluguel de bicicletas do projeto vaidebike.
+# Aluguel API
 
-## Instalando o projeto
+## Contributing
 
-### `npm install`
-Instala as dependências do projeto.
+### Prerequisites
 
-### `docker-compose -f docker-compose.sonar.yml up -d`
-Instala e inicia o container do SONAR.
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://yarnpkg.com/)
+- [nvm](https://github.com/nvm-sh/nvm)
 
-## Executando o projeto
+### Getting Started
 
-### `npm start`
-Inicia o microserviço.
+Make sure to run these commands before starting the project:
 
-## Testando
+#### For a better development experience, run these commands:
 
-### `npm run test`
-Executa a suite de testes com o jest.
+```bash
+nvm install
+yarn install
+```
 
-### `docker-compose -f docker-compose.sonar.yml up -d`
-Para iniciar o container do SONAR
+### To start the project, run:
 
-### `npm run sonar`
-Observação: Para que o script do SONAR funcione, o container do SONAR precisa estar iniciado.
+```bash
+docker compose up
+```
 
-Realiza a análise de código com a ferramenta SONAR e envia os resultados para o container do SONAR.
-O servidor local do SONAR fica localizado em http://localhost:9000. Realize o login com o usuário e senha padrão.
+### Commiting
+
+This project follows the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification.
+
+### Updating modules
+
+```bash
+docker exec externo-api yarn
+```
+
+### Running tests
+
+```bash
+docker exec externo-api yarn test
+```
