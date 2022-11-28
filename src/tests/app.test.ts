@@ -13,7 +13,7 @@ describe('Get Endpoints', () => {
 
   });
 });
-afterAll(done  => {
+afterEach(done  => {
   // close server conection
   server.close();
   done();

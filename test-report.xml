@@ -1,12 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
-    <testCase name="Get Endpoints Get" duration="69"/>
+    <testCase name="Get Endpoints Get" duration="87"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
+    <testCase name="Get one Cyclist Get" duration="169"/>
+    <testCase name="Get one Cyclist with not founded id Get" duration="11"/>
+    <testCase name="Get one Cyclist with not invalid id Get" duration="14"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\Cyclist.test.js">
+    <testCase name="Cyclist attributions should be ok" duration="8"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\Cyclist.test.ts">
-    <testCase name="Cyclist attributions should be ok" duration="3"/>
+    <testCase name="Cyclist attributions should be ok" duration="8"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\app.test.ts">
-    <testCase name="Get Endpoints Get" duration="25"/>
+    <testCase name="Get Endpoints Get" duration="36"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts">
+    <testCase name="Get one Cyclist Get" duration="38"/>
+    <testCase name="Get one Cyclist with not founded id Get" duration="7"/>
+    <testCase name="Get one Cyclist with not invalid id Get" duration="6"/>
   </file>
 </testExecutions>
