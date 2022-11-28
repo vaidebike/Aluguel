@@ -32,11 +32,11 @@ This project follows the [Conventional Commits](https://www.conventionalcommits.
 ### Updating modules
 
 ```bash
-docker exec externo-api yarn
+docker exec aluguel-api yarn
 ```
 
 ### Running tests
 
 ```bash
-docker exec externo-api yarn test
+docker exec aluguel-api yarn test
 ```

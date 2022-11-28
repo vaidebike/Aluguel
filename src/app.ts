@@ -3,8 +3,7 @@ import express from 'express';
 const app = express();
 app.disable('x-powered-by');
 
-const port = 4002;
-
+const port = process.env.PORT || 4002;
 app.get('/', (_, res) => {
   res.status(200).send({nome: 'test is cool'});
 });
