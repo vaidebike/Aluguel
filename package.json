@@ -4,7 +4,7 @@
   "main": "dist/app.js",
   "scripts": {
     "start": "node dist/app.js",
-    "build": "babel src --out-dir dist --no-copy-ignored",
+    "build": "tsc",
     "dev": "nodemon -L --watch 'src/' --exec 'ts-node src/app.ts' -e ts",
     "test": "jest --coverage"
   },
