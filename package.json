@@ -6,7 +6,7 @@
     "start": "node dist/app.js",
     "build": "babel src --out-dir dist --no-copy-ignored",
     "dev": "nodemon -L --watch 'src/' --exec 'ts-node src/app.ts' -e ts",
-    "test": "jest --passWithNoTests"
+    "test": "jest --coverage"
   },
   "jest": {
     "preset": "ts-jest",
