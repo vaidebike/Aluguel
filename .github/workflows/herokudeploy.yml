@@ -5,6 +5,8 @@ name: Deploy to heroku.
 on:
   workflow_run:
     workflows: ["SonarCloud analysis"]
+    branches: 
+      - main
     types:
       - completed
 
