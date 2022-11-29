@@ -6,7 +6,7 @@ app.disable('x-powered-by');
 
 const port = process.env.PORT || 4002;
 app.get('/', (_, res) => {
-  res.status(200).send({nome: 'test is cool'});
+  res.status(200).send({name: 'Aluguel-api', version: '1.0.0'});
 });
 
 app.use('/cyclist', cyclistRoutes);

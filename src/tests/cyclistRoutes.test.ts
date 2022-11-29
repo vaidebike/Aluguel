@@ -29,7 +29,7 @@ describe('Get one Cyclist with not founded id', () => {
   });
 });
 
-describe('Get one Cyclist with not nvalid id', () => {
+describe('Get one Cyclist with not valid id', () => {
   it('Get', async () => {
     const res =  await  request(server)
       .get('/cyclist/aaa');

@@ -1,16 +1,12 @@
 import request from 'supertest';
 import server from '../app';
-describe('Get Endpoints', () => {
+describe('Get Endpoint /', () => {
   it('Get', async () => {
     const res =  await  request(server)
-      .get('/')
-      .send({
-        userId:  1,
-        title:  'test is cool',
-      });
+      .get('/');
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('nome');
-
+    expect(res.body).toHaveProperty('name');
+    expect(res.body).toHaveProperty('version');
   });
 });
 afterEach(done  => {
