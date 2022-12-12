@@ -1,6 +1,6 @@
 export class Cyclist {
-  id: string;
-  status: StatusEnum;
+  id?: string;
+  status?: StatusEnum;
   name: string;
   nascimento: Date;
   cpf: string;
