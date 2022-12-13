@@ -31,7 +31,7 @@ export class EmployeeRepository implements IRepository {
     if (!data) throw new NoDataError('Employee is required');
     if (!this.validate(employeeData)) throw new NotValidError('Employee is not valid');
 
-    employeeData.registration = this.generateRegistration();
+    employeeData.registration = employeeData.registration || this.generateRegistration();
     await this.db.push('/employees[]', employeeData, true);
     return employeeData;
   }
@@ -116,7 +116,6 @@ export class EmployeeRepository implements IRepository {
     }catch(error){
       throw new NotFoundError('Employee not found');
     }
-
   }
 
   /**
