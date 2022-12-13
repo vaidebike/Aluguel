@@ -1,50 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Cyclist.test.ts">
-    <testCase name="Cyclist attributions should be ok" duration="30"/>
-  </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Employee.test.ts">
-    <testCase name="Employee model" duration="6"/>
+    <testCase name="Employee model" duration="7"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeRepository.test.ts">
-    <testCase name="EmployeeRepository should create a new employee" duration="58"/>
-    <testCase name="EmployeeRepository should remove an employee" duration="30"/>
-    <testCase name="EmployeeRepository should get a not found error when try to remove a employee not exists" duration="19"/>
-    <testCase name="EmployeeRepository should return all employees" duration="19"/>
-    <testCase name="EmployeeRepository should return employee by id" duration="23"/>
-    <testCase name="EmployeeRepository should get a not found error when employee not exists" duration="17"/>
-    <testCase name="EmployeeRepository should update a employee" duration="26"/>
-    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="17"/>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Cyclist.test.ts">
+    <testCase name="Cyclist attributions should be ok" duration="22"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\app.test.ts">
-    <testCase name="Get Endpoint / Get /" duration="67">
-      <failure message="Error: listen EADDRINUSE: address already in use :::4002"><![CDATA[Error: listen EADDRINUSE: address already in use :::4002
-    at Server.setupListenHandle [as _listen2] (node:net:1372:16)
-    at listenInCluster (node:net:1420:12)
-    at Server.listen (node:net:1508:7)
-    at Function.listen (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\express\lib\application.js:635:24)
-    at Object.listen (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\app.ts:22:20)
-    at Runtime._execModule (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:1377:24)
-    at Runtime._loadModule (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:989:12)
-    at Runtime.requireModule (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:849:12)
-    at Runtime.requireModuleOrMock (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:1009:21)
-    at Object.<anonymous> (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\app.test.ts:2:1)
-    at Runtime._execModule (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:1377:24)
-    at Runtime._loadModule (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:989:12)
-    at Runtime.requireModule (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runtime\build\index.js:849:12)
-    at jestAdapter (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-circus\build\legacy-code-todo-rewrite\jestAdapter.js:77:13)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)
-    at runTestInternal (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runner\build\runTest.js:367:16)
-    at runTest (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runner\build\runTest.js:444:34)
-    at Object.worker (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\node_modules\jest-runner\build\testWorker.js:106:12)]]></failure>
-    </testCase>
+    <testCase name="Get Endpoint / Get /" duration="50"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeRepository.test.ts">
+    <testCase name="EmployeeRepository should create a new employee repository" duration="6"/>
+    <testCase name="EmployeeRepository should set a new db" duration="1"/>
+    <testCase name="EmployeeRepository should create a new employee" duration="53"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no name" duration="2"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no email" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no role" duration="2"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no age" duration="3"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cpf" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no password" duration="1"/>
+    <testCase name="EmployeeRepository should get a no data error when try to create a employee without data" duration="1"/>
+    <testCase name="EmployeeRepository should remove an employee" duration="94"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to delete a employee with no valid uuid" duration="2"/>
+    <testCase name="EmployeeRepository should get a not found error when try to remove a employee not exists" duration="23"/>
+    <testCase name="EmployeeRepository should return all employees" duration="12"/>
+    <testCase name="EmployeeRepository should return employee by id" duration="12"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to find a employee with no valid uuid" duration="2"/>
+    <testCase name="EmployeeRepository should get a not found error when employee not exists" duration="21"/>
+    <testCase name="EmployeeRepository should update a employee" duration="61"/>
+    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with invalid id" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with no data" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to update a employee with invalid data" duration="56"/>
+    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="17"/>
+    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="12"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\cyclistRoutes.test.ts">
-    <testCase name="Get one Cyclist Get" duration="78"/>
-    <testCase name="Create one cyclist Create a cyclist" duration="88"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing params" duration="28"/>
-    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="11"/>
-    <testCase name="Get a invalid cyclist Get one Cyclist with not founded id" duration="10"/>
-    <testCase name="Get a invalid cyclist Get one Cyclist with not valid id" duration="11"/>
+    <testCase name="Get one Cyclist Get" duration="100"/>
+    <testCase name="Create one cyclist Create a cyclist" duration="48"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing params" duration="12"/>
+    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="6"/>
+    <testCase name="Get a invalid cyclist Get one Cyclist with not founded id" duration="17"/>
+    <testCase name="Get a invalid cyclist Get one Cyclist with not valid id" duration="13"/>
   </file>
 </testExecutions>
