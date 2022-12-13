@@ -12,6 +12,7 @@ export class Cyclist {
   nationality: string;
   email: string;
   urlDocumentPhoto: string;
+  password: string;
 }
 
 export enum StatusEnum {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { v4 as uuidv4 } from 'uuid';
-import { Cyclist, StatusEnum } from '../models/Cyclist';
+import { Cyclist } from '../models/Cyclist';
+import { CyclistRepository } from '../models/repositories/CyclistRepository';
 
 export class CyclistController {
 
@@ -12,24 +12,12 @@ export class CyclistController {
   public static async getOne(req: Request, res: Response) {
     const { id } = req.params;
 
-    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
-    if (!validId) {
-      res.status(422).send({ error: 'valid uuid is required' });
-      return;
-    }
-
     try{
-      const db = req.app.get('db');
-      const cyclistIndex = await db.getIndex('/cyclists', id);
-      
-      if(cyclistIndex === -1){
-        throw new Error('Cyclist not found');
-      }
-      
+      const cyclist = await new CyclistRepository(req.app.get('db')).findOne(id);
+      res.status(200).send(cyclist);
     }catch(error){
-      res.status(404).send({ error: 'Cyclist not found' });
+      res.status(404).send({ error: error.message});
     }
-
   }
 
   /**
@@ -47,11 +35,7 @@ export class CyclistController {
       return;
     }
     
-    cyclistData.id = uuidv4();
-    cyclistData.status = StatusEnum.Active;
-    const db = req.app.get('db');
-    await db.push('/cyclists[]', cyclistData, true);
-
-    res.status(200).send(cyclist);
+    const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
+    res.status(200).send(newCyclist);
   }
 }
