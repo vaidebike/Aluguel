@@ -1,6 +1,7 @@
 import express from 'express';
 import { Config, JsonDB } from 'node-json-db';
 import cyclistRoutes from './routes/cyclistRoutes';
+import employeeRoutes from './routes/employeeRoutes';
 
 const app = express();
 app.disable('x-powered-by');
@@ -16,6 +17,7 @@ app.get('/', async (_, res) => {
 });
 
 app.use('/cyclist', cyclistRoutes);
+app.use('/employee', employeeRoutes);
 
 const server = app.listen(port, () => console.log(`Running on port ${port}`));
 export default server;
