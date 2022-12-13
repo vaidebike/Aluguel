@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
-    <testCase name="Get Endpoints Get" duration="97"/>
+    <testCase name="Get Endpoints Get" duration="91"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
-    <testCase name="Get one Cyclist Get" duration="59"/>
-    <testCase name="Get one Cyclist with not founded id Get" duration="22"/>
-    <testCase name="Get one Cyclist with not nvalid id Get" duration="5"/>
+    <testCase name="Get one Cyclist Get" duration="49"/>
+    <testCase name="Get one Cyclist with not founded id Get" duration="24"/>
+    <testCase name="Get one Cyclist with not nvalid id Get" duration="13"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\Cyclist.test.js">
-    <testCase name="Cyclist attributions should be ok" duration="8"/>
+    <testCase name="Cyclist attributions should be ok" duration="5"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\Cyclist.test.ts">
-    <testCase name="Cyclist attributions should be ok" duration="8"/>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Cyclist.test.ts">
+    <testCase name="Cyclist attributions should be ok" duration="5"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts">
-    <testCase name="Get one Cyclist Get" duration="29"/>
-    <testCase name="Create one cyclist Create a cyclist" duration="27"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing params" duration="6"/>
-    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="4"/>
-    <testCase name="Get a invalid cyclist Get one Cyclist with not founded id" duration="5"/>
-    <testCase name="Get a invalid cyclist Get one Cyclist with not valid id" duration="5"/>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\app.test.ts">
+    <testCase name="Get Endpoint / Get /" duration="33"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\app.test.ts">
-    <testCase name="Get Endpoint / Get /" duration="23"/>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\cyclistRoutes.test.ts">
+    <testCase name="Get one Cyclist Get" duration="40"/>
+    <testCase name="Create one cyclist Create a cyclist" duration="36"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing params" duration="8"/>
+    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="5"/>
+    <testCase name="Get a invalid cyclist Get one Cyclist with not founded id" duration="6"/>
+    <testCase name="Get a invalid cyclist Get one Cyclist with not valid id" duration="6"/>
   </file>
 </testExecutions>
