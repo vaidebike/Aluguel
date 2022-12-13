@@ -1,5 +1,6 @@
 import request from 'supertest';
 import server from '../app';
+
 describe('Get one Cyclist', () => {
   it('Get', async () => {
     const res = await request(server)
@@ -15,9 +16,16 @@ describe('Get one Cyclist', () => {
     expect(res.body).toHaveProperty('nationality');
     expect(res.body).toHaveProperty('email');
     expect(res.body).toHaveProperty('urlDocumentPhoto');
+  });
 
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
   });
 });
+
+
 describe('Create one cyclist', ()=>{
   it('Create a cyclist', async () => {
     const cyclist = {
@@ -32,7 +40,7 @@ describe('Create one cyclist', ()=>{
       'nationality': 'string',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'senha': 'string'
+      'password': 'string'
     };
 
     const res = await request(server)
@@ -48,14 +56,18 @@ describe('Create one cyclist', ()=>{
     expect(res.body).toHaveProperty('nationality');
     expect(res.body).toHaveProperty('email');
     expect(res.body).toHaveProperty('urlDocumentPhoto');
-    expect(res.body).toHaveProperty('senha');
+    expect(res.body).toHaveProperty('password');
+  });
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
   });
 });
 
 describe('Create a invalid cyclist', ()=>{
-  it('Create a cyclist', async () => {
+  it('Create a cyclist with missing params', async () => {
     const cyclist = {
-      'name': 'string',
       'passaporte': {
         'number': 'string',
         'expiration': '2022-12-12',
@@ -64,29 +76,36 @@ describe('Create a invalid cyclist', ()=>{
       'nationality': 'string',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'senha': 'string'
+      'password': 'string'
     };
 
     const res = await request(server)
       .post('/cyclist').send({ cyclist });
 
-    expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body).toHaveProperty('status');
-    expect(res.body).toHaveProperty('name');
-    expect(res.body).toHaveProperty('nascimento');
-    expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('passaporte');
-    expect(res.body).toHaveProperty('nationality');
-    expect(res.body).toHaveProperty('email');
-    expect(res.body).toHaveProperty('urlDocumentPhoto');
-    expect(res.body).toHaveProperty('senha');
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Cyclist is not valid');
+  });
+
+  it('Create a cyclist without data', async () => {
+    const cyclist = '';
+
+    const res = await request(server)
+      .post('/cyclist').send(cyclist );
+
+    expect(res.statusCode).toEqual(400);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Cyclist is required');
+  });
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
   });
 });
 
-
-describe('Get one Cyclist with not founded id', () => {
-  it('Get', async () => {
+describe('Get a invalid cyclist', () => {
+  it('Get one Cyclist with not founded id', async () => {
     const res = await request(server)
       .get('/cyclist/a111111a-aaaa-41b8-91ad-fcba610ddd3a');
 
@@ -94,10 +113,8 @@ describe('Get one Cyclist with not founded id', () => {
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toEqual('Cyclist not found');
   });
-});
 
-describe('Get one Cyclist with not valid id', () => {
-  it('Get', async () => {
+  it('Get one Cyclist with not valid id', async () => {
     const res = await request(server)
       .get('/cyclist/aaa');
 
@@ -105,10 +122,12 @@ describe('Get one Cyclist with not valid id', () => {
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toEqual('valid uuid is required');
   });
+
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
+  });
 });
 
-afterEach(done => {
-  // close server conection
-  server.close();
-  done();
-});
+

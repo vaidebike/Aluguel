@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { NoDataError } from '../errors/NoDataError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { Cyclist } from '../models/Cyclist';
@@ -36,13 +37,17 @@ export class CyclistController {
     const {cyclist} = req.body;
 
     const cyclistData = cyclist as Cyclist;
-    
-    if (!cyclist) {
-      res.status(422).send({ error: 'Cyclist is required' });
-      return;
+   
+    try{
+      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
+      res.status(200).send(newCyclist);
+    }catch(error){
+      let status = 400;
+      
+      if(error instanceof NoDataError) status = 400;
+      if(error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message});
     }
-    
-    const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
-    res.status(200).send(newCyclist);
   }
 }

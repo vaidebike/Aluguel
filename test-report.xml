@@ -1,38 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
-    <testCase name="Get Endpoints Get" duration="46"/>
+    <testCase name="Get Endpoints Get" duration="97"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
-    <testCase name="Get one Cyclist Get" duration="70"/>
-    <testCase name="Get one Cyclist with not founded id Get" duration="11"/>
-    <testCase name="Get one Cyclist with not nvalid id Get" duration="10"/>
+    <testCase name="Get one Cyclist Get" duration="59"/>
+    <testCase name="Get one Cyclist with not founded id Get" duration="22"/>
+    <testCase name="Get one Cyclist with not nvalid id Get" duration="5"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\Cyclist.test.js">
-    <testCase name="Cyclist attributions should be ok" duration="3"/>
+    <testCase name="Cyclist attributions should be ok" duration="8"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\Cyclist.test.ts">
-    <testCase name="Cyclist attributions should be ok" duration="3"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\app.test.ts">
-    <testCase name="Get Endpoint / Get" duration="27"/>
+    <testCase name="Cyclist attributions should be ok" duration="8"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts">
-    <testCase name="Get one Cyclist Get" duration="30"/>
-    <testCase name="Create one cyclist Create a cyclist" duration="28"/>
-    <testCase name="Create a invalid cyclist Create a cyclist" duration="11">
-      <failure message="Error: expect(received).toHaveProperty(path)"><![CDATA[Error: expect(received).toHaveProperty(path)
-
-Expected path: "nascimento"
-Received path: []
-
-Received value: {"email": "user@example.com", "id": "0eafa02b-7765-4f46-8a60-36a4c40d502b", "name": "string", "nationality": "string", "passaporte": {"contry": "LS", "expiration": "2022-12-12", "number": "string"}, "senha": "string", "status": "ATIVO", "urlDocumentPhoto": "string"}
-    at C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:77:22
-    at Generator.next (<anonymous>)
-    at fulfilled (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:5:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
-    </testCase>
-    <testCase name="Get one Cyclist with not founded id Get" duration="4"/>
-    <testCase name="Get one Cyclist with not valid id Get" duration="4"/>
+    <testCase name="Get one Cyclist Get" duration="29"/>
+    <testCase name="Create one cyclist Create a cyclist" duration="27"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing params" duration="6"/>
+    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="4"/>
+    <testCase name="Get a invalid cyclist Get one Cyclist with not founded id" duration="5"/>
+    <testCase name="Get a invalid cyclist Get one Cyclist with not valid id" duration="5"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\app.test.ts">
+    <testCase name="Get Endpoint / Get /" duration="23"/>
   </file>
 </testExecutions>

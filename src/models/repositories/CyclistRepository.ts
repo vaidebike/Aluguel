@@ -1,5 +1,6 @@
 import { JsonDB } from 'node-json-db';
 import { v4 as uuidv4 } from 'uuid';
+import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
 import { Cyclist, StatusEnum } from '../Cyclist';
@@ -22,14 +23,28 @@ export class CyclistRepository implements IRepository {
   public async create(data: Cyclist): Promise<any> {
     const cyclistData = data as Cyclist;
 
-    if (!data) {
-      throw new Error('Cyclist is required');
-    }
+    if (!data) throw new NoDataError('Cyclist is required');
+    if(!this.validate(cyclistData)) throw new NotValidError('Cyclist is not valid');
 
     cyclistData.id = uuidv4();
     cyclistData.status = StatusEnum.Active;
     await this.db.push('/cyclists[]', cyclistData, true);
     return cyclistData;
+  }
+
+  private validate(cyclistData: Cyclist): boolean {
+    if (!cyclistData.name) return false;
+    if (!cyclistData.nascimento) return false;
+    if (!cyclistData.passaporte) return false;
+    if (!cyclistData.passaporte.number) return false;
+    if (!cyclistData.passaporte.expiration) return false;
+    if (!cyclistData.passaporte.contry) return false;
+    if (!cyclistData.nationality) return false;
+    if (!cyclistData.email) return false;
+    if (!cyclistData.urlDocumentPhoto) return false;
+    if (!cyclistData.password) return false;
+
+    return true;
   }
 
   public async findOne(id: string): Promise<any> {
