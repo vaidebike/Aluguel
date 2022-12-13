@@ -1,4 +1,6 @@
 import { Request, Response } from 'express';
+import { NotFoundError } from '../errors/NotFoundError';
+import { NotValidError } from '../errors/NotValidError';
 import { Cyclist } from '../models/Cyclist';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 
@@ -16,7 +18,12 @@ export class CyclistController {
       const cyclist = await new CyclistRepository(req.app.get('db')).findOne(id);
       res.status(200).send(cyclist);
     }catch(error){
-      res.status(404).send({ error: error.message});
+      let status = 400;
+      
+      if(error instanceof NotFoundError) status = 404;
+      if(error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message});
     }
   }
 

@@ -1,5 +1,7 @@
 import { JsonDB } from 'node-json-db';
 import { v4 as uuidv4 } from 'uuid';
+import { NotFoundError } from '../../errors/NotFoundError';
+import { NotValidError } from '../../errors/NotValidError';
 import { Cyclist, StatusEnum } from '../Cyclist';
 import { IRepository } from './IRepository';
 
@@ -33,7 +35,7 @@ export class CyclistRepository implements IRepository {
   public async findOne(id: string): Promise<any> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) {
-      throw new Error('valid uuid is required');
+      throw new NotValidError('valid uuid is required');
     }
 
     try {
@@ -41,12 +43,12 @@ export class CyclistRepository implements IRepository {
       const cyclist = await this.db.getData(`/cyclists[${cyclistIndex}]`);
 
       if (cyclistIndex === -1) {
-        throw new Error('Cyclist not found');
+        throw new NotFoundError('Cyclist not found');
       }
 
       return cyclist;
     } catch (error) {
-      throw new Error('Cyclist not found');
+      throw new NotFoundError('Cyclist not found');
     }
     
   }
