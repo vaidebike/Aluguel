@@ -1,6 +1,6 @@
 export class Cyclist {
-  id: string;
-  status: StatusEnum;
+  id?: string;
+  status?: StatusEnum;
   name: string;
   nascimento: Date;
   cpf: string;
@@ -12,6 +12,7 @@ export class Cyclist {
   nationality: string;
   email: string;
   urlDocumentPhoto: string;
+  password: string;
 }
 
 export enum StatusEnum {

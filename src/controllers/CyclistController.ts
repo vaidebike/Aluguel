@@ -1,5 +1,9 @@
 import { Request, Response } from 'express';
-import { Cyclist, StatusEnum } from '../models/Cyclist';
+import { NoDataError } from '../errors/NoDataError';
+import { NotFoundError } from '../errors/NotFoundError';
+import { NotValidError } from '../errors/NotValidError';
+import { Cyclist } from '../models/Cyclist';
+import { CyclistRepository } from '../models/repositories/CyclistRepository';
 
 export class CyclistController {
 
@@ -11,33 +15,39 @@ export class CyclistController {
   public static async getOne(req: Request, res: Response) {
     const { id } = req.params;
 
-    if (!id || isNaN(Number(id))) {
-      res.status(422).send({ error: 'valid id is required' });
-      return;
+    try{
+      const cyclist = await new CyclistRepository(req.app.get('db')).findOne(id);
+      res.status(200).send(cyclist);
+    }catch(error){
+      let status = 400;
+      
+      if(error instanceof NotFoundError) status = 404;
+      if(error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message});
     }
+  }
 
-    if (id !== '1') {
-      res.status(404).send({ error: 'Cyclist not found' });
-      return;
+  /**
+ * Create a cyclist
+ * @Route POST /cyclist/
+ * @returns  Cyclist created 
+ */
+  public static async create(req: Request, res: Response) {
+    const {cyclist} = req.body;
+
+    const cyclistData = cyclist as Cyclist;
+   
+    try{
+      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
+      res.status(200).send(newCyclist);
+    }catch(error){
+      let status = 400;
+      
+      if(error instanceof NoDataError) status = 400;
+      if(error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message});
     }
-
-    const cyclist = new Cyclist();
-
-    cyclist.id = '1';
-    cyclist.status = StatusEnum.Active;
-    cyclist.name = 'test';
-    cyclist.nascimento = new Date();
-    cyclist.cpf = '123456789';
-    cyclist.passaporte = {
-      number: '123456789',
-      expiration: new Date(),
-      contry: 'Brazil'
-    };
-    cyclist.nationality = 'Brazil';
-    cyclist.email = 'email@email.com';
-    cyclist.urlDocumentPhoto = 'http://url.com';
-
-    res.status(200).send(cyclist);
-
   }
 }
