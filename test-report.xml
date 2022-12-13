@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
-    <testCase name="Get Endpoints Get" duration="79"/>
+    <testCase name="Get Endpoints Get" duration="46"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
-    <testCase name="Get one Cyclist Get" duration="110"/>
-    <testCase name="Get one Cyclist with not founded id Get" duration="9"/>
+    <testCase name="Get one Cyclist Get" duration="70"/>
+    <testCase name="Get one Cyclist with not founded id Get" duration="11"/>
     <testCase name="Get one Cyclist with not nvalid id Get" duration="10"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\Cyclist.test.js">
@@ -14,31 +14,25 @@
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\Cyclist.test.ts">
     <testCase name="Cyclist attributions should be ok" duration="3"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts">
-    <testCase name="Get one Cyclist Get" duration="26">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-Expected: 200
-Received: 404
-    at C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:8:28
-    at Generator.next (<anonymous>)
-    at fulfilled (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:5:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
-    </testCase>
-    <testCase name="Create one cyclist Create a cyclist" duration="35"/>
-    <testCase name="Get one Cyclist with not founded id Get" duration="7"/>
-    <testCase name="Get one Cyclist with not valid id Get" duration="5">
-      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
-
-Expected: 422
-Received: 404
-    at C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:70:28
-    at Generator.next (<anonymous>)
-    at fulfilled (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:5:58)
-    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
-    </testCase>
-  </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\app.test.ts">
-    <testCase name="Get Endpoint / Get" duration="29"/>
+    <testCase name="Get Endpoint / Get" duration="27"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts">
+    <testCase name="Get one Cyclist Get" duration="30"/>
+    <testCase name="Create one cyclist Create a cyclist" duration="28"/>
+    <testCase name="Create a invalid cyclist Create a cyclist" duration="11">
+      <failure message="Error: expect(received).toHaveProperty(path)"><![CDATA[Error: expect(received).toHaveProperty(path)
+
+Expected path: "nascimento"
+Received path: []
+
+Received value: {"email": "user@example.com", "id": "0eafa02b-7765-4f46-8a60-36a4c40d502b", "name": "string", "nationality": "string", "passaporte": {"contry": "LS", "expiration": "2022-12-12", "number": "string"}, "senha": "string", "status": "ATIVO", "urlDocumentPhoto": "string"}
+    at C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:77:22
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\cyclistRoutes.test.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
+    </testCase>
+    <testCase name="Get one Cyclist with not founded id Get" duration="4"/>
+    <testCase name="Get one Cyclist with not valid id Get" duration="4"/>
   </file>
 </testExecutions>

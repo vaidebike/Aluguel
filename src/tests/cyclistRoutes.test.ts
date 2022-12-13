@@ -3,7 +3,7 @@ import server from '../app';
 describe('Get one Cyclist', () => {
   it('Get', async () => {
     const res = await request(server)
-      .get('/cyclist/1');
+      .get('/cyclist/fd7a869c-21cd-4b65-8d8a-7f36148666b7');
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('id');
@@ -51,6 +51,40 @@ describe('Create one cyclist', ()=>{
     expect(res.body).toHaveProperty('senha');
   });
 });
+
+describe('Create a invalid cyclist', ()=>{
+  it('Create a cyclist', async () => {
+    const cyclist = {
+      'name': 'string',
+      'passaporte': {
+        'number': 'string',
+        'expiration': '2022-12-12',
+        'contry': 'LS'
+      },
+      'nationality': 'string',
+      'email': 'user@example.com',
+      'urlDocumentPhoto': 'string',
+      'senha': 'string'
+    };
+
+    const res = await request(server)
+      .post('/cyclist').send({ cyclist });
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('id');
+    expect(res.body).toHaveProperty('status');
+    expect(res.body).toHaveProperty('name');
+    expect(res.body).toHaveProperty('nascimento');
+    expect(res.body).toHaveProperty('cpf');
+    expect(res.body).toHaveProperty('passaporte');
+    expect(res.body).toHaveProperty('nationality');
+    expect(res.body).toHaveProperty('email');
+    expect(res.body).toHaveProperty('urlDocumentPhoto');
+    expect(res.body).toHaveProperty('senha');
+  });
+});
+
+
 describe('Get one Cyclist with not founded id', () => {
   it('Get', async () => {
     const res = await request(server)
