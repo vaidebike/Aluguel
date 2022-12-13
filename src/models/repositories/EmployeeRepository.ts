@@ -25,7 +25,7 @@ export class EmployeeRepository implements IRepository {
    * @returns Employee created as a Promise
    * @throws NoDataError if data is not passed, NotValidError if data is not valid
    */
-  public async create(data: Employee): Promise<any> {
+  public async create(data: Employee): Promise<Employee> {
     const employeeData = data as Employee;
 
     if (!data) throw new NoDataError('Employee is required');
@@ -66,7 +66,7 @@ export class EmployeeRepository implements IRepository {
    * @returns Employee as a Promise
    * @throws NotFoundError if employee not found, NotValidError if id is not valid
    */
-  public async findOne(id: string): Promise<any> {
+  public async findOne(id: string): Promise<Employee> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) throw new NotValidError('Id is not valid');
 
@@ -85,7 +85,7 @@ export class EmployeeRepository implements IRepository {
    * Get all employees from database
    * @returns all employees as a Promise
    */
-  public async findAll(): Promise<any> {
+  public async findAll(): Promise<Employee> {
     const employees = await this.db.getData('/employees');
     return employees;
   }
@@ -96,7 +96,7 @@ export class EmployeeRepository implements IRepository {
    * @param data Employeeto update
    * @returns Employee updated as a Promise
    */
-  public async update(id: string, data: Employee): Promise<any> {
+  public async update(id: string, data: Employee): Promise<Employee> {
     const employeeData = data as Employee;
 
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
@@ -124,7 +124,7 @@ export class EmployeeRepository implements IRepository {
    * @param id of employee to delete
    * @returns Employee deleted as a Promise
    */
-  public async delete(id: string): Promise<any> {
+  public async delete(id: string): Promise<Employee> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) throw new NotValidError('Id is not valid');
 
