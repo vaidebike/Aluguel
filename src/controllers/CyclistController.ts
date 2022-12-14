@@ -50,38 +50,11 @@ export class CyclistController {
   }
 
   public static async update(req: Request, res: Response) {
-    const { id } = req.params;
-    const {cyclist} = req.body;
-
-    const cyclistData = cyclist;
-
-    try{
-      const updatedCyclist = await new CyclistRepository(req.app.get('db')).update(id, cyclistData);
-      res.status(200).send(updatedCyclist);
-    }catch(error){
-      let status = 400;
-      
-      if(error instanceof NotFoundError) status = 404;
-      if(error instanceof NotValidError) status = 422;
-
-      res.status(status).send({ error: error.message});
-    }
+    res.status(400).send({ error: 'Not implemented' });
   }
 
   public static async delete(req: Request, res: Response) {
-    const { id } = req.params;
-
-    try{
-      const deletedCyclist = await new CyclistRepository(req.app.get('db')).delete(id);
-      res.status(200).send(deletedCyclist);
-    }catch(error){
-      let status = 400;
-      
-      if(error instanceof NotFoundError) status = 404;
-      if(error instanceof NotValidError) status = 422;
-
-      res.status(status).send({ error: error.message});
-    }
+    res.status(400).send({ error: 'Not implemented' });
   }
 
   public static async emailExists(req: Request, res: Response) {
