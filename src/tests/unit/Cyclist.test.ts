@@ -1,4 +1,4 @@
-import { Cyclist, StatusEnum } from '../models/Cyclist';
+import { Cyclist, StatusEnum } from '../../models/Cyclist';
 
 test('Cyclist attributions should be ok', () =>{
   const cyclist = new Cyclist();

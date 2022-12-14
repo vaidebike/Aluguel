@@ -12,6 +12,16 @@ export class CyclistRepository implements IRepository {
   constructor(db: JsonDB) {
     this.db = db;
   }
+  
+  findAll(): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  update(id: string, data: any): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
+  delete(id: string): Promise<any> {
+    throw new Error('Method not implemented.');
+  }
   public get db(): JsonDB {
     return this._db;
   }

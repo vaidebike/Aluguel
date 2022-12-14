@@ -44,7 +44,7 @@ export class CyclistController {
     }catch(error){
       let status = 400;
       
-      if(error instanceof NoDataError) status = 400;
+      if(error instanceof NoDataError) status;
       if(error instanceof NotValidError) status = 422;
 
       res.status(status).send({ error: error.message});
