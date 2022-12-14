@@ -72,6 +72,7 @@ export class EmployeeRepository implements IRepository {
 
     try {
       const employeeIndex = await this.db.getIndex('/employees', id, 'registration');
+
       const employee = await this.db.getData(`/employees[${employeeIndex}]`);
 
       if (employeeIndex === -1) throw new NotFoundError('Employee not found');

@@ -6,7 +6,7 @@
     "start": "node dist/app.js",
     "build": "tsc",
     "dev": "nodemon -L --watch 'src/' --exec 'ts-node src/app.ts' -e ts",
-    "test": "jest --coverage"
+    "test": "jest --coverage --maxWorkers=1"
   },
   "jest": {
     "preset": "ts-jest",

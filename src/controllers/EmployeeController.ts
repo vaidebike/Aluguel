@@ -52,12 +52,8 @@ export class EmployeeController {
    * @returns Array of employees
    */
   public static async read(req: Request, res: Response) {
-    try {
-      const employees = await new EmployeeRepository(req.app.get('db')).findAll();
-      res.status(200).send(employees);
-    } catch (error) {
-      res.status(400).send({ error: error.message });
-    }
+    const employees = await new EmployeeRepository(req.app.get('db')).findAll();
+    res.status(200).send(employees);
   }
 
   /**
