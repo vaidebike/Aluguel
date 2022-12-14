@@ -26,7 +26,7 @@ export class EmployeeRepository implements IRepository {
    * @throws NoDataError if data is not passed, NotValidError if data is not valid
    */
   public async create(data: Employee): Promise<Employee> {
-    const employeeData = data as Employee;
+    const employeeData = data;
 
     if (!data) throw new NoDataError('Employee is required');
     if (!this.validate(employeeData)) throw new NotValidError('Employee is not valid');
@@ -67,7 +67,7 @@ export class EmployeeRepository implements IRepository {
    * @throws NotFoundError if employee not found, NotValidError if id is not valid
    */
   public async findOne(id: string): Promise<Employee> {
-    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) throw new NotValidError('Id is not valid');
 
     try {
@@ -98,9 +98,9 @@ export class EmployeeRepository implements IRepository {
    * @returns Employee updated as a Promise
    */
   public async update(id: string, data: Employee): Promise<Employee> {
-    const employeeData = data as Employee;
+    const employeeData = data;
 
-    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     
     if (!validId) throw new NotValidError('Id is not valid');
     if (!data) throw new NoDataError('Employee is required');
@@ -122,7 +122,7 @@ export class EmployeeRepository implements IRepository {
    * @returns Employee deleted as a Promise
    */
   public async delete(id: string): Promise<Employee> {
-    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) throw new NotValidError('Id is not valid');
 
     try {

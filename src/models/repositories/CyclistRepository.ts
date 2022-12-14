@@ -31,7 +31,7 @@ export class CyclistRepository implements IRepository {
   }
 
   public async create(data: Cyclist): Promise<any> {
-    const cyclistData = data as Cyclist;
+    const cyclistData = data;
 
     if (!data) throw new NoDataError('Cyclist is required');
     if(!this.validate(cyclistData)) throw new NotValidError('Cyclist is not valid');
@@ -58,7 +58,7 @@ export class CyclistRepository implements IRepository {
   }
 
   public async findOne(id: string): Promise<any> {
-    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-[4][0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) {
       throw new NotValidError('valid uuid is required');
     }
