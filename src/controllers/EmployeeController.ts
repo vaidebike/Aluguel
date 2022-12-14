@@ -36,7 +36,7 @@ export class EmployeeController {
 
     try {
       const newEmployee = await new EmployeeRepository(req.app.get('db')).create(employee);
-      res.status(200).send(newEmployee);
+      res.status(201).send(newEmployee);
     } catch (error) {
       let status = 400;
       if (error instanceof NoDataError) status;
