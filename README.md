@@ -1,4 +1,10 @@
 # Aluguel API
+API REST for the microservice "Aluguel" of project "Vai de Bike".
+
+## Metrics
+This project is using [Sonar Cloud](https://sonarcloud.io/project/overview?id=vaidebike_Aluguel) for code metrics, with de following metrics:
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=vaidebike_Aluguel&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=vaidebike_Aluguel) [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=vaidebike_Aluguel&metric=bugs)](https://sonarcloud.io/summary/new_code?id=vaidebike_Aluguel) [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=vaidebike_Aluguel&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=vaidebike_Aluguel) [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=vaidebike_Aluguel&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=vaidebike_Aluguel) [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=vaidebike_Aluguel&metric=coverage)](https://sonarcloud.io/summary/new_code?id=vaidebike_Aluguel) [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=vaidebike_Aluguel&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=vaidebike_Aluguel)
 
 ## Contributing
 
