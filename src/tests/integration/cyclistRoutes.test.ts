@@ -61,8 +61,15 @@ describe('Create one cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('id');
@@ -84,6 +91,32 @@ describe('Create one cyclist', () => {
 });
 
 describe('Create a invalid cyclist', () => {
+
+  it('Create a cyclist with missing payment Method', async() => {
+    const cyclist = {
+      'name': 'string',
+      'nascimento': '2022-12-12',
+      'cpf': '71269834020',
+      'passaporte': {
+        'number': 'string',
+        'expiration': '2022-12-12',
+        'contry': 'LS'
+      },
+      'nationality': 'string',
+      'email': 'user@example.com',
+      'urlDocumentPhoto': 'string',
+      'password': 'string',
+      'password2': 'string'
+    };
+
+    const res = await request(server)
+      .post('/cyclist').send({ cyclist });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Invalid credit card');
+  });
+
   it('Create a cyclist with missing passaporte', async () => {
     const cyclist = {
       'name': 'string',
@@ -96,8 +129,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -120,8 +160,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -144,8 +191,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -168,8 +222,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -192,8 +253,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -216,8 +284,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -240,8 +315,15 @@ describe('Create a invalid cyclist', () => {
       'password': 'string'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -265,8 +347,15 @@ describe('Create a invalid cyclist', () => {
       'password2': 'string1'
     };
 
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
+
     const res = await request(server)
-      .post('/cyclist').send({ cyclist });
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -275,9 +364,14 @@ describe('Create a invalid cyclist', () => {
 
   it('Create a cyclist without data', async () => {
     const cyclist = '';
-
+    const paymentMethod = {
+      'nomeTitular': 'Teste',
+      'numero': '1234567890123456',
+      'validade': '2022-12-12',
+      'cvv': '123'
+    };
     const res = await request(server)
-      .post('/cyclist').send(cyclist);
+      .post('/cyclist').send({ cyclist, paymentMethod });
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty('error');

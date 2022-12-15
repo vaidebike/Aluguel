@@ -1,4 +1,4 @@
-export interface IRepository{
+export interface RepositoryInterface{
   db: unknown;
   create(data: unknown): Promise<unknown>;
   findOne(id: string): Promise<unknown>;

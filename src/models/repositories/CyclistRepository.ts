@@ -4,9 +4,9 @@ import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
 import { Cyclist, StatusEnum } from '../Cyclist';
-import { IRepository } from './IRepository';
+import { RepositoryInterface } from './RepositoryInterface';
 
-export class CyclistRepository implements IRepository {
+export class CyclistRepository implements RepositoryInterface {
   private _db: JsonDB;
 
   constructor(db: JsonDB) {

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
+import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 
 export class CyclistController {
 
@@ -33,12 +34,15 @@ export class CyclistController {
  * @returns  Cyclist created 
  */
   public static async create(req: Request, res: Response) {
-    const {cyclist} = req.body;
+    const {cyclist, paymentMethod} = req.body;
 
-    const cyclistData = cyclist;
+    const creditCardService = new FakeCreditCardService();
+    const validCreditCard = await creditCardService.validateCreditCard(paymentMethod);
+
+    if(!validCreditCard) return res.status(422).send({ error: 'Invalid credit card'});
 
     try{
-      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
+      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclist);
       res.status(200).send(newCyclist);
     }catch(error){
       let status = 400;
