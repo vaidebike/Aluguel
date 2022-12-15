@@ -3,6 +3,7 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
+import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
 
@@ -43,6 +44,10 @@ export class CyclistController {
 
     try{
       const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclist);
+
+      const emailService = new FakeEmailService();
+      await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');
+
       res.status(200).send(newCyclist);
     }catch(error){
       let status = 400;
