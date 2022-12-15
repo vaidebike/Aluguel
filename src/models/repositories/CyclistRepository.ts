@@ -53,10 +53,10 @@ export class CyclistRepository implements RepositoryInterface {
     if(cyclistData.nationality === 'Brazil'){
       if (!cyclistData.cpf) return false;
     }else{
-      if (!cyclistData.passaporte || cyclistData.passaporte == undefined) return false;
-      if (!cyclistData.passaporte.number || cyclistData.passaporte.number == undefined) return false;
-      if (!cyclistData.passaporte.expiration || cyclistData.passaporte.expiration == undefined) return false;
-      if (!cyclistData.passaporte.contry || cyclistData.passaporte.contry == undefined) return false;
+      if (!cyclistData.passaporte) return false;
+      if (!cyclistData.passaporte.number) return false;
+      if (!cyclistData.passaporte.expiration) return false;
+      if (!cyclistData.passaporte.contry) return false;
     }
     
     if (!cyclistData.email) return false;
