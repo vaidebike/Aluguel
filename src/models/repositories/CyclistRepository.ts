@@ -93,7 +93,7 @@ export class CyclistRepository implements RepositoryInterface {
   }
 
   private validateEmail(email: string): boolean {
-    const re = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+    const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return re.test(email);
   }
 }
