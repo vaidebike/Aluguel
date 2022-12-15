@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { NoDataError } from '../errors/NoDataError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { EmployeeRepository } from '../models/repositories/EmployeeRepository';
@@ -39,7 +38,6 @@ export class EmployeeController {
       res.status(201).send(newEmployee);
     } catch (error) {
       let status = 400;
-      if (error instanceof NoDataError) status = 400;
       if (error instanceof NotValidError) status = 422;
 
       res.status(status).send({ error: error.message });

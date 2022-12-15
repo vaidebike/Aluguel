@@ -4,22 +4,22 @@ import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
 import { Cyclist, StatusEnum } from '../Cyclist';
-import { IRepository } from './IRepository';
+import { RepositoryInterface } from './RepositoryInterface';
 
-export class CyclistRepository implements IRepository {
+export class CyclistRepository implements RepositoryInterface {
   private _db: JsonDB;
 
   constructor(db: JsonDB) {
     this.db = db;
   }
   
-  findAll(): Promise<any> {
+  findAll(): Promise<Cyclist> {
     throw new Error('Method not implemented.');
   }
-  update(id: string, data: any): Promise<any> {
+  update(id: string, cyclistData: Cyclist): Promise<Cyclist> {
     throw new Error('Method not implemented.');
   }
-  delete(id: string): Promise<any> {
+  delete(id: string): Promise<Cyclist> {
     throw new Error('Method not implemented.');
   }
   public get db(): JsonDB {
@@ -30,11 +30,14 @@ export class CyclistRepository implements IRepository {
     this._db = value;
   }
 
-  public async create(data: Cyclist): Promise<any> {
-    const cyclistData = data;
+  public async create(cyclistData: Cyclist): Promise<Cyclist> {
+    if (!cyclistData) throw new NoDataError('Cyclist is required');
 
-    if (!data) throw new NoDataError('Cyclist is required');
-    if(!this.validate(cyclistData)) throw new NotValidError('Cyclist is not valid');
+    
+    if(!cyclistData.password || !cyclistData.password2) throw new NotValidError('Password is required');
+    if(cyclistData.password !== cyclistData.password2) throw new NotValidError('Password and password2 must be equals');
+   
+    if(!this.validateCyclistData(cyclistData)) throw new NotValidError('Cyclist is not valid');
 
     cyclistData.id = uuidv4();
     cyclistData.status = StatusEnum.Active;
@@ -42,22 +45,27 @@ export class CyclistRepository implements IRepository {
     return cyclistData;
   }
 
-  private validate(cyclistData: Cyclist): boolean {
+  private validateCyclistData(cyclistData: Cyclist): boolean {
     if (!cyclistData.name) return false;
     if (!cyclistData.nascimento) return false;
-    if (!cyclistData.passaporte) return false;
-    if (!cyclistData.passaporte.number) return false;
-    if (!cyclistData.passaporte.expiration) return false;
-    if (!cyclistData.passaporte.contry) return false;
     if (!cyclistData.nationality) return false;
+    
+    if(cyclistData.nationality === 'Brazil'){
+      if (!cyclistData.cpf) return false;
+    }else{
+      if (!cyclistData.passaporte || cyclistData.passaporte == undefined) return false;
+      if (!cyclistData.passaporte.number || cyclistData.passaporte.number == undefined) return false;
+      if (!cyclistData.passaporte.expiration || cyclistData.passaporte.expiration == undefined) return false;
+      if (!cyclistData.passaporte.contry || cyclistData.passaporte.contry == undefined) return false;
+    }
+    
     if (!cyclistData.email) return false;
     if (!cyclistData.urlDocumentPhoto) return false;
-    if (!cyclistData.password) return false;
-
+    
     return true;
   }
 
-  public async findOne(id: string): Promise<any> {
+  public async findOne(id: string): Promise<Cyclist> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) {
       throw new NotValidError('valid uuid is required');
@@ -75,6 +83,17 @@ export class CyclistRepository implements IRepository {
     } catch (error) {
       throw new NotFoundError('Cyclist not found');
     }
+  }
+
+  public async verifyIfEmailExists(email: string): Promise<boolean> {
+    if (!this.validateEmail(email)) throw new NotValidError('Email is not valid');
     
+    const cyclistIndex = await this.db.getIndex('/cyclists', email, 'email');
+    return cyclistIndex !== -1;
+  }
+
+  private validateEmail(email: string): boolean {
+    const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return re.test(email);
   }
 }

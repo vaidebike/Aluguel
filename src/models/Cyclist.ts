@@ -3,8 +3,8 @@ export class Cyclist {
   status?: StatusEnum;
   name: string;
   nascimento: Date;
-  cpf: string;
-  passaporte:{
+  cpf?: string;
+  passaporte?:{
     number: string;
     expiration: Date;
     contry: string;
@@ -13,6 +13,7 @@ export class Cyclist {
   email: string;
   urlDocumentPhoto: string;
   password: string;
+  password2: string;
 }
 
 export enum StatusEnum {

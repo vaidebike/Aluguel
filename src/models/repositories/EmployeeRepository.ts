@@ -4,9 +4,9 @@ import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
 import { Employee } from '../Employee';
-import { IRepository } from './IRepository';
+import { RepositoryInterface } from './RepositoryInterface';
 
-export class EmployeeRepository implements IRepository {
+export class EmployeeRepository implements RepositoryInterface {
   private _db: JsonDB;
   constructor(db: JsonDB) {
     this._db = db;

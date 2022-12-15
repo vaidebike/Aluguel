@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
-import { NoDataError } from '../errors/NoDataError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
-import { Cyclist } from '../models/Cyclist';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
+import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
+import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
+
 
   /**
    * Get one cyclist by id
@@ -34,17 +35,46 @@ export class CyclistController {
  * @returns  Cyclist created 
  */
   public static async create(req: Request, res: Response) {
-    const {cyclist} = req.body;
+    const {cyclist, paymentMethod} = req.body;
 
-    const cyclistData = cyclist as Cyclist;
-   
+    const creditCardService = new FakeCreditCardService();
+    const validCreditCard = await creditCardService.validateCreditCard(paymentMethod);
+
+    if(!validCreditCard) return res.status(422).send({ error: 'Invalid credit card'});
+
     try{
-      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
+      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclist);
+
+      const emailService = new FakeEmailService();
+      await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');
+
       res.status(200).send(newCyclist);
     }catch(error){
       let status = 400;
       
-      if(error instanceof NoDataError) status = 400;
+      if(error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message});
+    }
+  }
+
+  public static async update(req: Request, res: Response) {
+    res.status(400).send({ error: 'Not implemented' });
+  }
+
+  public static async delete(req: Request, res: Response) {
+    res.status(400).send({ error: 'Not implemented' });
+  }
+
+  public static async emailExists(req: Request, res: Response) {
+    const { email } = req.params;
+
+    try{
+      const exists = await new CyclistRepository(req.app.get('db')).verifyIfEmailExists(email);
+      res.status(200).send({ exists });
+    }catch(error){
+      let status = 400;
+      
       if(error instanceof NotValidError) status = 422;
 
       res.status(status).send({ error: error.message});
