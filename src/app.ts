@@ -41,10 +41,10 @@ function prepareDatabaseForTests(db: JsonDB) {
   db.push('/cyclists', [
     {
       name: 'John Doe',
-      nascimento: '1990-01-01',
+      birthday: '1990-01-01',
       cpf: '12345678910',
       email: 'johndoe@email.com',
-      passaporte: {
+      passport: {
         number: '12345678910',
         expiration: '2020-01-01',
         country: 'Brazil',
@@ -56,10 +56,10 @@ function prepareDatabaseForTests(db: JsonDB) {
     },
     {
       name: 'John Doe 2',
-      nascimento: '1990-01-01',
+      birthday: '1990-01-01',
       cpf: '12345678911',
       email: 'johndoe2@email.com',
-      passaporte: {
+      passport: {
         number: '12345678911',
         expiration: '2020-01-01',
         country: 'Brazil',

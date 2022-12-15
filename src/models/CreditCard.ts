@@ -1,6 +1,6 @@
 export class CreditCard {
-  nomeTitular: string;
-  numero: string;
-  validade: Date;
-  cvv: string;
+  name: string;
+  number: string;
+  validity: Date;
+  security_code: string;
 }

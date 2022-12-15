@@ -10,9 +10,9 @@ describe('Get one Cyclist', () => {
     expect(res.body).toHaveProperty('id');
     expect(res.body).toHaveProperty('status');
     expect(res.body).toHaveProperty('name');
-    expect(res.body).toHaveProperty('nascimento');
+    expect(res.body).toHaveProperty('birthday');
     expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('passaporte');
+    expect(res.body).toHaveProperty('passport');
     expect(res.body).toHaveProperty('nationality');
     expect(res.body).toHaveProperty('email');
     expect(res.body).toHaveProperty('urlDocumentPhoto');
@@ -47,12 +47,12 @@ describe('Create one cyclist', () => {
   it('Create a cyclist', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': 'string',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'string',
       'email': 'user@example.com',
@@ -62,10 +62,10 @@ describe('Create one cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -75,9 +75,9 @@ describe('Create one cyclist', () => {
     expect(res.body).toHaveProperty('id');
     expect(res.body).toHaveProperty('status');
     expect(res.body).toHaveProperty('name');
-    expect(res.body).toHaveProperty('nascimento');
+    expect(res.body).toHaveProperty('birthday');
     expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('passaporte');
+    expect(res.body).toHaveProperty('passport');
     expect(res.body).toHaveProperty('nationality');
     expect(res.body).toHaveProperty('email');
     expect(res.body).toHaveProperty('urlDocumentPhoto');
@@ -95,12 +95,12 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with missing payment Method', async() => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': 'string',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'string',
       'email': 'user@example.com',
@@ -117,10 +117,10 @@ describe('Create a invalid cyclist', () => {
     expect(res.body.error).toEqual('Invalid credit card');
   });
 
-  it('Create a cyclist with missing passaporte', async () => {
+  it('Create a cyclist with missing passport', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
       'nationality': 'string',
       'email': 'user@example.com',
@@ -130,10 +130,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -147,12 +147,12 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with missing cpf', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'nationality': 'Brazil',
-      'passaporte': {
+      'passport': {
         'number': '111111',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
@@ -161,10 +161,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -178,11 +178,11 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with missing passport number', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'EUA',
       'email': 'user@example.com',
@@ -192,10 +192,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -209,11 +209,11 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with missing passport expiration', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': '123456789',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'EUA',
       'email': 'user@example.com',
@@ -223,10 +223,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -240,9 +240,9 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with missing passport coutry', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': '123456789',
         'expiration': '2022-12-12',
       },
@@ -254,10 +254,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -271,12 +271,12 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with no password', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': 'string',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'string',
       'email': 'user@example.com',
@@ -285,10 +285,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -302,12 +302,12 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with no password2', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': 'string',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'string',
       'email': 'user@example.com',
@@ -316,10 +316,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -333,12 +333,12 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist with no equals passwords', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': 'string',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'string',
       'email': 'user@example.com',
@@ -348,10 +348,10 @@ describe('Create a invalid cyclist', () => {
     };
 
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
 
     const res = await request(server)
@@ -365,10 +365,10 @@ describe('Create a invalid cyclist', () => {
   it('Create a cyclist without data', async () => {
     const cyclist = '';
     const paymentMethod = {
-      'nomeTitular': 'Teste',
-      'numero': '1234567890123456',
-      'validade': '2022-12-12',
-      'cvv': '123'
+      'name': 'Teste',
+      'number': '1234567890123456',
+      'validity': '2022-12-12',
+      'security_code': '123'
     };
     const res = await request(server)
       .post('/cyclist').send({ cyclist, paymentMethod });
@@ -389,12 +389,12 @@ describe('Update cyclist', () => {
   it('Update a cyclist', async () => {
     const cyclist = {
       'name': 'string',
-      'nascimento': '2022-12-12',
+      'birthday': '2022-12-12',
       'cpf': '71269834020',
-      'passaporte': {
+      'passport': {
         'number': 'string',
         'expiration': '2022-12-12',
-        'contry': 'LS'
+        'country': 'LS'
       },
       'nationality': 'string',
       'email': 'user@example.com',

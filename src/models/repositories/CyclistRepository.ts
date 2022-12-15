@@ -47,16 +47,16 @@ export class CyclistRepository implements RepositoryInterface {
 
   private validateCyclistData(cyclistData: Cyclist): boolean {
     if (!cyclistData.name) return false;
-    if (!cyclistData.nascimento) return false;
+    if (!cyclistData.birthday) return false;
     if (!cyclistData.nationality) return false;
     
     if(cyclistData.nationality === 'Brazil'){
       if (!cyclistData.cpf) return false;
     }else{
-      if (!cyclistData.passaporte) return false;
-      if (!cyclistData.passaporte.number) return false;
-      if (!cyclistData.passaporte.expiration) return false;
-      if (!cyclistData.passaporte.contry) return false;
+      if (!cyclistData.passport) return false;
+      if (!cyclistData.passport.number) return false;
+      if (!cyclistData.passport.expiration) return false;
+      if (!cyclistData.passport.country) return false;
     }
     
     if (!cyclistData.email) return false;

@@ -24,11 +24,11 @@ describe('CyclistRepository', () => {
   it('should create a new cyclist', async () => {
     const cyclist = new Cyclist();
     cyclist.name = 'Teste';
-    cyclist.nascimento = new Date('2000-10-10');
-    cyclist.passaporte = {
+    cyclist.birthday = new Date('2000-10-10');
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.email = 'test@email.com';
     cyclist.cpf = '12345678910';
@@ -46,12 +46,12 @@ describe('CyclistRepository', () => {
   it('should get a not valid error when try to create a cyclist with no name', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -70,12 +70,12 @@ describe('CyclistRepository', () => {
   it('should get a not valid error when try to create a cyclist with no email', async () => {
     const cyclist = new Cyclist();
     cyclist.name = 'Teste';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -92,15 +92,15 @@ describe('CyclistRepository', () => {
     }
   });
 
-  it('should get a not valid error when try to create a cyclist with no nascimento', async () => {
+  it('should get a not valid error when try to create a cyclist with no birthday', async () => {
     const cyclist = new Cyclist();
     cyclist.name = 'Teste';
     cyclist.email = 'teste@email.com';
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -120,11 +120,11 @@ describe('CyclistRepository', () => {
   it('should get a not valid error when try to create a cyclist with no cpf', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
-    cyclist.passaporte = {
+    cyclist.birthday = new Date('2000-10-10');
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -140,17 +140,17 @@ describe('CyclistRepository', () => {
     }
   });
 
-  it('should get a not valid error when try to create a cyclist with no passaporte', async () => {
+  it('should get a not valid error when try to create a cyclist with no passport', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'England';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
     cyclist.password2 = '12345';
-    cyclist.passaporte = undefined;
+    cyclist.passport = undefined;
 
     try {
       await cyclistRepository.create(cyclist);
@@ -163,12 +163,12 @@ describe('CyclistRepository', () => {
   it('should get a not valid error when try to create a cyclist with no status', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
@@ -183,15 +183,15 @@ describe('CyclistRepository', () => {
     }
   });
 
-  it('should get a not valid error when try to create a cyclist with no passaporte number', async () => {
+  it('should get a not valid error when try to create a cyclist with no passport number', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: undefined,
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -208,15 +208,15 @@ describe('CyclistRepository', () => {
     }
   });
 
-  it('should get a not valid error when try to create a cyclist with no passaporte expiration', async () => {
+  it('should get a not valid error when try to create a cyclist with no passport expiration', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: undefined,
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -233,15 +233,15 @@ describe('CyclistRepository', () => {
     }
   });
 
-  it('should get a not valid error when try to create a cyclist with no passaporte country', async () => {
+  it('should get a not valid error when try to create a cyclist with no passport country', async () => {
     const cyclist = new Cyclist();
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: undefined,
+      country: undefined,
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -262,12 +262,12 @@ describe('CyclistRepository', () => {
     const cyclist = new Cyclist();
     cyclist.name = 'Teste';
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.urlDocumentPhoto = 'http://teste.com';
@@ -286,12 +286,12 @@ describe('CyclistRepository', () => {
     const cyclist = new Cyclist();
     cyclist.name = 'Teste';
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -311,12 +311,12 @@ describe('CyclistRepository', () => {
     const cyclist = new Cyclist();
     cyclist.name = 'Teste';
     cyclist.email = 'test@email.com';
-    cyclist.nascimento = new Date('2000-10-10');
+    cyclist.birthday = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
-    cyclist.passaporte = {
+    cyclist.passport = {
       number: '12345678910',
       expiration: new Date('2020-10-10'),
-      contry: 'Brazil',
+      country: 'Brazil',
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
@@ -409,10 +409,10 @@ function prepareDatabaseForTests(db: JsonDB) {
   db.push('/cyclists', [
     {
       name: 'John Doe',
-      nascimento: '1990-01-01',
+      birthday: '1990-01-01',
       cpf: '12345678910',
       email: 'johndoe@email.com',
-      passaporte: {
+      passport: {
         number: '12345678910',
         expiration: '2020-01-01',
         country: 'Brazil',
@@ -422,10 +422,10 @@ function prepareDatabaseForTests(db: JsonDB) {
     },
     {
       name: 'John Doe 2',
-      nascimento: '1990-01-01',
+      birthday: '1990-01-01',
       cpf: '12345678911',
       email: 'johndoe2@email.com',
-      passaporte: {
+      passport: {
         number: '12345678911',
         expiration: '2020-01-01',
         country: 'Brazil',

@@ -2,12 +2,12 @@ export class Cyclist {
   id?: string;
   status?: StatusEnum;
   name: string;
-  nascimento: Date;
+  birthday: Date;
   cpf?: string;
-  passaporte?:{
+  passport?:{
     number: string;
     expiration: Date;
-    contry: string;
+    country: string;
   };
   nationality: string;
   email: string;
