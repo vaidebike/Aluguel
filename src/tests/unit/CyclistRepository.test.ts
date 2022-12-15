@@ -36,6 +36,7 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
 
     const createdCyclist = await cyclistRepository.create(cyclist);
     expect(createdCyclist).toBeDefined();
@@ -56,6 +57,7 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
 
     try {
       await cyclistRepository.create(cyclist);
@@ -79,6 +81,8 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -102,6 +106,8 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -122,6 +128,9 @@ describe('CyclistRepository', () => {
     };
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
+    cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -137,9 +146,10 @@ describe('CyclistRepository', () => {
     cyclist.nascimento = new Date('2000-10-10');
     cyclist.cpf = '12345678910';
     cyclist.status = StatusEnum.Active;
-    cyclist.nationality = 'Brazil';
+    cyclist.nationality = 'England';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
     cyclist.passaporte = undefined;
 
     try {
@@ -163,6 +173,7 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
 
     try {
       await cyclistRepository.create(cyclist);
@@ -186,6 +197,8 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -209,6 +222,8 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -232,6 +247,8 @@ describe('CyclistRepository', () => {
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -255,6 +272,8 @@ describe('CyclistRepository', () => {
     cyclist.status = StatusEnum.Active;
     cyclist.urlDocumentPhoto = 'http://teste.com';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
     try {
       await cyclistRepository.create(cyclist);
     } catch (error) {
@@ -277,6 +296,8 @@ describe('CyclistRepository', () => {
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
     cyclist.password = '12345';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
@@ -300,12 +321,14 @@ describe('CyclistRepository', () => {
     cyclist.status = StatusEnum.Active;
     cyclist.nationality = 'Brazil';
     cyclist.urlDocumentPhoto = 'http://teste.com';
+    cyclist.password2 = '12345';
+
 
     try {
       await cyclistRepository.create(cyclist);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Cyclist is not valid');
+      expect(error.message).toBe('Password is required');
     }
   });
 

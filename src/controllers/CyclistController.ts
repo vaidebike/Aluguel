@@ -36,7 +36,7 @@ export class CyclistController {
     const {cyclist} = req.body;
 
     const cyclistData = cyclist;
-   
+
     try{
       const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclistData);
       res.status(200).send(newCyclist);

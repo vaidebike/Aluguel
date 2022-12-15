@@ -32,6 +32,11 @@ export class CyclistRepository implements IRepository {
 
   public async create(cyclistData: Cyclist): Promise<Cyclist> {
     if (!cyclistData) throw new NoDataError('Cyclist is required');
+
+    
+    if(!cyclistData.password || !cyclistData.password2) throw new NotValidError('Password is required');
+    if(cyclistData.password !== cyclistData.password2) throw new NotValidError('Password and password2 must be equals');
+   
     if(!this.validateCyclistData(cyclistData)) throw new NotValidError('Cyclist is not valid');
 
     cyclistData.id = uuidv4();
@@ -43,15 +48,20 @@ export class CyclistRepository implements IRepository {
   private validateCyclistData(cyclistData: Cyclist): boolean {
     if (!cyclistData.name) return false;
     if (!cyclistData.nascimento) return false;
-    if (!cyclistData.passaporte || cyclistData.passaporte == undefined) return false;
-    if (!cyclistData.passaporte.number || cyclistData.passaporte.number == undefined) return false;
-    if (!cyclistData.passaporte.expiration || cyclistData.passaporte.expiration == undefined) return false;
-    if (!cyclistData.passaporte.contry || cyclistData.passaporte.contry == undefined) return false;
     if (!cyclistData.nationality) return false;
+    
+    if(cyclistData.nationality === 'Brazil'){
+      if (!cyclistData.cpf) return false;
+    }else{
+      if (!cyclistData.passaporte || cyclistData.passaporte == undefined) return false;
+      if (!cyclistData.passaporte.number || cyclistData.passaporte.number == undefined) return false;
+      if (!cyclistData.passaporte.expiration || cyclistData.passaporte.expiration == undefined) return false;
+      if (!cyclistData.passaporte.contry || cyclistData.passaporte.contry == undefined) return false;
+    }
+    
     if (!cyclistData.email) return false;
     if (!cyclistData.urlDocumentPhoto) return false;
-    if (!cyclistData.password) return false;
-
+    
     return true;
   }
 

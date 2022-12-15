@@ -57,7 +57,8 @@ describe('Create one cyclist', () => {
       'nationality': 'string',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'password': 'string'
+      'password': 'string',
+      'password2': 'string'
     };
 
     const res = await request(server)
@@ -83,7 +84,7 @@ describe('Create one cyclist', () => {
 });
 
 describe('Create a invalid cyclist', () => {
-  it('Create a cyclist with missing params', async () => {
+  it('Create a cyclist with missing passaporte', async () => {
     const cyclist = {
       'name': 'string',
       'nascimento': '2022-12-12',
@@ -91,7 +92,32 @@ describe('Create a invalid cyclist', () => {
       'nationality': 'string',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'password': 'string'
+      'password': 'string',
+      'password2': 'string'
+    };
+
+    const res = await request(server)
+      .post('/cyclist').send({ cyclist });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Cyclist is not valid');
+  });
+
+  it('Create a cyclist with missing cpf', async () => {
+    const cyclist = {
+      'name': 'string',
+      'nascimento': '2022-12-12',
+      'nationality': 'Brazil',
+      'passaporte': {
+        'number': '111111',
+        'expiration': '2022-12-12',
+        'contry': 'LS'
+      },
+      'email': 'user@example.com',
+      'urlDocumentPhoto': 'string',
+      'password': 'string',
+      'password2': 'string'
     };
 
     const res = await request(server)
@@ -111,10 +137,11 @@ describe('Create a invalid cyclist', () => {
         'expiration': '2022-12-12',
         'contry': 'LS'
       },
-      'nationality': 'string',
+      'nationality': 'EUA',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'password': 'string'
+      'password': 'string',
+      'password2': 'string'
     };
 
     const res = await request(server)
@@ -134,10 +161,11 @@ describe('Create a invalid cyclist', () => {
         'number': '123456789',
         'contry': 'LS'
       },
-      'nationality': 'string',
+      'nationality': 'EUA',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'password': 'string'
+      'password': 'string',
+      'password2': 'string'
     };
 
     const res = await request(server)
@@ -160,7 +188,8 @@ describe('Create a invalid cyclist', () => {
       'nationality': 'string',
       'email': 'user@example.com',
       'urlDocumentPhoto': 'string',
-      'password': 'string'
+      'password': 'string',
+      'password2': 'string'
     };
 
     const res = await request(server)
@@ -169,6 +198,79 @@ describe('Create a invalid cyclist', () => {
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toEqual('Cyclist is not valid');
+  });
+
+  it('Create a cyclist with no password', async () => {
+    const cyclist = {
+      'name': 'string',
+      'nascimento': '2022-12-12',
+      'cpf': '71269834020',
+      'passaporte': {
+        'number': 'string',
+        'expiration': '2022-12-12',
+        'contry': 'LS'
+      },
+      'nationality': 'string',
+      'email': 'user@example.com',
+      'urlDocumentPhoto': 'string',
+      'password2': 'string'
+    };
+
+    const res = await request(server)
+      .post('/cyclist').send({ cyclist });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Password is required');
+  });
+
+  it('Create a cyclist with no password2', async () => {
+    const cyclist = {
+      'name': 'string',
+      'nascimento': '2022-12-12',
+      'cpf': '71269834020',
+      'passaporte': {
+        'number': 'string',
+        'expiration': '2022-12-12',
+        'contry': 'LS'
+      },
+      'nationality': 'string',
+      'email': 'user@example.com',
+      'urlDocumentPhoto': 'string',
+      'password': 'string'
+    };
+
+    const res = await request(server)
+      .post('/cyclist').send({ cyclist });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Password is required');
+  });
+
+  it('Create a cyclist with no equals passwords', async () => {
+    const cyclist = {
+      'name': 'string',
+      'nascimento': '2022-12-12',
+      'cpf': '71269834020',
+      'passaporte': {
+        'number': 'string',
+        'expiration': '2022-12-12',
+        'contry': 'LS'
+      },
+      'nationality': 'string',
+      'email': 'user@example.com',
+      'urlDocumentPhoto': 'string',
+      'password': 'string',
+      'password2': 'string1'
+    };
+
+    const res = await request(server)
+      .post('/cyclist').send({ cyclist });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Password and password2 must be equals');
   });
 
   it('Create a cyclist without data', async () => {
