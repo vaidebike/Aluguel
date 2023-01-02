@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
-import { Cyclist, StatusEnum } from '../Cyclist';
+import { Ciclista, StatusEnum } from '../Ciclista';
 import { RepositoryInterface } from './RepositoryInterface';
 
 export class CyclistRepository implements RepositoryInterface {
@@ -13,13 +13,13 @@ export class CyclistRepository implements RepositoryInterface {
     this.db = db;
   }
   
-  findAll(): Promise<Cyclist> {
+  findAll(): Promise<Ciclista> {
     throw new Error('Method not implemented.');
   }
-  update(id: string, cyclistData: Cyclist): Promise<Cyclist> {
+  update(id: string, cyclistData: Ciclista): Promise<Ciclista> {
     throw new Error('Method not implemented.');
   }
-  delete(id: string): Promise<Cyclist> {
+  delete(id: string): Promise<Ciclista> {
     throw new Error('Method not implemented.');
   }
   public get db(): JsonDB {
@@ -30,65 +30,65 @@ export class CyclistRepository implements RepositoryInterface {
     this._db = value;
   }
 
-  public async create(cyclistData: Cyclist): Promise<Cyclist> {
-    if (!cyclistData) throw new NoDataError('Cyclist is required');
+  public async create(cyclistData: Ciclista): Promise<Ciclista> {
+    if (!cyclistData) throw new NoDataError('Ciclista inválido.');
 
     
-    if(!cyclistData.password || !cyclistData.password2) throw new NotValidError('Password is required');
-    if(cyclistData.password !== cyclistData.password2) throw new NotValidError('Password and password2 must be equals');
+    if(!cyclistData.senha || !cyclistData.confirma_senha) throw new NotValidError('A senha é obrigatória.');
+    if(cyclistData.senha !== cyclistData.confirma_senha) throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
    
-    if(!this.validateCyclistData(cyclistData)) throw new NotValidError('Cyclist is not valid');
+    if(!this.validateCyclistData(cyclistData)) throw new NotValidError('O ciclista passado é inválido');
 
     cyclistData.id = uuidv4();
-    cyclistData.status = StatusEnum.Active;
-    await this.db.push('/cyclists[]', cyclistData, true);
+    cyclistData.status = StatusEnum.Ativo;
+    await this.db.push('/ciclistas[]', cyclistData, true);
     return cyclistData;
   }
 
-  private validateCyclistData(cyclistData: Cyclist): boolean {
-    if (!cyclistData.name) return false;
-    if (!cyclistData.birthday) return false;
-    if (!cyclistData.nationality) return false;
+  private validateCyclistData(cyclistData: Ciclista): boolean {
+    if (!cyclistData.nome) return false;
+    if (!cyclistData.nascimento) return false;
+    if (!cyclistData.nacionalidade) return false;
     
-    if(cyclistData.nationality === 'Brazil'){
+    if(cyclistData.nacionalidade === 'Brazil'){
       if (!cyclistData.cpf) return false;
     }else{
-      if (!cyclistData.passport) return false;
-      if (!cyclistData.passport.number) return false;
-      if (!cyclistData.passport.expiration) return false;
-      if (!cyclistData.passport.country) return false;
+      if (!cyclistData.passaporte) return false;
+      if (!cyclistData.passaporte.numero) return false;
+      if (!cyclistData.passaporte.validade) return false;
+      if (!cyclistData.passaporte.pais) return false;
     }
     
     if (!cyclistData.email) return false;
-    if (!cyclistData.urlDocumentPhoto) return false;
+    if (!cyclistData.urlFotoDocumento) return false;
     
     return true;
   }
 
-  public async findOne(id: string): Promise<Cyclist> {
+  public async findOne(id: string): Promise<Ciclista> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) {
-      throw new NotValidError('valid uuid is required');
+      throw new NotValidError('uuid inválido.');
     }
 
     try {
-      const cyclistIndex = await this.db.getIndex('/cyclists', id);
-      const cyclist = await this.db.getData(`/cyclists[${cyclistIndex}]`);
+      const cyclistIndex = await this.db.getIndex('/ciclistas', id);
+      const cyclist = await this.db.getData(`/ciclistas[${cyclistIndex}]`);
 
       if (cyclistIndex === -1) {
-        throw new NotFoundError('Cyclist not found');
+        throw new NotFoundError('Ciclista não encontrado.');
       }
 
       return cyclist;
     } catch (error) {
-      throw new NotFoundError('Cyclist not found');
+      throw new NotFoundError('Ciclista não encontrado.');
     }
   }
 
   public async verifyIfEmailExists(email: string): Promise<boolean> {
-    if (!this.validateEmail(email)) throw new NotValidError('Email is not valid');
+    if (!this.validateEmail(email)) throw new NotValidError('Email inválido.');
     
-    const cyclistIndex = await this.db.getIndex('/cyclists', email, 'email');
+    const cyclistIndex = await this.db.getIndex('/ciclistas', email, 'email');
     return cyclistIndex !== -1;
   }
 

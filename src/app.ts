@@ -1,6 +1,6 @@
 import express from 'express';
 import { Config, JsonDB } from 'node-json-db';
-import { StatusEnum } from './models/Cyclist';
+import { StatusEnum } from './models/Ciclista';
 import cyclistRoutes from './routes/cyclistRoutes';
 import employeeRoutes from './routes/employeeRoutes';
 
@@ -19,12 +19,12 @@ app.get('/', async (_, res) => {
   res.status(200).send({ name: 'Aluguel-api', version: '1.0.0' });
 });
 
-app.use('/cyclist', cyclistRoutes);
+app.use('/ciclista', cyclistRoutes);
 app.use('/employee', employeeRoutes);
 
 function prepareDatabaseForTests(db: JsonDB) {
   db.delete('/employees');
-  db.delete('/cyclists');
+  db.delete('/ciclistas');
 
   db.push('/employees', [
     {
@@ -38,36 +38,36 @@ function prepareDatabaseForTests(db: JsonDB) {
     }
   ]);
   
-  db.push('/cyclists', [
+  db.push('/ciclistas', [
     {
-      name: 'John Doe',
-      birthday: '1990-01-01',
+      nome: 'John Doe',
+      nascimento: '1990-01-01',
       cpf: '12345678910',
       email: 'johndoe@email.com',
-      passport: {
-        number: '12345678910',
-        expiration: '2020-01-01',
-        country: 'Brazil',
+      passaporte: {
+        numero: '12345678910',
+        validade: '2020-01-01',
+        pais: 'Brazil',
       },
-      status: StatusEnum.Active,
+      status: StatusEnum.Ativo,
       id:'ca67326d-8d9d-41b8-91ad-fcba610ddd3b',
-      nationality: 'Brazil',
-      urlDocumentPhoto: 'https://www.google.com.br',
+      nacionalidade: 'Brazil',
+      urlFotoDocumento: 'https://www.google.com.br',
     },
     {
-      name: 'John Doe 2',
-      birthday: '1990-01-01',
+      nome: 'John Doe 2',
+      nascimento: '1990-01-01',
       cpf: '12345678911',
       email: 'johndoe2@email.com',
-      passport: {
-        number: '12345678911',
-        expiration: '2020-01-01',
-        country: 'Brazil',
+      passaporte: {
+        numero: '12345678911',
+        validade: '2020-01-01',
+        pais: 'Brazil',
       },
-      status: StatusEnum.Active,
+      status: StatusEnum.Ativo,
       id: 'd11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
-      nationality: 'Brazil',
-      urlDocumentPhoto: 'https://www.google.com.br',
+      nacionalidade: 'Brazil',
+      urlFotoDocumento: 'https://www.google.com.br',
     }
   ], true);
 }

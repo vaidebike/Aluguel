@@ -3,11 +3,11 @@ import { CyclistController } from '../controllers/CyclistController';
 
 const router = express.Router();
 
-//GET /clyclist/:id
+//GET /ciclista/:id
 router.get('/:id', CyclistController.getOne)
   .post('/', CyclistController.create)
   .put('/:id', CyclistController.update)
   .delete('/:id', CyclistController.delete)
-  .get('/emailExists/:email', CyclistController.emailExists);
+  .get('/existeEmail/:email', CyclistController.emailExists);
 
 export default router;
