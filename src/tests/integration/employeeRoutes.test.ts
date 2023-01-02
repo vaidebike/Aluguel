@@ -5,34 +5,34 @@ describe('Get one Employee', () => {
 
   it('Get one employee with id', async () => {
     const res = await request(server)
-      .get('/employee/7ef32b9a-2e22-46e6-a7f6-6297c28421bf');
+      .get('/funcionario/7ef32b9a-2e22-46e6-a7f6-6297c28421bf');
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('registration');
-    expect(res.body).toHaveProperty('name');
+    expect(res.body).toHaveProperty('matricula');
+    expect(res.body).toHaveProperty('nome');
     expect(res.body).toHaveProperty('email');
-    expect(res.body).toHaveProperty('role');
-    expect(res.body).toHaveProperty('age');
+    expect(res.body).toHaveProperty('cargo');
+    expect(res.body).toHaveProperty('idade');
     expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('password');
+    expect(res.body).toHaveProperty('senha');
   });
 
   it('Get one employee with not founded id', async () => {
     const res = await request(server)
-      .get('/employee/1ef32b9a-2e22-46e6-a7f6-6297c28421bf');
+      .get('/funcionario/1ef32b9a-2e22-46e6-a7f6-6297c28421bf');
 
     expect(res.statusCode).toEqual(404);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Employee not found');
+    expect(res.body.error).toBe('Funcionário não encontrado');
   });
 
   it('Get one employee with not valid id', async () => {
     const res = await request(server)
-      .get('/employee/aa');
+      .get('/funcionario/aa');
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Id is not valid');
+    expect(res.body.error).toBe('Id não é válido');
   });
 
   afterEach(done => {
@@ -46,7 +46,7 @@ describe('Get all Employees', () => {
 
   it('Get all employees', async () => {
     const res = await request(server)
-      .get('/employee');
+      .get('/funcionario');
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toBeInstanceOf(Array);
@@ -63,54 +63,54 @@ describe('Create an Employee', () => {
 
   it('Create an employee with valid data', async () => {
     const res = await request(server)
-      .post('/employee')
+      .post('/funcionario')
       .send({
-        employee: {
-          name: 'John Doe',
+        funcionario: {
+          nome: 'John Doe',
           email: 'joao@email.com',
           cpf: '123.456.789-10',
-          password: '123456',
-          age: 30,
-          role: 'ADMINISTRATOR',
+          senha: '123456',
+          idade: 30,
+          cargo: 'ADMINISTRADOR',
         }
       });
 
     expect(res.statusCode).toEqual(201);
-    expect(res.body).toHaveProperty('registration');
-    expect(res.body).toHaveProperty('name');
+    expect(res.body).toHaveProperty('matricula');
+    expect(res.body).toHaveProperty('nome');
     expect(res.body).toHaveProperty('email');
-    expect(res.body).toHaveProperty('role');
-    expect(res.body).toHaveProperty('age');
+    expect(res.body).toHaveProperty('cargo');
+    expect(res.body).toHaveProperty('idade');
     expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('password');
+    expect(res.body).toHaveProperty('senha');
   });
   
   it('Create an employee with invalid data', async () => {
     const res = await request(server)
-      .post('/employee')
+      .post('/funcionario')
       .send({
-        employee: {
+        funcionario: {
           email: 'joao@email.com',
           cpf: '123.456.789-10',
-          password: '123456',
-          age: 30,
-          role: 'ADMINISTRATOR',
+          senha: '123456',
+          idade: 30,
+          cargo: 'ADMINISTRATOR',
         }
       });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Employee is not valid');
+    expect(res.body.error).toBe('Funcionário não é válido');
   });
 
   it('Create an employee with no data', async () => {
     const res = await request(server)
-      .post('/employee')
+      .post('/funcionario')
       .send();
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Employee is required');
+    expect(res.body.error).toBe('Funcionário é obrigatório');
   });
 
   afterEach(done => {
@@ -123,89 +123,89 @@ describe('Create an Employee', () => {
 describe('Update an Employee', () => {
   it('Update an employee with valid data', async () => {
     const res = await request(server)
-      .put('/employee/7ef32b9a-2e22-46e6-a7f6-6297c28421bf')
+      .put('/funcionario/7ef32b9a-2e22-46e6-a7f6-6297c28421bf')
       .send({
-        employee: {
-          name: 'John Doe',
+        funcionario: {
+          nome: 'John Doe',
           email: 'joao@email.com',
           cpf: '123.456.789-10',
-          password: '123456',
-          age: 30,
-          role: 'ADMINISTRATOR',
-          registration: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
+          senha: '123456',
+          idade: 30,
+          cargo: 'ADMINISTRADOR',
+          matricula: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
         }
       });
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('name');
+    expect(res.body).toHaveProperty('nome');
     expect(res.body).toHaveProperty('email');
-    expect(res.body).toHaveProperty('role');
-    expect(res.body).toHaveProperty('age');
+    expect(res.body).toHaveProperty('cargo');
+    expect(res.body).toHaveProperty('idade');
     expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('password');
+    expect(res.body).toHaveProperty('senha');
   });
 
   it('Update an employee with invalid data', async () => {
     const res = await request(server)
-      .put('/employee/7ef32b9a-2e22-46e6-a7f6-6297c28421bf')
+      .put('/funcionario/7ef32b9a-2e22-46e6-a7f6-6297c28421bf')
       .send({
-        employee: {
+        funcionario: {
           email: 'joao@email.com',
           cpf: '123.456.789-10',
-          password: '123456',
-          age: 30,
-          role: 'ADMINISTRATOR',
+          senha: '123456',
+          idade: 30,
+          cargo: 'ADMINISTRATOR',
         }
       });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Employee is not valid');
+    expect(res.body.error).toBe('Funcionário não é válido');
   });
 
   it('Update an employee with not found id', async () =>{
     const res = await request(server)
-      .put('/employee/1ef32b9a-2e22-46e6-a7f6-6297c28421bf')
+      .put('/funcionario/1ef32b9a-2e22-46e6-a7f6-6297c28421bf')
       .send({
-        employee: {
-          name: 'John Doe',
+        funcionario: {
+          nome: 'John Doe',
           email: 'joao@email.com',
           cpf: '123.456.789-10',
-          password: '123456',
-          age: 30,
-          role: 'ADMINISTRATOR',
+          senha: '123456',
+          idade: 30,
+          cargo: 'ADMINISTRADOR',
         }
       });
 
     expect(res.statusCode).toEqual(404);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Employee not found');
+    expect(res.body.error).toBe('Funcionário não encontrado');
   });
 });
 
 describe('Delete an Employee', () => {
   it('Delete an employee with valid data', async () => {
     const res = await request(server)
-      .delete('/employee/7ef32b9a-2e22-46e6-a7f6-6297c28421bf');
+      .delete('/funcionario/7ef32b9a-2e22-46e6-a7f6-6297c28421bf');
 
     expect(res.statusCode).toEqual(200);
   });
 
   it('Delete an employee with not found id', async () => {
     const res = await request(server)
-      .delete('/employee/1ef32b9a-2e22-46e6-a7f6-6297c28421bf');
+      .delete('/funcionario/1ef32b9a-2e22-46e6-a7f6-6297c28421bf');
 
     expect(res.statusCode).toEqual(404);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Employee not found');
+    expect(res.body.error).toBe('Funcionário não encontrado');
   });
 
   it('Delete an employee with invalid id', async () => {
     const res = await request(server)
-      .delete('/employee/aaaa');
+      .delete('/funcionario/aaaa');
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toBe('Id is not valid');
+    expect(res.body.error).toBe('Id não é válido');
   });
 });

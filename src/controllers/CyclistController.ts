@@ -7,7 +7,6 @@ import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
 
-
   /**
    * Get one cyclist by id
    * @Route GET /cyclist/:id
@@ -35,15 +34,15 @@ export class CyclistController {
  * @returns  Cyclist created 
  */
   public static async create(req: Request, res: Response) {
-    const {cyclist, paymentMethod} = req.body;
+    const {ciclista, meioDePagamento} = req.body;
 
     const creditCardService = new FakeCreditCardService();
-    const validCreditCard = await creditCardService.validateCreditCard(paymentMethod);
+    const validCreditCard = await creditCardService.validateCreditCard(meioDePagamento);
 
     if(!validCreditCard) return res.status(422).send({ error: 'Invalid credit card'});
 
     try{
-      const newCyclist = await new CyclistRepository(req.app.get('db')).create(cyclist);
+      const newCyclist = await new CyclistRepository(req.app.get('db')).create(ciclista);
 
       const emailService = new FakeEmailService();
       await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');

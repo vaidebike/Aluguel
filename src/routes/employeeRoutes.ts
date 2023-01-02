@@ -3,7 +3,7 @@ import { EmployeeController } from '../controllers/EmployeeController';
 
 const router = express.Router();
 
-//GET /employee/:id POST /employee/
+//GET /funcionario/:id POST, PUT DELETE /funcionario/ 
 router.get('/:id', EmployeeController.getOne)
   .post('/', EmployeeController.create)
   .get('/', EmployeeController.read)

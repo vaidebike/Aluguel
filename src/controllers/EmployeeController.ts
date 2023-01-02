@@ -14,8 +14,8 @@ export class EmployeeController {
     const { id } = req.params;
 
     try {
-      const cyclist = await new EmployeeRepository(req.app.get('db')).findOne(id);
-      res.status(200).send(cyclist);
+      const employee = await new EmployeeRepository(req.app.get('db')).findOne(id);
+      res.status(200).send(employee);
     } catch (error) {
       let status = 400;
       if (error instanceof NotFoundError) status = 404;
@@ -27,14 +27,14 @@ export class EmployeeController {
 
   /**
    * Create an employee
-   * @Route POST /employee/
+   * @Route POST /funcionario/
    * @returns  Employee created
   */
   public static async create(req: Request, res: Response) {
-    const { employee } = req.body;
+    const { funcionario } = req.body;
 
     try {
-      const newEmployee = await new EmployeeRepository(req.app.get('db')).create(employee);
+      const newEmployee = await new EmployeeRepository(req.app.get('db')).create(funcionario);
       res.status(201).send(newEmployee);
     } catch (error) {
       let status = 400;
@@ -46,25 +46,25 @@ export class EmployeeController {
 
   /**
    * Read all employees
-   * @Route GET /employee/
+   * @Route GET /funcionario/
    * @returns Array of employees
    */
   public static async read(req: Request, res: Response) {
-    const employees = await new EmployeeRepository(req.app.get('db')).findAll();
-    res.status(200).send(employees);
+    const funcionario = await new EmployeeRepository(req.app.get('db')).findAll();
+    res.status(200).send(funcionario);
   }
 
   /**
    * Update an employee
-   * @Route PUT /employee/:id
+   * @Route PUT /funcionario/:id
    * @returns  Employee updated
    */
   public static async update(req: Request, res: Response) {
     const { id } = req.params;
-    const { employee } = req.body;
+    const { funcionario } = req.body;
 
     try {
-      const updatedEmployee = await new EmployeeRepository(req.app.get('db')).update(id, employee);
+      const updatedEmployee = await new EmployeeRepository(req.app.get('db')).update(id, funcionario);
       res.status(200).send(updatedEmployee);
     } catch (error) {
       let status = 400;
@@ -77,7 +77,7 @@ export class EmployeeController {
 
   /**
    * Delete an employee by id
-   * @Route DELETE /employee/:id
+   * @Route DELETE /funcionario/:id
    * @returns Employee deleted
    */
   public static async delete(req: Request, res: Response) {

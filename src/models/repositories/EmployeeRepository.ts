@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
-import { Employee } from '../Employee';
+import { Funcionario } from '../Funcionario';
 import { RepositoryInterface } from './RepositoryInterface';
 
 export class EmployeeRepository implements RepositoryInterface {
@@ -25,22 +25,22 @@ export class EmployeeRepository implements RepositoryInterface {
    * @returns Employee created as a Promise
    * @throws NoDataError if data is not passed, NotValidError if data is not valid
    */
-  public async create(data: Employee): Promise<Employee> {
+  public async create(data: Funcionario): Promise<Funcionario> {
     const employeeData = data;
 
-    if (!data) throw new NoDataError('Employee is required');
-    if (!this.validate(employeeData)) throw new NotValidError('Employee is not valid');
+    if (!data) throw new NoDataError('Funcionário é obrigatório');
+    if (!this.validate(employeeData)) throw new NotValidError('Funcionário não é válido');
 
-    employeeData.registration = this.generateRegistration();
-    await this.db.push('/employees[]', employeeData, true);
+    employeeData.matricula = this.generatematricula();
+    await this.db.push('/funcionarios[]', employeeData, true);
     return employeeData;
   }
 
   /**
-   * Create a registration uuid
-   * @returns a random registration uuid
+   * Create a matricula uuid
+   * @returns a random matricula uuid
    */
-  private generateRegistration(): string {
+  private generatematricula(): string {
     return uuidv4();
   }
 
@@ -49,12 +49,12 @@ export class EmployeeRepository implements RepositoryInterface {
    * @param employeeData 
    * @returns true if employee data is valid, false otherwise
    */
-  private validate(employeeData: Employee): boolean {
-    if (!employeeData.name) return false;
+  private validate(employeeData: Funcionario): boolean {
+    if (!employeeData.nome) return false;
     if (!employeeData.email) return false;
-    if (!employeeData.password) return false;
-    if (!employeeData.age) return false;
-    if (!employeeData.role) return false;
+    if (!employeeData.senha) return false;
+    if (!employeeData.idade) return false;
+    if (!employeeData.cargo) return false;
     if (!employeeData.cpf) return false;
 
     return true;
@@ -64,21 +64,21 @@ export class EmployeeRepository implements RepositoryInterface {
    * Find one employee by id
    * @param id
    * @returns Employee as a Promise
-   * @throws NotFoundError if employee not found, NotValidError if id is not valid
+   * @throws NotFoundError if Funcionário não encontrado, NotValidError if Id não é válido
    */
-  public async findOne(id: string): Promise<Employee> {
+  public async findOne(id: string): Promise<Funcionario> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
-    if (!validId) throw new NotValidError('Id is not valid');
+    if (!validId) throw new NotValidError('Id não é válido');
 
     try {
-      const employeeIndex = await this.db.getIndex('/employees', id, 'registration');
+      const employeeIndex = await this.db.getIndex('/funcionarios', id, 'matricula');
 
-      const employee = await this.db.getData(`/employees[${employeeIndex}]`);
+      const employee = await this.db.getData(`/funcionarios[${employeeIndex}]`);
 
-      if (employeeIndex === -1) throw new NotFoundError('Employee not found');
+      if (employeeIndex === -1) throw new NotFoundError('Funcionário não encontrado');
       return employee;
     } catch (error) {
-      throw new NotFoundError('Employee not found');
+      throw new NotFoundError('Funcionário não encontrado');
     }
   }
 
@@ -86,8 +86,8 @@ export class EmployeeRepository implements RepositoryInterface {
    * Get all employees from database
    * @returns all employees as a Promise
    */
-  public async findAll(): Promise<Employee> {
-    const employees = await this.db.getData('/employees');
+  public async findAll(): Promise<Funcionario> {
+    const employees = await this.db.getData('/funcionarios');
     return employees;
   }
   
@@ -97,20 +97,20 @@ export class EmployeeRepository implements RepositoryInterface {
    * @param data Employeeto update
    * @returns Employee updated as a Promise
    */
-  public async update(id: string, data: Employee): Promise<Employee> {
+  public async update(id: string, data: Funcionario): Promise<Funcionario> {
     const employeeData = data;
 
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     
-    if (!validId) throw new NotValidError('Id is not valid');
-    if (!data) throw new NoDataError('Employee is required');
-    if (!this.validate(employeeData)) throw new NotValidError('Employee is not valid');
+    if (!validId) throw new NotValidError('Id não é válido');
+    if (!data) throw new NoDataError('Funcionário é obrigatório');
+    if (!this.validate(employeeData)) throw new NotValidError('Funcionário não é válido');
 
-    const employeeIndex = await this.db.getIndex('/employees', id, 'registration');
+    const employeeIndex = await this.db.getIndex('/funcionarios', id, 'matricula');
 
-    if (employeeIndex === -1) throw new NotFoundError('Employee not found');
+    if (employeeIndex === -1) throw new NotFoundError('Funcionário não encontrado');
 
-    await this.db.push(`/employees[${employeeIndex}]`, employeeData, true);
+    await this.db.push(`/funcionarios[${employeeIndex}]`, employeeData, true);
     
     return employeeData;
 
@@ -121,20 +121,20 @@ export class EmployeeRepository implements RepositoryInterface {
    * @param id of employee to delete
    * @returns Employee deleted as a Promise
    */
-  public async delete(id: string): Promise<Employee> {
+  public async delete(id: string): Promise<Funcionario> {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
-    if (!validId) throw new NotValidError('Id is not valid');
+    if (!validId) throw new NotValidError('Id não é válido');
 
     try {
-      const employeeIndex = await this.db.getIndex('/employees', id, 'registration');
-      const employee = await this.db.getData(`/employees[${employeeIndex}]`);
+      const employeeIndex = await this.db.getIndex('/funcionarios', id, 'matricula');
+      const employee = await this.db.getData(`/funcionarios[${employeeIndex}]`);
 
-      if (employeeIndex === -1) throw new NotFoundError('Employee not found');
+      if (employeeIndex === -1) throw new NotFoundError('Funcionário não encontrado');
 
-      await this.db.delete(`/employees[${employeeIndex}]`);
+      await this.db.delete(`/funcionarios[${employeeIndex}]`);
       return employee;
     } catch (error) {
-      throw new NotFoundError('Employee not found');
+      throw new NotFoundError('Funcionário não encontrado');
     }
   }
 }
