@@ -20,21 +20,21 @@ app.get('/', async (_, res) => {
 });
 
 app.use('/ciclista', cyclistRoutes);
-app.use('/employee', employeeRoutes);
+app.use('/funcionario', employeeRoutes);
 
 function prepareDatabaseForTests(db: JsonDB) {
-  db.delete('/employees');
+  db.delete('/funcionarios');
   db.delete('/ciclistas');
 
-  db.push('/employees', [
+  db.push('/funcionarios', [
     {
-      name: 'John Doe',
-      password: 'p4ssw0rd',
+      nome: 'John Doe',
+      senha: 'p4ssw0rd',
       email: 'user@example.com',
-      age: 20,
-      role: 'REPAIRMAN',
+      idade: 20,
+      cargo: 'REPARADOR',
       cpf: '111.111.111-11',
-      registration: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf'
+      matricula: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf'
     }
   ]);
   

@@ -1,5 +1,5 @@
 import { Config, JsonDB } from 'node-json-db';
-import { Employee, RoleEnum } from '../../models/Employee';
+import { CargoEnum, Funcionario } from '../../models/Funcionario';
 import { EmployeeRepository } from '../../models/repositories/EmployeeRepository';
 
 describe('EmployeeRepository', () => {
@@ -22,111 +22,111 @@ describe('EmployeeRepository', () => {
   });
 
   it('should create a new employee', async () => {
-    const employee = new Employee();
-    employee.name = 'John Doe';
+    const employee = new Funcionario();
+    employee.nome = 'John Doe';
     employee.email = 'joao@email.com';
-    employee.role = RoleEnum.Admin;
-    employee.age = 30;
+    employee.cargo = CargoEnum.Admin;
+    employee.idade = 30;
     employee.cpf = '12345678910';
-    employee.password = '123456';
+    employee.senha = '123456';
 
     const createdEmployee = await employeeRepository.create(employee);
     expect(createdEmployee).toBeDefined();
-    expect(createdEmployee?.age).toBe(30);
+    expect(createdEmployee?.idade).toBe(30);
   });
 
-  it('should get a not valid error when try to create a employee with no name', async () => {
-    const employee = new Employee();
+  it('should get a not valid error when try to create a employee with no nome', async () => {
+    const employee = new Funcionario();
     employee.email = 'joao@email.com';
-    employee.role = RoleEnum.Admin;
-    employee.age = 30;
+    employee.cargo = CargoEnum.Admin;
+    employee.idade = 30;
     employee.cpf = '12345678910';
-    employee.password = '123456';
+    employee.senha = '123456';
 
     try {
       await employeeRepository.create(employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
   it('should get a not valid error when try to create a employee with no email', async () => {
-    const employee = new Employee();
-    employee.name = 'John Doe';
-    employee.role = RoleEnum.Admin;
-    employee.age = 30;
+    const employee = new Funcionario();
+    employee.nome = 'John Doe';
+    employee.cargo = CargoEnum.Admin;
+    employee.idade = 30;
     employee.cpf = '12345678910';
-    employee.password = '123456';
+    employee.senha = '123456';
 
     try {
       await employeeRepository.create(employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
-  it('should get a not valid error when try to create a employee with no role', async () => {
-    const employee = new Employee();
-    employee.name = 'John Doe';
+  it('should get a not valid error when try to create a employee with no cargo', async () => {
+    const employee = new Funcionario();
+    employee.nome = 'John Doe';
     employee.email = 'joao@email.com';
-    employee.age = 30;
+    employee.idade = 30;
     employee.cpf = '12345678910';
-    employee.password = '123456';
+    employee.senha = '123456';
 
     try {
       await employeeRepository.create(employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
   
-  it('should get a not valid error when try to create a employee with no age', async () => {
-    const employee = new Employee();
-    employee.name = 'John Doe';
+  it('should get a not valid error when try to create a employee with no idade', async () => {
+    const employee = new Funcionario();
+    employee.nome = 'John Doe';
     employee.email = 'joao@email.com';
-    employee.role = RoleEnum.Admin;
+    employee.cargo = CargoEnum.Admin;
     employee.cpf = '12345678910';
-    employee.password = '123456';
+    employee.senha = '123456';
     try {
       await employeeRepository.create(employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
   it('should get a not valid error when try to create a employee with no cpf', async () => {
-    const employee = new Employee();
-    employee.name = 'John Doe';
+    const employee = new Funcionario();
+    employee.nome = 'John Doe';
     employee.email = 'joao@email.com';
-    employee.role = RoleEnum.Admin;
-    employee.age = 30;
-    employee.password = '123456';
+    employee.cargo = CargoEnum.Admin;
+    employee.idade = 30;
+    employee.senha = '123456';
     try {
       await employeeRepository.create(employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
-  it('should get a not valid error when try to create a employee with no password', async () => {
-    const employee = new Employee();
-    employee.name = 'John Doe';
+  it('should get a not valid error when try to create a employee with no senha', async () => {
+    const employee = new Funcionario();
+    employee.nome = 'John Doe';
     employee.email = 'joao@email.com';
-    employee.role = RoleEnum.Admin;
-    employee.age = 30;
+    employee.cargo = CargoEnum.Admin;
+    employee.idade = 30;
     employee.cpf = '12345678910';
     
     try {
       await employeeRepository.create(employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
@@ -136,7 +136,7 @@ describe('EmployeeRepository', () => {
       await employeeRepository.create(null);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is required');
+      expect(error.message).toBe('Funcionário é obrigatório');
     }
   });
 
@@ -144,7 +144,7 @@ describe('EmployeeRepository', () => {
     const id = '7ef32b9a-2e22-46e6-a7f6-6297c28421bf';
     const employeeDeleted = await employeeRepository.delete(id);
     expect(employeeDeleted).toBeDefined();
-    expect(employeeDeleted?.registration).toBe(id);
+    expect(employeeDeleted?.matricula).toBe(id);
 
   });
 
@@ -153,7 +153,7 @@ describe('EmployeeRepository', () => {
       await employeeRepository.delete('a');
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Id is not valid');
+      expect(error.message).toBe('Id não é válido');
     }
   });
 
@@ -162,7 +162,7 @@ describe('EmployeeRepository', () => {
       await employeeRepository.delete('1aa11a1a-2e22-46e6-a7f6-6297c28421bf');
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee not found');
+      expect(error.message).toBe('Funcionário não encontrado');
     }
   });
 
@@ -172,9 +172,9 @@ describe('EmployeeRepository', () => {
   });
 
   it('should return employee by id', async () => {
-    const employee = await employeeRepository.findOne('7ef32b9a-2e22-46e6-a7f6-6297c28421bf') as Employee;
+    const employee = await employeeRepository.findOne('7ef32b9a-2e22-46e6-a7f6-6297c28421bf') as Funcionario;
     expect(employee).toBeDefined();
-    expect(employee?.registration).toBe('7ef32b9a-2e22-46e6-a7f6-6297c28421bf');
+    expect(employee?.matricula).toBe('7ef32b9a-2e22-46e6-a7f6-6297c28421bf');
   });
 
   it('should get a not valid error when try to find a employee with no valid uuid', async () => {
@@ -182,7 +182,7 @@ describe('EmployeeRepository', () => {
       await employeeRepository.findOne('a');
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Id is not valid');
+      expect(error.message).toBe('Id não é válido');
     }
   });
 
@@ -191,13 +191,13 @@ describe('EmployeeRepository', () => {
       await employeeRepository.findOne('1aa11a1a-2e22-46e6-a7f6-6297c28421bf');
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee not found');
+      expect(error.message).toBe('Funcionário não encontrado');
     }
   });
 
   it('should update a employee', async () => {
     const id = '7ef32b9a-2e22-46e6-a7f6-6297c28421bf';
-    const employee = await employeeRepository.findOne(id) as Employee;
+    const employee = await employeeRepository.findOne(id) as Funcionario;
     const employeeUpdated = await employeeRepository.update(id, employee);
     expect(employeeUpdated).toBeDefined();
   });
@@ -207,7 +207,7 @@ describe('EmployeeRepository', () => {
       await employeeRepository.update('a', null);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Id is not valid');
+      expect(error.message).toBe('Id não é válido');
     }
   });
 
@@ -216,57 +216,57 @@ describe('EmployeeRepository', () => {
       await employeeRepository.update('7ef32b9a-2e22-46e6-a7f6-6297c28421bf', null);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is required');
+      expect(error.message).toBe('Funcionário é obrigatório');
     }
   });
 
   it('should get a not valid error when try to update a employee with invalid data', async () => {
     const id = '7ef32b9a-2e22-46e6-a7f6-6297c28421bf';
-    const employee = await employeeRepository.findOne(id) as Employee;
-    employee.name = '';
+    const employee = await employeeRepository.findOne(id) as Funcionario;
+    employee.nome = '';
     try {
       await employeeRepository.update(id, employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee is not valid');
+      expect(error.message).toBe('Funcionário não é válido');
     }
   });
 
   it('should get a not found error when try to update a employee not exists', async () => {
     try {
       const id = '1aa11a1a-2e22-46e6-a7f6-6297c28421bf';
-      const employee = await employeeRepository.findOne('7ef32b9a-2e22-46e6-a7f6-6297c28421bf') as Employee;
+      const employee = await employeeRepository.findOne('7ef32b9a-2e22-46e6-a7f6-6297c28421bf') as Funcionario;
       await employeeRepository.update(id, employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee not found');
+      expect(error.message).toBe('Funcionário não encontrado');
     }
   });
 
   it('should get a not found error when try to update a employee not exists', async () => {
     try {
       const id = '1aa11a1a-2e22-46e6-a7f6-6297c28421bf';
-      const employee = await employeeRepository.findOne(id) as Employee;
+      const employee = await employeeRepository.findOne(id) as Funcionario;
       await employeeRepository.update(id, employee);
     } catch (error) {
       expect(error).toBeDefined();
-      expect(error.message).toBe('Employee not found');
+      expect(error.message).toBe('Funcionário não encontrado');
     }
   });
 });
 
 function prepareDatabaseForTests(db: JsonDB) {
-  db.delete('/employees');
+  db.delete('/funcionarios');
 
-  db.push('/employees', [
+  db.push('/funcionarios', [
     {
-      name: 'John Doe',
-      password: 'p4ssw0rd',
+      nome: 'John Doe',
+      senha: 'p4ssw0rd',
       email: 'user@example.com',
-      age: 20,
-      role: 'REPAIRMAN',
+      idade: 20,
+      cargo: 'REPAIRMAN',
       cpf: '111.111.111-11',
-      registration: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf'
+      matricula: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf'
     }
   ]);
 }

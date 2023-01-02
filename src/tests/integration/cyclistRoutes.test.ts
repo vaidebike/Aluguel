@@ -45,7 +45,7 @@ describe('Get one Cyclist', () => {
 
 describe('Create one cyclist', () => {
   it('Create a cyclist', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -69,7 +69,7 @@ describe('Create one cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('id');
@@ -93,7 +93,7 @@ describe('Create one cyclist', () => {
 describe('Create a invalid cyclist', () => {
 
   it('Create a cyclist with missing payment Method', async() => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -110,7 +110,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist });
+      .post('/ciclista').send({ ciclista });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -118,7 +118,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with missing passaporte', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -137,7 +137,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -145,7 +145,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with missing cpf', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'nacionalidade': 'Brazil',
@@ -168,7 +168,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -176,7 +176,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with missing passaporte numero', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -199,7 +199,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -207,7 +207,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with missing passaporte validade', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -230,7 +230,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -238,7 +238,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with missing passaporte coutry', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -261,7 +261,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -269,7 +269,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with no senha', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -292,7 +292,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -300,7 +300,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with no confirma_senha', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -323,7 +323,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -331,7 +331,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist with no equals senhas', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -355,7 +355,7 @@ describe('Create a invalid cyclist', () => {
     };
 
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
@@ -363,7 +363,7 @@ describe('Create a invalid cyclist', () => {
   });
 
   it('Create a cyclist without data', async () => {
-    const cyclist = '';
+    const ciclista = '';
     const meioDePagamento = {
       'nome': 'Teste',
       'numero': '1234567890123456',
@@ -371,11 +371,11 @@ describe('Create a invalid cyclist', () => {
       'security_code': '123'
     };
     const res = await request(server)
-      .post('/ciclista').send({ cyclist, meioDePagamento });
+      .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toEqual('Ciclista inválido');
+    expect(res.body.error).toEqual('Ciclista inválido.');
   });
   afterEach(done => {
     // close server conection
@@ -387,7 +387,7 @@ describe('Create a invalid cyclist', () => {
 describe('Update cyclist', () => {
 
   it('Update a cyclist', async () => {
-    const cyclist = {
+    const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
       'cpf': '71269834020',
@@ -403,7 +403,7 @@ describe('Update cyclist', () => {
     };
 
     const res = await request(server)
-      .put('/ciclista/ca67326d-8d9d-41b8-91ad-fcba610ddd3b').send({ cyclist });
+      .put('/ciclista/ca67326d-8d9d-41b8-91ad-fcba610ddd3b').send({ ciclista });
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty('error');
