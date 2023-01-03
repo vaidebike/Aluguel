@@ -7,8 +7,6 @@ class JsonDBHandler implements DatabaseHandlerInterface {
   db: JsonDB;
   private dbName = 'database';
 
-  teste = 'teste';
-
   public static getInstance(): JsonDBHandler {
     if (!JsonDBHandler.instance) {
       JsonDBHandler.instance = new JsonDBHandler();
@@ -76,5 +74,5 @@ class JsonDBHandler implements DatabaseHandlerInterface {
     ], true);
   }
 }
-
-export const jsonDBHandler = JsonDBHandler.getInstance();
+const jsonDBHandler = JsonDBHandler.getInstance();
+export default jsonDBHandler;
