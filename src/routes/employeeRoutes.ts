@@ -1,6 +1,6 @@
 import express from 'express';
 import { EmployeeController } from '../controllers/EmployeeController';
-import jsonDBHandler from '../database/jsonDBHandler';
+import jsonDBHandler from '../database/JsonDBHandler';
 
 const router = express.Router();
 const employeeController = new EmployeeController(jsonDBHandler);

@@ -1,6 +1,6 @@
 import express from 'express';
 import { CyclistController } from '../controllers/CyclistController';
-import jsonDBHandler from '../database/jsonDBHandler';
+import jsonDBHandler from '../database/JsonDBHandler';
 const router = express.Router();
 
 const cyclistController = new CyclistController(jsonDBHandler);
