@@ -1,122 +1,212 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeController.test.ts">
+  <file path="/usr/app/dist/tests/cyclistRoutes.test.js">
+    <testCase name="Get one Cyclist Get" duration="47">
+      <failure message="Error: listen EADDRINUSE: address already in use :::4002"><![CDATA[Error: listen EADDRINUSE: address already in use :::4002
+    at Server.setupListenHandle [as _listen2] (node:net:1485:16)
+    at listenInCluster (node:net:1533:12)
+    at Server.listen (node:net:1621:7)
+    at Function.listen (/usr/app/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/usr/app/src/app.ts:14:20)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at Runtime.requireModuleOrMock (/usr/app/node_modules/jest-runtime/build/index.js:1009:21)
+    at Object.<anonymous> (/usr/app/src/tests/cyclistRoutes.test.ts:2:1)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at jestAdapter (/usr/app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:77:13)
+    at runTestInternal (/usr/app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/usr/app/node_modules/jest-runner/build/runTest.js:444:34)]]></failure>
+    </testCase>
+    <testCase name="Get one Cyclist with not founded id Get" duration="20"/>
+    <testCase name="Get one Cyclist with not nvalid id Get" duration="9"/>
+  </file>
+  <file path="/usr/app/dist/tests/app.test.js">
+    <testCase name="Get Endpoints Get" duration="42">
+      <failure message="Error: listen EADDRINUSE: address already in use :::4002"><![CDATA[Error: listen EADDRINUSE: address already in use :::4002
+    at Server.setupListenHandle [as _listen2] (node:net:1485:16)
+    at listenInCluster (node:net:1533:12)
+    at Server.listen (node:net:1621:7)
+    at Function.listen (/usr/app/node_modules/express/lib/application.js:635:24)
+    at Object.<anonymous> (/usr/app/src/app.ts:14:20)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at Runtime.requireModuleOrMock (/usr/app/node_modules/jest-runtime/build/index.js:1009:21)
+    at Object.<anonymous> (/usr/app/src/tests/app.test.ts:2:1)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at jestAdapter (/usr/app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:77:13)
+    at runTestInternal (/usr/app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/usr/app/node_modules/jest-runner/build/runTest.js:444:34)]]></failure>
+    </testCase>
+  </file>
+  <file path="/usr/app/src/tests/unit/CyclistRepository.test.ts">
+    <testCase name="CyclistRepository should create a new cyclist repository" duration="7"/>
+    <testCase name="CyclistRepository should set a new db" duration="0"/>
+    <testCase name="CyclistRepository should create a new cyclist" duration="103"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no nome" duration="2"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no email" duration="1"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no nascimento" duration="1"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no cpf" duration="2"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte" duration="1"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no status" duration="1"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte numero" duration="1"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte validade" duration="2"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte pais" duration="2"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist without nacionalidade" duration="1"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist without urlFotoDocumento" duration="0"/>
+    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist without senha" duration="0"/>
+    <testCase name="CyclistRepository should return a cyclist finded by id" duration="334"/>
+    <testCase name="CyclistRepository should get a not found error when try to find a cyclist by id that does not exist" duration="26"/>
+    <testCase name="CyclistRepository should get a invalid id error when try to find a cyclist by id that is invalid" duration="0"/>
+    <testCase name="CyclistRepository should return a true if email exists on database" duration="56"/>
+    <testCase name="CyclistRepository should return a false if email does not exists on database" duration="24"/>
+    <testCase name="CyclistRepository should get a invalid email error when try to verify if email exists and email is invalid" duration="1"/>
+    <testCase name="CyclistRepository should get a not implemented when try to findAll" duration="1"/>
+    <testCase name="CyclistRepository should get a not implemented when try to update" duration="1"/>
+    <testCase name="CyclistRepository should get a not implemented when try to delete" duration="0"/>
+  </file>
+  <file path="/usr/app/src/tests/unit/EmployeeRepository.test.ts">
+    <testCase name="EmployeeRepository should create a new employee repository" duration="4"/>
+    <testCase name="EmployeeRepository should set a new db" duration="1"/>
+    <testCase name="EmployeeRepository should create a new employee" duration="196"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no nome" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no email" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cargo" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no idade" duration="2"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cpf" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no senha" duration="1"/>
+    <testCase name="EmployeeRepository should get a no data error when try to create a employee without data" duration="1"/>
+    <testCase name="EmployeeRepository should remove an employee" duration="501"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to delete a employee with no valid uuid" duration="1"/>
+    <testCase name="EmployeeRepository should get a not found error when try to remove a employee not exists" duration="96"/>
+    <testCase name="EmployeeRepository should return all employees" duration="35"/>
+    <testCase name="EmployeeRepository should return employee by id" duration="40"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to find a employee with no valid uuid" duration="1"/>
+    <testCase name="EmployeeRepository should get a not found error when employee not exists" duration="63"/>
+    <testCase name="EmployeeRepository should update a employee" duration="46"/>
+    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with invalid id" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with no data" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to update a employee with invalid data" duration="72"/>
+    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="32"/>
+    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="24"/>
+  </file>
+  <file path="/usr/app/src/tests/unit/EmployeeController.test.ts">
     <testCase name="EmployeeController should return 200 if the employee is found" duration="9"/>
-    <testCase name="EmployeeController should return 200 if the employee is created" duration="3"/>
+    <testCase name="EmployeeController should return 200 if the employee is created" duration="2"/>
     <testCase name="EmployeeController should return 200 on read" duration="2"/>
     <testCase name="EmployeeController should return 200 if the employee is updated" duration="2"/>
     <testCase name="EmployeeController should return 200 if the employee is deleted" duration="2"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\employeeRoutes.test.ts">
-    <testCase name="Get one Employee Get one employee with id" duration="76"/>
-    <testCase name="Get one Employee Get one employee with not founded id" duration="9"/>
-    <testCase name="Get one Employee Get one employee with not valid id" duration="6"/>
-    <testCase name="Get all Employees Get all employees" duration="6"/>
-    <testCase name="Create an Employee Create an employee with valid data" duration="32"/>
-    <testCase name="Create an Employee Create an employee with invalid data" duration="7"/>
-    <testCase name="Create an Employee Create an employee with no data" duration="7"/>
-    <testCase name="Update an Employee Update an employee with valid data" duration="12"/>
-    <testCase name="Update an Employee Update an employee with invalid data" duration="7"/>
-    <testCase name="Update an Employee Update an employee with not found id" duration="6"/>
-    <testCase name="Delete an Employee Delete an employee with valid data" duration="9"/>
-    <testCase name="Delete an Employee Delete an employee with not found id" duration="5"/>
-    <testCase name="Delete an Employee Delete an employee with invalid id" duration="5"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeRepository.test.ts">
-    <testCase name="EmployeeRepository should create a new employee repository" duration="4"/>
-    <testCase name="EmployeeRepository should set a new db" duration="0"/>
-    <testCase name="EmployeeRepository should create a new employee" duration="37"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no nome" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no email" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cargo" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no idade" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cpf" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no senha" duration="0"/>
-    <testCase name="EmployeeRepository should get a no data error when try to create a employee without data" duration="0"/>
-    <testCase name="EmployeeRepository should remove an employee" duration="78"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to delete a employee with no valid uuid" duration="1"/>
-    <testCase name="EmployeeRepository should get a not found error when try to remove a employee not exists" duration="18"/>
-    <testCase name="EmployeeRepository should return all employees" duration="9"/>
-    <testCase name="EmployeeRepository should return employee by id" duration="9"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to find a employee with no valid uuid" duration="1"/>
-    <testCase name="EmployeeRepository should get a not found error when employee not exists" duration="19"/>
-    <testCase name="EmployeeRepository should update a employee" duration="13"/>
-    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with invalid id" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with no data" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to update a employee with invalid data" duration="30"/>
-    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="10"/>
-    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="9"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\cyclistRoutes.test.ts">
-    <testCase name="Get one Cyclist Get a cyclist by id" duration="47"/>
-    <testCase name="Get one Cyclist Get a cyclist by id with invalid id" duration="10"/>
-    <testCase name="Get one Cyclist Get a cyclist by id with not found id" duration="8"/>
-    <testCase name="Create one cyclist Create a cyclist" duration="29"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing payment Method" duration="8"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte" duration="10"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing cpf" duration="6"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte numero" duration="7"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte validade" duration="6"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte coutry" duration="7"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with no senha" duration="6"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with no confirma_senha" duration="9"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with no equals senhas" duration="9"/>
-    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="6"/>
-    <testCase name="Update cyclist Update a cyclist" duration="7"/>
-    <testCase name="Verify if email exists Verify if email exists with valid and existing email" duration="6"/>
-    <testCase name="Verify if email exists Verify if email exists with valid and not existing email" duration="5"/>
-    <testCase name="Verify if email exists Verify if email exists with invalid email" duration="10"/>
-    <testCase name="Delete a cyclist Delete a cyclist" duration="17"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\CyclistRepository.test.ts">
-    <testCase name="CyclistRepository should create a new cyclist repository" duration="9"/>
-    <testCase name="CyclistRepository should set a new db" duration="1"/>
-    <testCase name="CyclistRepository should create a new cyclist" duration="33"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no nome" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no email" duration="2"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no nascimento" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no cpf" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no status" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte numero" duration="0"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte validade" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist with no passaporte pais" duration="1"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist without nacionalidade" duration="0"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist without urlFotoDocumento" duration="0"/>
-    <testCase name="CyclistRepository should get a not valid error when try to create a cyclist without senha" duration="0"/>
-    <testCase name="CyclistRepository should return a cyclist finded by id" duration="109"/>
-    <testCase name="CyclistRepository should get a not found error when try to find a cyclist by id that does not exist" duration="12"/>
-    <testCase name="CyclistRepository should get a invalid id error when try to find a cyclist by id that is invalid" duration="1"/>
-    <testCase name="CyclistRepository should return a true if email exists on database" duration="17"/>
-    <testCase name="CyclistRepository should return a false if email does not exists on database" duration="9"/>
-    <testCase name="CyclistRepository should get a invalid email error when try to verify if email exists and email is invalid" duration="0"/>
-    <testCase name="CyclistRepository should get a not implemented when try to findAll" duration="0"/>
-    <testCase name="CyclistRepository should get a not implemented when try to update" duration="1"/>
-    <testCase name="CyclistRepository should get a not implemented when try to delete" duration="1"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
-    <testCase name="Get one Cyclist Get" duration="19"/>
-    <testCase name="Get one Cyclist with not founded id Get" duration="6"/>
-    <testCase name="Get one Cyclist with not nvalid id Get" duration="4"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\app.test.ts">
-    <testCase name="Get Endpoint / Get /" duration="18"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
-    <testCase name="Get Endpoints Get" duration="19"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\CyclistController.test.ts">
-    <testCase name="CyclistController should return 200 if the cyclist is found" duration="7"/>
+  <file path="/usr/app/src/tests/unit/CyclistController.test.ts">
+    <testCase name="CyclistController should return 200 if the cyclist is found" duration="10"/>
     <testCase name="CyclistController should return 200 if the cyclist is created" duration="4"/>
-    <testCase name="CyclistController should return 200 if the email exists" duration="3"/>
+    <testCase name="CyclistController should return 200 if the email exists" duration="2"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Cyclist.test.ts">
+  <file path="/usr/app/src/tests/unit/Cyclist.test.ts">
+    <testCase name="Cyclist attributions should be ok" duration="4"/>
+  </file>
+  <file path="/usr/app/src/tests/unit/Employee.test.ts">
+    <testCase name="Employee model" duration="4"/>
+  </file>
+  <file path="/usr/app/dist/tests/Cyclist.test.js">
     <testCase name="Cyclist attributions should be ok" duration="5"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Employee.test.ts">
-    <testCase name="Employee model" duration="3"/>
+  <file path="/usr/app/src/tests/integration/cyclistRoutes.test.ts">
+    <testCase name="Get one Cyclist Get a cyclist by id" duration="86">
+      <failure message="Error: listen EADDRINUSE: address already in use :::4002"><![CDATA[Error: listen EADDRINUSE: address already in use :::4002
+    at Server.setupListenHandle [as _listen2] (node:net:1485:16)
+    at listenInCluster (node:net:1533:12)
+    at Server.listen (node:net:1621:7)
+    at Function.listen (/usr/app/node_modules/express/lib/application.js:635:24)
+    at Object.listen (/usr/app/src/app.ts:19:20)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at Runtime.requireModuleOrMock (/usr/app/node_modules/jest-runtime/build/index.js:1009:21)
+    at Object.<anonymous> (/usr/app/src/tests/integration/cyclistRoutes.test.ts:2:1)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at jestAdapter (/usr/app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:77:13)
+    at runTestInternal (/usr/app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/usr/app/node_modules/jest-runner/build/runTest.js:444:34)]]></failure>
+    </testCase>
+    <testCase name="Get one Cyclist Get a cyclist by id with invalid id" duration="5"/>
+    <testCase name="Get one Cyclist Get a cyclist by id with not found id" duration="5"/>
+    <testCase name="Create one cyclist Create a cyclist" duration="39"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing payment Method" duration="6"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte" duration="8"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing cpf" duration="5"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte numero" duration="4"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte validade" duration="9"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte coutry" duration="4"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with no senha" duration="4"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with no confirma_senha" duration="5"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with no equals senhas" duration="4"/>
+    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="4"/>
+    <testCase name="Update cyclist Update a cyclist" duration="4"/>
+    <testCase name="Verify if email exists Verify if email exists with valid and existing email" duration="4"/>
+    <testCase name="Verify if email exists Verify if email exists with valid and not existing email" duration="5"/>
+    <testCase name="Verify if email exists Verify if email exists with invalid email" duration="5"/>
+    <testCase name="Delete a cyclist Delete a cyclist" duration="4"/>
   </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\Cyclist.test.js">
-    <testCase name="Cyclist attributions should be ok" duration="4"/>
+  <file path="/usr/app/src/tests/integration/employeeRoutes.test.ts">
+    <testCase name="Get one Employee Get one employee with id" duration="79">
+      <failure message="Error: listen EADDRINUSE: address already in use :::4002"><![CDATA[Error: listen EADDRINUSE: address already in use :::4002
+    at Server.setupListenHandle [as _listen2] (node:net:1485:16)
+    at listenInCluster (node:net:1533:12)
+    at Server.listen (node:net:1621:7)
+    at Function.listen (/usr/app/node_modules/express/lib/application.js:635:24)
+    at Object.listen (/usr/app/src/app.ts:19:20)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at Runtime.requireModuleOrMock (/usr/app/node_modules/jest-runtime/build/index.js:1009:21)
+    at Object.<anonymous> (/usr/app/src/tests/integration/employeeRoutes.test.ts:2:1)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at jestAdapter (/usr/app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:77:13)
+    at runTestInternal (/usr/app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/usr/app/node_modules/jest-runner/build/runTest.js:444:34)]]></failure>
+    </testCase>
+    <testCase name="Get one Employee Get one employee with not founded id" duration="6"/>
+    <testCase name="Get one Employee Get one employee with not valid id" duration="4"/>
+    <testCase name="Get all Employees Get all employees" duration="11"/>
+    <testCase name="Create an Employee Create an employee with valid data" duration="39"/>
+    <testCase name="Create an Employee Create an employee with invalid data" duration="4"/>
+    <testCase name="Create an Employee Create an employee with no data" duration="4"/>
+    <testCase name="Update an Employee Update an employee with valid data" duration="20"/>
+    <testCase name="Update an Employee Update an employee with invalid data" duration="5"/>
+    <testCase name="Update an Employee Update an employee with not found id" duration="4"/>
+    <testCase name="Delete an Employee Delete an employee with valid data" duration="17"/>
+    <testCase name="Delete an Employee Delete an employee with not found id" duration="4"/>
+    <testCase name="Delete an Employee Delete an employee with invalid id" duration="4"/>
+  </file>
+  <file path="/usr/app/src/tests/integration/app.test.ts">
+    <testCase name="Get Endpoint / Get /" duration="22">
+      <failure message="Error: listen EADDRINUSE: address already in use :::4002"><![CDATA[Error: listen EADDRINUSE: address already in use :::4002
+    at Server.setupListenHandle [as _listen2] (node:net:1485:16)
+    at listenInCluster (node:net:1533:12)
+    at Server.listen (node:net:1621:7)
+    at Function.listen (/usr/app/node_modules/express/lib/application.js:635:24)
+    at Object.listen (/usr/app/src/app.ts:19:20)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at Runtime.requireModuleOrMock (/usr/app/node_modules/jest-runtime/build/index.js:1009:21)
+    at Object.<anonymous> (/usr/app/src/tests/integration/app.test.ts:2:1)
+    at Runtime._execModule (/usr/app/node_modules/jest-runtime/build/index.js:1377:24)
+    at Runtime._loadModule (/usr/app/node_modules/jest-runtime/build/index.js:989:12)
+    at Runtime.requireModule (/usr/app/node_modules/jest-runtime/build/index.js:849:12)
+    at jestAdapter (/usr/app/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:77:13)
+    at runTestInternal (/usr/app/node_modules/jest-runner/build/runTest.js:367:16)
+    at runTest (/usr/app/node_modules/jest-runner/build/runTest.js:444:34)]]></failure>
+    </testCase>
   </file>
 </testExecutions>
