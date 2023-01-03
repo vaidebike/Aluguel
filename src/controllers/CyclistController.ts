@@ -1,22 +1,30 @@
 import { Request, Response } from 'express';
+import { JsonDB } from 'node-json-db';
+import { DatabaseHandlerInterface } from '../database/DatabaseHandlerInterface';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
+import { Ciclista } from '../models/Ciclista';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
+  private cyclistRepository: CyclistRepository;
+
+  constructor(db: DatabaseHandlerInterface) {
+    this.cyclistRepository = new CyclistRepository(db.db as JsonDB);
+  }
 
   /**
    * Get one cyclist by id
    * @Route GET /cyclist/:id
    * @returns  Cyclist 
    */
-  public static async getOne(req: Request, res: Response) {
+  public getOne = async (req: Request, res: Response) => {
     const { id } = req.params;
-
+    
     try{
-      const cyclist = await new CyclistRepository(req.app.get('db')).findOne(id);
+      const cyclist = await this.cyclistRepository.findOne(id);
       res.status(200).send(cyclist);
     }catch(error){
       let status = 400;
@@ -26,14 +34,14 @@ export class CyclistController {
 
       res.status(status).send({ error: error.message});
     }
-  }
+  };
 
   /**
  * Create a cyclist
  * @Route POST /cyclist/
  * @returns  Cyclist created 
  */
-  public static async create(req: Request, res: Response) {
+  public create = async(req: Request, res: Response) => {
     const {ciclista, meioDePagamento} = req.body;
 
     const creditCardService = new FakeCreditCardService();
@@ -42,7 +50,7 @@ export class CyclistController {
     if(!validCreditCard) return res.status(422).send({ error: 'Invalid credit card'});
 
     try{
-      const newCyclist = await new CyclistRepository(req.app.get('db')).create(ciclista);
+      const newCyclist = await this.cyclistRepository.create(ciclista) as Ciclista;
 
       const emailService = new FakeEmailService();
       await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');
@@ -55,21 +63,21 @@ export class CyclistController {
 
       res.status(status).send({ error: error.message});
     }
-  }
+  };
 
-  public static async update(req: Request, res: Response) {
+  public update = async (req: Request, res: Response) =>{
     res.status(400).send({ error: 'Not implemented' });
-  }
+  };
 
-  public static async delete(req: Request, res: Response) {
+  public delete = async (req: Request, res: Response) => {
     res.status(400).send({ error: 'Not implemented' });
-  }
+  };
 
-  public static async emailExists(req: Request, res: Response) {
+  public emailExists = async(req: Request, res: Response) => {
     const { email } = req.params;
 
     try{
-      const exists = await new CyclistRepository(req.app.get('db')).verifyIfEmailExists(email);
+      const exists = await this.cyclistRepository.verifyIfEmailExists(email);
       res.status(200).send({ exists });
     }catch(error){
       let status = 400;
@@ -78,5 +86,5 @@ export class CyclistController {
 
       res.status(status).send({ error: error.message});
     }
-  }
+  };
 }
