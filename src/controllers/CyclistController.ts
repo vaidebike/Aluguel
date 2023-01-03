@@ -3,7 +3,6 @@ import { JsonDB } from 'node-json-db';
 import { DatabaseHandlerInterface } from '../database/DatabaseHandlerInterface';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
-import { Ciclista } from '../models/Ciclista';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
@@ -50,7 +49,7 @@ export class CyclistController {
     if(!validCreditCard) return res.status(422).send({ error: 'Invalid credit card'});
 
     try{
-      const newCyclist = await this.cyclistRepository.create(ciclista) as Ciclista;
+      const newCyclist = await this.cyclistRepository.create(ciclista);
 
       const emailService = new FakeEmailService();
       await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');
