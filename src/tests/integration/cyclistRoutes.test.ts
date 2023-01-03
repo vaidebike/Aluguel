@@ -388,26 +388,36 @@ describe('Update cyclist', () => {
 
   it('Update a cyclist', async () => {
     const ciclista = {
-      'nome': 'string',
-      'nascimento': '2022-12-12',
+      'nome': 'John Doe',
+      'nascimento': '1999-12-12',
       'cpf': '71269834020',
       'passaporte': {
-        'numero': 'string',
-        'validade': '2022-12-12',
-        'pais': 'LS'
+        'numero': '123456',
+        'validade': '2023-12-12',
+        'pais': 'Brazil'
       },
-      'nacionalidade': 'string',
-      'email': 'user@example.com',
-      'urlFotoDocumento': 'string',
-      'senha': 'string'
+      'nacionalidade': 'Brasileiro',
+      'email': 'john.doe@example.com',
+      'urlFotoDocumento': 'https://teste.com.br/foto.jpg',
+      'senha': '123456',
+      'confirma_senha': '123456'
     };
 
     const res = await request(server)
       .put('/ciclista/ca67326d-8d9d-41b8-91ad-fcba610ddd3b').send({ ciclista });
 
-    expect(res.statusCode).toEqual(400);
-    expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toEqual('Not implemented');
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('id');
+    expect(res.body).toHaveProperty('nome');
+    expect(res.body).toHaveProperty('nascimento');
+    expect(res.body).toHaveProperty('cpf');
+    expect(res.body).toHaveProperty('passaporte');
+    expect(res.body).toHaveProperty('nacionalidade');
+    expect(res.body).toHaveProperty('email');
+    expect(res.body).toHaveProperty('urlFotoDocumento');
+    expect(res.body).toHaveProperty('senha');
+    expect(res.body).toHaveProperty('confirma_senha');
+
   });
 
   afterEach(done => {

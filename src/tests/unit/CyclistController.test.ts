@@ -65,4 +65,6 @@ describe('CyclistController', () => {
     await cyclistController.emailExists(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
   });
+
+  
 });

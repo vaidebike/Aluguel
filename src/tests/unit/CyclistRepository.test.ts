@@ -384,13 +384,39 @@ describe('CyclistRepository', () => {
     }
   });
 
-  it('should get a not implemented when try to update', async () =>{
-    try {
-      await cyclistRepository.update('1', new Ciclista());
-    } catch (error) {
-      expect(error).toBeDefined();
-      expect(error.message).toBe('Method not implemented.');
-    }
+  it('Shoud update a cyclist.', async () =>{
+    const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+    const cyclist = await cyclistRepository.findOne(id);
+
+    cyclist.nome = 'John Doe 2';
+    cyclist.nascimento = new Date('1990-01-01');
+    cyclist.cpf = '12345678910';
+    cyclist.email = 'john.doe@email.com';
+    cyclist.passaporte = {
+      numero: '12345678910',
+      validade: new Date('2020-01-01'),
+      pais: 'Brazil',
+    };
+    cyclist.status = StatusEnum.Ativo;
+    cyclist.nacionalidade = 'Brazil';
+    cyclist.urlFotoDocumento = 'http://teste.com/teste.jpg';
+    cyclist.senha = '123456';
+    cyclist.confirma_senha = '123456';
+
+    const updatedCyclist = await cyclistRepository.update(id, cyclist);
+
+    expect(updatedCyclist).toBeDefined();
+    expect(updatedCyclist.nome).toBe('John Doe 2');
+    expect(updatedCyclist.nascimento).toEqual(new Date('1990-01-01'));
+    expect(updatedCyclist.cpf).toBe('12345678910');
+    expect(updatedCyclist.email).toBe('john.doe@email.com');
+    expect(updatedCyclist.passaporte.numero).toBe('12345678910');
+    expect(updatedCyclist.passaporte.validade).toEqual(new Date('2020-01-01'));
+    expect(updatedCyclist.passaporte.pais).toBe('Brazil');
+    expect(updatedCyclist.status).toBe(StatusEnum.Ativo);
+    expect(updatedCyclist.nacionalidade).toBe('Brazil');
+    expect(updatedCyclist.urlFotoDocumento).toBe('http://teste.com/teste.jpg');
+
   });
 
   it('should get a not implemented when try to delete', async () =>{
