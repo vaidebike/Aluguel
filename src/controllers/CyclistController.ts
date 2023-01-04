@@ -16,74 +16,95 @@ export class CyclistController {
 
   /**
    * Get one cyclist by id
-   * @Route GET /cyclist/:id
+   * @Route GET /ciclista/:id
    * @returns  Cyclist 
    */
   public getOne = async (req: Request, res: Response) => {
     const { id } = req.params;
-    
-    try{
+
+    try {
       const cyclist = await this.cyclistRepository.findOne(id);
       res.status(200).send(cyclist);
-    }catch(error){
+    } catch (error) {
       let status = 400;
-      
-      if(error instanceof NotFoundError) status = 404;
-      if(error instanceof NotValidError) status = 422;
 
-      res.status(status).send({ error: error.message});
+      if (error instanceof NotFoundError) status = 404;
+      if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
     }
   };
 
   /**
  * Create a cyclist
- * @Route POST /cyclist/
+ * @Route POST /ciclista/
  * @returns  Cyclist created 
  */
-  public create = async(req: Request, res: Response) => {
-    const {ciclista, meioDePagamento} = req.body;
+  public create = async (req: Request, res: Response) => {
+    const { ciclista, meioDePagamento } = req.body;
 
     const creditCardService = new FakeCreditCardService();
     const validCreditCard = await creditCardService.validateCreditCard(meioDePagamento);
 
-    if(!validCreditCard) return res.status(422).send({ error: 'Invalid credit card'});
+    if (!validCreditCard) return res.status(422).send({ error: 'Invalid credit card' });
 
-    try{
+    try {
       const newCyclist = await this.cyclistRepository.create(ciclista);
 
       const emailService = new FakeEmailService();
       await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');
 
       res.status(200).send(newCyclist);
-    }catch(error){
+    } catch (error) {
       let status = 400;
-      
-      if(error instanceof NotValidError) status = 422;
 
-      res.status(status).send({ error: error.message});
+      if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
     }
   };
 
-  public update = async (req: Request, res: Response) =>{
-    res.status(400).send({ error: 'Not implemented' });
+  /**
+   * Create a cyclist
+   * @Route PUT /ciclista/
+   * @returns  Cyclist updated 
+   */
+  public update = async (req: Request, res: Response) => {
+    const { ciclista } = req.body;
+    const id = req.params.id;
+
+    try {
+      const newCyclist = await this.cyclistRepository.update(id, ciclista);
+
+      const emailService = new FakeEmailService();
+      await emailService.sendEmail(newCyclist.email, 'Dados atualizados com sucesso');
+
+      res.status(200).send(newCyclist);
+    } catch (error) {
+      let status = 400;
+
+      if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
+    }
   };
 
   public delete = async (req: Request, res: Response) => {
     res.status(400).send({ error: 'Not implemented' });
   };
 
-  public emailExists = async(req: Request, res: Response) => {
+  public emailExists = async (req: Request, res: Response) => {
     const { email } = req.params;
 
-    try{
+    try {
       const exists = await this.cyclistRepository.verifyIfEmailExists(email);
       res.status(200).send({ exists });
-    }catch(error){
+    } catch (error) {
       let status = 400;
-      
-      if(error instanceof NotValidError) status = 422;
 
-      res.status(status).send({ error: error.message});
+      if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
     }
   };
 }

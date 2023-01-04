@@ -1,6 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { CyclistController } from '../../controllers/CyclistController';
-import { DatabaseHandlerStub } from './mocks/DatabaseHandlerMock';
+import { DatabaseHandlerMock } from './mocks/DatabaseHandlerMock';
 
 describe('CyclistController', () => {
   let cyclistController: CyclistController;
@@ -8,7 +8,7 @@ describe('CyclistController', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    const databaseStub = new DatabaseHandlerStub();
+    const databaseStub = new DatabaseHandlerMock();
     cyclistController = new CyclistController(databaseStub);
   });
 
@@ -65,4 +65,6 @@ describe('CyclistController', () => {
     await cyclistController.emailExists(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
   });
+
+  
 });
