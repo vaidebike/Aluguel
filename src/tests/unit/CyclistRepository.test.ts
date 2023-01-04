@@ -434,7 +434,7 @@ describe('CyclistRepository', () => {
 
       try {
         await cyclistRepository.update(id, cyclist);
-      }catch (error) {
+      } catch (error) {
         expect(error).toBeDefined();
         expect(error.message).toBe('Id não é válido');
       }
@@ -447,7 +447,7 @@ describe('CyclistRepository', () => {
 
       try {
         await cyclistRepository.update(id, cyclist);
-      }catch (error) {
+      } catch (error) {
         expect(error).toBeDefined();
         expect(error.message).toBe('Ciclista não encontrado');
       }
@@ -461,12 +461,214 @@ describe('CyclistRepository', () => {
 
       try {
         await cyclistRepository.update(id, cyclist);
-      }catch (error) {
+      } catch (error) {
         expect(error).toBeDefined();
-        expect(error.message).toBe('Email inválido.');
+        expect(error.message).toBe('O email é inválido.');
       }
     });
 
+    it('should get a invalid name error when try to update a cyclist and name is invalid', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nome = 'a';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O nome deve ter no mínimo 6 caracteres.');
+      }
+    });
+
+    it('should get a invalid nascimento error when try to update a cyclist and nascimento is invalid', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nascimento = new Date('2089-01-01');
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A data de nascimento deve ser menor que a data atual.');
+      }
+    });
+
+    it('should get a invalid nacionalidade error when try to update a cyclist and nacionalidade is invalid', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nacionalidade = 'a';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A nacionalidade deve ter no mínimo 3 caracteres.');
+      }
+    });
+
+    it('should get a cpf error when try to update a brazilian cyclist with no cpf', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nacionalidade = 'Brazil';
+      cyclist.cpf = null;
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O CPF é obrigatório para brasileiros.');
+      }
+    });
+
+    it('should get a invalid passport error when try to update a cyclist that is not a brazilian and have no passaporte', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nacionalidade = 'Argentina';
+      cyclist.passaporte = null;
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O passaporte é obrigatório para estrangeiros.');
+      }
+    });
+
+    it('should get a invalid passport number error when try to update a cyclist that is not a brazilian and have no passaporte number', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nacionalidade = 'Argentina';
+      cyclist.passaporte.numero = null;
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O número do passaporte é obrigatório para estrangeiros.');
+      }
+    });
+
+    it('should get a invalid passport expiration date error when try to update a cyclist that is not a brazilian and have no passaporte expiration date', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nacionalidade = 'Argentina';
+      cyclist.passaporte.validade = null;
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A validade do passaporte é obrigatório para estrangeiros.');
+      }
+    });
+
+    it('should get a invalid passport country error when try to update a cyclist that is not a brazilian and have no passaporte country', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.nacionalidade = 'Argentina';
+      cyclist.passaporte.pais = null;
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O país do passaporte é obrigatório para estrangeiros.');
+      }
+    });
+
+    it('should get a invalid email error when try to update a cyclist with an email that have a length less than 6 characters', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.email = 'aa';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O email deve ter no mínimo 6 caracteres.');
+      }
+    });
+
+    it('should get a invalid email error when try to update a cyclist with an email invalid', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.email = 'aaaaa@';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('O email é inválido.');
+      }
+    });
+
+    it('shoudl get a invalid urlFotoDocumento when try to update a cyclist with an urlFotoDocumento invalid', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.urlFotoDocumento = 'aaaaa';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A url da foto do documento é inválida.');
+      }
+    });
+
+    it('should get a invalid password error when try to update a cyclist with a password length less than 6 characters', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.senha = 'aaaaa';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A senha deve ter no mínimo 6 caracteres.');
+      }
+    });
+
+    it('should get a invalid confirmation password error when try to update a cyclist with no confirmation password.', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.senha = '123456';
+      cyclist.confirma_senha = null;
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A senha e a confirmação da senha devem ser iguais.');
+      }
+    });
+
+    it('should get a invalid confirmation password error when try to update a cyclist with a confirmation password different from password.', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.findOne(id) as Ciclista;
+
+      cyclist.senha = '123456';
+      cyclist.confirma_senha = '123476';
+
+      try {
+        await cyclistRepository.update(id, cyclist);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('A senha e a confirmação da senha devem ser iguais.');
+      }
+    });
   });
 
   describe('Delete cyclist', () => {
