@@ -12,7 +12,7 @@ export class CyclistRepository implements RepositoryInterface {
   constructor(db: JsonDB) {
     this.db = db;
   }
-  
+
   findAll(): Promise<Ciclista> {
     throw new Error('Method not implemented.');
   }
@@ -21,10 +21,10 @@ export class CyclistRepository implements RepositoryInterface {
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) throw new NotValidError('Id não é válido');
 
-    
+
     const cyclistIndex = await this.db.getIndex('/ciclistas', id);
     if (cyclistIndex === -1) throw new NotFoundError('Ciclista não encontrado');
-    
+
     this.validateCyclistDataToUpdate(cyclistData);
 
     await this.db.push(`/ciclistas[${cyclistIndex}]`, cyclistData, false);
@@ -44,11 +44,11 @@ export class CyclistRepository implements RepositoryInterface {
 
   public async create(cyclistData: Ciclista): Promise<Ciclista> {
     if (!cyclistData) throw new NoDataError('Ciclista inválido.');
-    
-    if(!cyclistData.senha || !cyclistData.confirma_senha) throw new NotValidError('A senha é obrigatória.');
-    if(cyclistData.senha !== cyclistData.confirma_senha) throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
-   
-    if(!this.validateCyclistData(cyclistData)) throw new NotValidError('O ciclista passado é inválido');
+
+    if (!cyclistData.senha || !cyclistData.confirma_senha) throw new NotValidError('A senha é obrigatória.');
+    if (cyclistData.senha !== cyclistData.confirma_senha) throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
+
+    if (!this.validateCyclistData(cyclistData)) throw new NotValidError('O ciclista passado é inválido');
 
     cyclistData.id = uuidv4();
     cyclistData.status = StatusEnum.Ativo;
@@ -60,64 +60,68 @@ export class CyclistRepository implements RepositoryInterface {
     if (!cyclistData.nome) return false;
     if (!cyclistData.nascimento) return false;
     if (!cyclistData.nacionalidade) return false;
-    
-    if(cyclistData.nacionalidade === 'Brazil'){
+
+    if (cyclistData.nacionalidade === 'Brazil') {
       if (!cyclistData.cpf) return false;
-    }else{
+    } else {
       if (!cyclistData.passaporte) return false;
       if (!cyclistData.passaporte.numero) return false;
       if (!cyclistData.passaporte.validade) return false;
       if (!cyclistData.passaporte.pais) return false;
     }
-    
+
     if (!cyclistData.email) return false;
     if (!cyclistData.urlFotoDocumento) return false;
-    
+
     return true;
   }
 
-  private validateCyclistDataToUpdate(cyclistData: Ciclista): boolean{
-    if (cyclistData.nome && cyclistData.nome.length < 6){
+  private validateCyclistDataToUpdate(cyclistData: Ciclista): boolean {
+    if (cyclistData.nome && cyclistData.nome.length < 6) {
       throw new NotValidError('O nome deve ter no mínimo 6 caracteres.');
-    } 
-    
-    if (cyclistData.nascimento){
-      const date = cyclistData.nascimento;
-      const today = new Date();
-      if(date > today) throw new NotValidError('A data de nascimento deve ser menor que a data atual.');
     }
 
-    if (cyclistData.nacionalidade && cyclistData.nacionalidade.length < 3){
+    if (cyclistData.nascimento) {
+      const date = cyclistData.nascimento;
+      const today = new Date();
+      if (date > today) throw new NotValidError('A data de nascimento deve ser menor que a data atual.');
+    }
+
+    if (cyclistData.nacionalidade && cyclistData.nacionalidade.length < 3) {
       throw new NotValidError('A nacionalidade deve ter no mínimo 3 caracteres.');
     }
-    
-    if(cyclistData.nacionalidade === 'Brazil' && !cyclistData.cpf){
+
+    if (cyclistData.nacionalidade === 'Brazil' && !cyclistData.cpf) {
       throw new NotValidError('O CPF é obrigatório para brasileiros.');
-    }else{
-      if (!cyclistData.passaporte) throw new NotValidError('O passaporte é obrigatório para estrangeiros.');
-      if (!cyclistData.passaporte.numero) throw new NotValidError('O número do passaporte é obrigatório para estrangeiros.');
-      if (!cyclistData.passaporte.validade) throw new NotValidError('A validade do passaporte é obrigatório para estrangeiros.');
-      if (!cyclistData.passaporte.pais) throw new NotValidError('O país do passaporte é obrigatório para estrangeiros.');
     }
-    
-    if (cyclistData.email && cyclistData.email.length < 6){
+    if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte) {
+      throw new NotValidError('O passaporte é obrigatório para estrangeiros.');
+    }
+
+    if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte.numero) throw new NotValidError('O número do passaporte é obrigatório para estrangeiros.');
+    if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte.validade) throw new NotValidError('A validade do passaporte é obrigatório para estrangeiros.');
+    if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte.pais) throw new NotValidError('O país do passaporte é obrigatório para estrangeiros.');
+
+    if (cyclistData.email && cyclistData.email.length < 6) {
       throw new NotValidError('O email deve ter no mínimo 6 caracteres.');
     }
 
     const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-    if(cyclistData.email && !emailRegex.test(cyclistData.email)){
+    if (cyclistData.email && !emailRegex.test(cyclistData.email)) {
       throw new NotValidError('O email é inválido.');
     }
 
     const urlRegex = /^(http(s?):)([/|.\w\s-])*\.(?:jpg|gif|png)$/g;
-    if (cyclistData.urlFotoDocumento && !urlRegex.test(cyclistData.urlFotoDocumento)){
+    if (cyclistData.urlFotoDocumento && !urlRegex.test(cyclistData.urlFotoDocumento)) {
       throw new NotValidError('A url da foto do documento é inválida.');
     }
 
-    if(cyclistData.senha){
-      if(cyclistData.senha.length < 6) throw new NotValidError('A senha deve ter no mínimo 6 caracteres.');
-      if(cyclistData.senha !== cyclistData.confirma_senha) throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
+    if (cyclistData.senha && cyclistData.senha.length < 6) {
+      throw new NotValidError('A senha deve ter no mínimo 6 caracteres.');
     }
+    if (cyclistData.senha && cyclistData.senha !== cyclistData.confirma_senha){
+      throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
+    } 
 
     return true;
   }
@@ -144,7 +148,7 @@ export class CyclistRepository implements RepositoryInterface {
 
   public async verifyIfEmailExists(email: string): Promise<boolean> {
     if (!this.validateEmail(email)) throw new NotValidError('Email inválido.');
-    
+
     const cyclistIndex = await this.db.getIndex('/ciclistas', email, 'email');
     return cyclistIndex !== -1;
   }
