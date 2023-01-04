@@ -77,8 +77,8 @@ export class CyclistRepository implements RepositoryInterface {
   }
 
   private validateCyclistDataToUpdate(cyclistData: Ciclista): boolean{
-    if (cyclistData.nome){
-      if(cyclistData.nome.length < 6) throw new NotValidError('O nome deve ter no mínimo 6 caracteres.');
+    if (cyclistData.nome && cyclistData.nome.length < 6){
+      throw new NotValidError('O nome deve ter no mínimo 6 caracteres.');
     } 
     
     if (cyclistData.nascimento){
@@ -108,7 +108,7 @@ export class CyclistRepository implements RepositoryInterface {
     }
 
     if (cyclistData.urlFotoDocumento){
-      const urlRegex = /^(http(s?):)([/|.|\w|\s|-])*\.(?:jpg|gif|png)$/g;
+      const urlRegex = /^(http(s?):)([/|.\w\s-])*\.(?:jpg|gif|png)$/g;
       if(!urlRegex.test(cyclistData.urlFotoDocumento)) throw new NotValidError('A url da foto do documento é inválida.');
     }
 
