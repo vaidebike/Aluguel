@@ -16,5 +16,6 @@ app.get('/', async (_, res) => {
 app.use('/ciclista', cyclistRoutes);
 app.use('/funcionario', employeeRoutes);
 
+
 const server = app.listen(port, () => console.log(`Running on port ${port}`));
 export default server;

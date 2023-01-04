@@ -72,16 +72,18 @@ describe('Create one cyclist', () => {
       .post('/ciclista').send({ ciclista, meioDePagamento });
 
     expect(res.statusCode).toEqual(200);
-    expect(res.body).toHaveProperty('id');
-    expect(res.body).toHaveProperty('status');
-    expect(res.body).toHaveProperty('nome');
-    expect(res.body).toHaveProperty('nascimento');
-    expect(res.body).toHaveProperty('cpf');
-    expect(res.body).toHaveProperty('passaporte');
-    expect(res.body).toHaveProperty('nacionalidade');
-    expect(res.body).toHaveProperty('email');
-    expect(res.body).toHaveProperty('urlFotoDocumento');
-    expect(res.body).toHaveProperty('senha');
+    expect(res.body).toHaveProperty('ciclista');
+    expect(res.body.ciclista).toHaveProperty('id');
+    expect(res.body.ciclista).toHaveProperty('id');
+    expect(res.body.ciclista).toHaveProperty('status');
+    expect(res.body.ciclista).toHaveProperty('nome');
+    expect(res.body.ciclista).toHaveProperty('nascimento');
+    expect(res.body.ciclista).toHaveProperty('cpf');
+    expect(res.body.ciclista).toHaveProperty('passaporte');
+    expect(res.body.ciclista).toHaveProperty('nacionalidade');
+    expect(res.body.ciclista).toHaveProperty('email');
+    expect(res.body.ciclista).toHaveProperty('urlFotoDocumento');
+    expect(res.body.ciclista).toHaveProperty('senha');
   });
   afterEach(done => {
     // close server conection

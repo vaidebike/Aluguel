@@ -1,5 +1,6 @@
 import { JsonDB } from 'node-json-db';
 import { v4 as uuidv4 } from 'uuid';
+import { AlreadyInUseError } from '../../errors/AlreadyInUseError';
 import { NoDataError } from '../../errors/NoDataError';
 import { NotFoundError } from '../../errors/NotFoundError';
 import { NotValidError } from '../../errors/NotValidError';
@@ -51,7 +52,7 @@ export class CyclistRepository implements RepositoryInterface {
     if (!this.validateCyclistData(cyclistData)) throw new NotValidError('O ciclista passado é inválido');
 
     cyclistData.id = uuidv4();
-    cyclistData.status = StatusEnum.Ativo;
+    cyclistData.status = StatusEnum.AguardandoConfirmacao;
     await this.db.push('/ciclistas[]', cyclistData, true);
     return cyclistData;
   }
@@ -119,9 +120,9 @@ export class CyclistRepository implements RepositoryInterface {
     if (cyclistData.senha && cyclistData.senha.length < 6) {
       throw new NotValidError('A senha deve ter no mínimo 6 caracteres.');
     }
-    if (cyclistData.senha && cyclistData.senha !== cyclistData.confirma_senha){
+    if (cyclistData.senha && cyclistData.senha !== cyclistData.confirma_senha) {
       throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
-    } 
+    }
 
     return true;
   }
@@ -156,5 +157,18 @@ export class CyclistRepository implements RepositoryInterface {
   private validateEmail(email: string): boolean {
     const re = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
     return re.test(email);
+  }
+
+  public async activate(id: string): Promise<Ciclista> {
+    const cyclist = await this.findOne(id);
+
+    if (cyclist.status === StatusEnum.Ativo) throw new AlreadyInUseError('Ciclista já está ativo.');
+    cyclist.status = StatusEnum.Ativo;
+
+    const cyclistIndex = await this.db.getIndex('/ciclistas', id);
+
+    await this.db.push(`/ciclistas[${cyclistIndex}]`, cyclist, true);
+
+    return cyclist;
   }
 }

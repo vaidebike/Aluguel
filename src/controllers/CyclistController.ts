@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { JsonDB } from 'node-json-db';
 import { DatabaseHandlerInterface } from '../database/DatabaseHandlerInterface';
+import { AlreadyInUseError } from '../errors/AlreadyInUseError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
@@ -52,9 +53,12 @@ export class CyclistController {
       const newCyclist = await this.cyclistRepository.create(ciclista);
 
       const emailService = new FakeEmailService();
-      await emailService.sendEmail(newCyclist.email, 'Clique aqui para confirmar seu e-mail');
+      
+      const confirmEmailUrl = `${req.protocol}://${req.get('host')}/ciclista/${newCyclist.id}/ativar`;
+      
+      await emailService.sendEmail(newCyclist.email, `Por favor, confirme o e-mail através do link: ${confirmEmailUrl}`);
 
-      res.status(200).send(newCyclist);
+      res.status(200).send({ciclista: newCyclist, confirmEmailUrl});
     } catch (error) {
       let status = 400;
 
@@ -103,6 +107,32 @@ export class CyclistController {
       let status = 400;
 
       if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
+    }
+  };
+
+  /**
+   * Activate a cyclist account
+   * @Route POST /ciclista/:id/ativar
+   * @returns  Cyclist updated 
+   */
+  public activate = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const cyclist = await this.cyclistRepository.activate(id);
+
+      const emailService = new FakeEmailService();
+      await emailService.sendEmail(cyclist.email, 'Conta ativada com sucesso');
+
+      res.status(200).send(cyclist);
+    } catch (error) {
+      let status = 400;
+
+      if (error instanceof NotFoundError) status = 404;
+      if (error instanceof NotValidError) status = 422;
+      if(error instanceof AlreadyInUseError) status = 409;
 
       res.status(status).send({ error: error.message });
     }
