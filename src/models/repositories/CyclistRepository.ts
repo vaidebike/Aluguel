@@ -87,12 +87,12 @@ export class CyclistRepository implements RepositoryInterface {
       if(date > today) throw new NotValidError('A data de nascimento deve ser menor que a data atual.');
     }
 
-    if (cyclistData.nacionalidade){
-      if(cyclistData.nacionalidade.length < 3) throw new NotValidError('A nacionalidade deve ter no mínimo 3 caracteres.');
+    if (cyclistData.nacionalidade && cyclistData.nacionalidade.length < 3){
+      throw new NotValidError('A nacionalidade deve ter no mínimo 3 caracteres.');
     }
     
-    if(cyclistData.nacionalidade === 'Brazil'){
-      if (!cyclistData.cpf) throw new NotValidError('O CPF é obrigatório para brasileiros.');
+    if(cyclistData.nacionalidade === 'Brazil' && !cyclistData.cpf){
+      throw new NotValidError('O CPF é obrigatório para brasileiros.');
     }else{
       if (!cyclistData.passaporte) throw new NotValidError('O passaporte é obrigatório para estrangeiros.');
       if (!cyclistData.passaporte.numero) throw new NotValidError('O número do passaporte é obrigatório para estrangeiros.');
@@ -100,16 +100,18 @@ export class CyclistRepository implements RepositoryInterface {
       if (!cyclistData.passaporte.pais) throw new NotValidError('O país do passaporte é obrigatório para estrangeiros.');
     }
     
-    if (cyclistData.email){
-      if(cyclistData.email.length < 6) throw new NotValidError('O email deve ter no mínimo 6 caracteres.');
-
-      const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-      if(!emailRegex.test(cyclistData.email)) throw new NotValidError('O email é inválido.');
+    if (cyclistData.email && cyclistData.email.length < 6){
+      throw new NotValidError('O email deve ter no mínimo 6 caracteres.');
     }
 
-    if (cyclistData.urlFotoDocumento){
-      const urlRegex = /^(http(s?):)([/|.\w\s-])*\.(?:jpg|gif|png)$/g;
-      if(!urlRegex.test(cyclistData.urlFotoDocumento)) throw new NotValidError('A url da foto do documento é inválida.');
+    const emailRegex = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+    if(cyclistData.email && !emailRegex.test(cyclistData.email)){
+      throw new NotValidError('O email é inválido.');
+    }
+
+    const urlRegex = /^(http(s?):)([/|.\w\s-])*\.(?:jpg|gif|png)$/g;
+    if (cyclistData.urlFotoDocumento && !urlRegex.test(cyclistData.urlFotoDocumento)){
+      throw new NotValidError('A url da foto do documento é inválida.');
     }
 
     if(cyclistData.senha){
