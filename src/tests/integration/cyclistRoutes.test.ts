@@ -386,7 +386,7 @@ describe('Create a invalid cyclist', () => {
 
 describe('Update cyclist', () => {
 
-  it('Update a cyclist', async () => {
+  it('Update a cyclist with valid data', async () => {
     const ciclista = {
       'nome': 'John Doe',
       'nascimento': '1999-12-12',
@@ -404,7 +404,7 @@ describe('Update cyclist', () => {
     };
 
     const res = await request(server)
-      .put('/ciclista/ca67326d-8d9d-41b8-91ad-fcba610ddd3b').send({ ciclista });
+      .put('/ciclista/d11dec00-ae9d-4e71-821f-a0d7ad3a8a7a').send({ ciclista });
 
     expect(res.statusCode).toEqual(200);
     expect(res.body).toHaveProperty('id');
@@ -418,6 +418,31 @@ describe('Update cyclist', () => {
     expect(res.body).toHaveProperty('senha');
     expect(res.body).toHaveProperty('confirma_senha');
 
+  });
+
+  it('Update a cyclist with invalid id', async () => {
+    const ciclista = {
+      'nome': 'John Doe',
+      'nascimento': '1999-12-12',
+      'cpf': '71269834020',
+      'passaporte': {
+        'numero': '123456',
+        'validade': '2023-12-12',
+        'pais': 'Brazil'
+      },
+      'nacionalidade': 'Brasileiro',
+      'email': 'john.doe@example.com',
+      'urlFotoDocumento': 'https://teste.com.br/foto.jpg',
+      'senha': '123456',
+      'confirma_senha': '123456'
+    };
+
+    const res = await request(server)
+      .put('/ciclista/invalid-id').send({ ciclista });
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Id não é válido');
   });
 
   afterEach(done => {
@@ -467,7 +492,7 @@ describe('Delete a cyclist', () => {
   it('Delete a cyclist', async () => {
 
     const res = await request(server)
-      .delete('/ciclista/ca67326d-8d9d-41b8-91ad-fcba610ddd3b');
+      .delete('/ciclista/d11dec00-ae9d-4e71-821f-a0d7ad3a8a7a');
 
     expect(res.statusCode).toEqual(400);
     expect(res.body).toHaveProperty('error');

@@ -18,19 +18,17 @@ export class CyclistRepository implements RepositoryInterface {
   }
 
   public async update(id: string, cyclistData: Ciclista): Promise<Ciclista> {
-    if(!cyclistData) throw new NoDataError('Ciclista inválido.');
-
     const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
     if (!validId) throw new NotValidError('Id não é válido');
 
-    this.validateCyclistDataToUpdate(cyclistData);
-
+    
     const cyclistIndex = await this.db.getIndex('/ciclistas', id);
     if (cyclistIndex === -1) throw new NotFoundError('Ciclista não encontrado');
+    
+    this.validateCyclistDataToUpdate(cyclistData);
 
     await this.db.push(`/ciclistas[${cyclistIndex}]`, cyclistData, false);
-    console.log(await this.findOne(id));
-    return this.findOne(id);
+    return await this.findOne(id);
   }
 
   delete(id: string): Promise<Ciclista> {
@@ -84,7 +82,7 @@ export class CyclistRepository implements RepositoryInterface {
     } 
     
     if (cyclistData.nascimento){
-      const date = new Date(cyclistData.nascimento);
+      const date = cyclistData.nascimento;
       const today = new Date();
       if(date > today) throw new NotValidError('A data de nascimento deve ser menor que a data atual.');
     }

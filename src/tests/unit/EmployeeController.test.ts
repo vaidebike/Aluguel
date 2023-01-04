@@ -1,6 +1,6 @@
 import { getMockReq, getMockRes } from '@jest-mock/express';
 import { EmployeeController } from '../../controllers/EmployeeController';
-import { DatabaseHandlerStub } from './mocks/DatabaseHandlerMock';
+import { DatabaseHandlerMock } from './mocks/DatabaseHandlerMock';
 
 describe('EmployeeController', () => {
   let employeeController: EmployeeController;
@@ -8,7 +8,7 @@ describe('EmployeeController', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    const databaseStub = new DatabaseHandlerStub();
+    const databaseStub = new DatabaseHandlerMock();
     employeeController = new EmployeeController(databaseStub);
   });
 

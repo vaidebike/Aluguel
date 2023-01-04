@@ -17,14 +17,17 @@ class JsonDBHandler implements DatabaseHandlerInterface {
 
   private constructor() {
     this.db = new JsonDB(new Config(this.dbName, true, false, '/'));
+
     if (process.env.NODE_ENV === 'test') {
       this.dbName = 'database-integration-test.json';
+      this.db = new JsonDB(new Config(this.dbName, true, false, '/'));
+      
       this.prepareDatabaseForTests(this.db);
     }
 
   }
 
-  private prepareDatabaseForTests(db: JsonDB) {
+  public prepareDatabaseForTests(db: JsonDB) {
     db.delete('/funcionarios');
     db.delete('/ciclistas');
 

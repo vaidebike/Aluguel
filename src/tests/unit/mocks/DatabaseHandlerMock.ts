@@ -1,7 +1,7 @@
 import { JsonDB } from 'node-json-db';
 import { DatabaseHandlerInterface } from '../../../database/DatabaseHandlerInterface';
 
-export class DatabaseHandlerStub implements DatabaseHandlerInterface {
+export class DatabaseHandlerMock implements DatabaseHandlerInterface {
   db: JsonDB;
 
   constructor() {
