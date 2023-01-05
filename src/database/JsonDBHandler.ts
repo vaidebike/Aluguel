@@ -69,7 +69,7 @@ class JsonDBHandler implements DatabaseHandlerInterface {
           validade: '2020-01-01',
           pais: 'Brazil',
         },
-        status: StatusEnum.Ativo,
+        status: StatusEnum.AguardandoConfirmacao,
         id: 'd11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
         nacionalidade: 'Brazil',
         urlFotoDocumento: 'https://www.google.com.br',

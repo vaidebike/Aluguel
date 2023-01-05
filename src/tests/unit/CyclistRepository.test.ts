@@ -682,6 +682,38 @@ describe('CyclistRepository', () => {
     });
   });
 
+  describe('Activate cyclist', () => {
+    it('should activate a cyclist', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclist = await cyclistRepository.activate(id);
+
+      expect(cyclist).toBeDefined();
+      expect(cyclist.status).toBe(StatusEnum.Ativo);
+    });
+
+    it('should get a not found error when try to activate a cyclist that not exists', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3c';
+
+      try {
+        await cyclistRepository.activate(id);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('Ciclista não encontrado.');
+      }
+    });
+
+    it('should get a already activated error when try to activate a cyclist that already activated', async () => {
+      const id = 'd11dec00-ae9d-4e71-821f-a0d7ad3a8a7a';
+
+      try {
+        await cyclistRepository.activate(id);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('Ciclista já está ativo.');
+      }
+    });
+  });
+
 });
 
 function prepareDatabaseForTests(db: JsonDB) {
@@ -698,7 +730,7 @@ function prepareDatabaseForTests(db: JsonDB) {
         validade: '2020-01-01',
         pais: 'Brazil',
       },
-      status: StatusEnum.Ativo,
+      status: StatusEnum.AguardandoConfirmacao,
       id: 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b'
     },
     {

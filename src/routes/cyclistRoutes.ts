@@ -10,6 +10,7 @@ router.get('/:id', cyclistController.getOne)
   .post('/', cyclistController.create)
   .put('/:id', cyclistController.update)
   .delete('/:id', cyclistController.delete)
-  .get('/existeEmail/:email', cyclistController.emailExists);
+  .get('/existeEmail/:email', cyclistController.emailExists)
+  .post('/:id/ativar', cyclistController.activate);
 
 export default router;
