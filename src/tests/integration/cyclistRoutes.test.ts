@@ -94,7 +94,7 @@ describe('Create one cyclist', () => {
 
 describe('Create a invalid cyclist', () => {
 
-  it('Create a cyclist with missing payment Method', async() => {
+  it('Create a cyclist with missing payment Method', async () => {
     const ciclista = {
       'nome': 'string',
       'nascimento': '2022-12-12',
@@ -447,6 +447,31 @@ describe('Update cyclist', () => {
     expect(res.body.error).toEqual('Id não é válido');
   });
 
+  it('Update a cyclist with a not found id', async () => {
+    const ciclista = {
+      'nome': 'John Doe',
+      'nascimento': '1999-12-12',
+      'cpf': '71269834020',
+      'passaporte': {
+        'numero': '123456',
+        'validade': '2023-12-12',
+        'pais': 'Brazil'
+      },
+      'nacionalidade': 'Brasileiro',
+      'email': 'john.doe@example.com',
+      'urlFotoDocumento': 'https://teste.com.br/foto.jpg',
+      'senha': '123456',
+      'confirma_senha': '123456'
+    };
+
+    const res = await request(server)
+      .put('/ciclista/aa11111a-8d9d-41b8-91ad-fcba610ddd3b').send({ ciclista });
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Ciclista não encontrado');
+  });
+
   afterEach(done => {
     // close server conection
     server.close();
@@ -505,6 +530,51 @@ describe('Delete a cyclist', () => {
     // close server conection
     server.close();
     done();
+  });
+
+});
+
+describe('Activate a cyclist', () => {
+  it('Activate a cyclist', async () => {
+    const res = await request(server)
+      .post('/ciclista/d11dec00-ae9d-4e71-821f-a0d7ad3a8a7a/ativar');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('id');
+    expect(res.body).toHaveProperty('nome');
+  });
+
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
+  });
+
+  it('Activate a cyclist with invalid id', async () => {
+    const res = await request(server)
+      .post('/ciclista/invalid-id/ativar');
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('uuid inválido.');
+  });
+
+  it('Activate a cyclist with a not found id', async () => {
+    const res = await request(server)
+      .post('/ciclista/aa11111a-8d9d-41b8-91ad-fcba610ddd3b/ativar');
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Ciclista não encontrado.');
+  });
+
+  it('Activate a cyclist with a already activated id', async () => {
+    const res = await request(server)
+      .post('/ciclista/ca67326d-8d9d-41b8-91ad-fcba610ddd3b/ativar');
+
+    expect(res.statusCode).toEqual(409);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Ciclista já está ativo.');
   });
 });
 

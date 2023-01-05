@@ -161,7 +161,7 @@ export class CyclistRepository implements RepositoryInterface {
 
   public async activate(id: string): Promise<Ciclista> {
     const cyclist = await this.findOne(id);
-
+    
     if (cyclist.status === StatusEnum.Ativo) throw new AlreadyInUseError('Ciclista já está ativo.');
     cyclist.status = StatusEnum.Ativo;
 

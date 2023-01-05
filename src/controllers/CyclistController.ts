@@ -54,9 +54,9 @@ export class CyclistController {
 
       const emailService = new FakeEmailService();
       
-      const confirmEmailUrl = `${req.protocol}://${req.get('host')}/ciclista/${newCyclist.id}/ativar`;
+      const confirmEmailUrl = `${req.protocol}://${req.get('host')}/ciclista/${newCyclist?.id}/ativar`;
       
-      await emailService.sendEmail(newCyclist.email, `Por favor, confirme o e-mail através do link: ${confirmEmailUrl}`);
+      await emailService.sendEmail(newCyclist?.email, `Por favor, confirme o e-mail através do link: ${confirmEmailUrl}`);
 
       res.status(200).send({ciclista: newCyclist, confirmEmailUrl});
     } catch (error) {
@@ -81,14 +81,15 @@ export class CyclistController {
       const newCyclist = await this.cyclistRepository.update(id, ciclista);
 
       const emailService = new FakeEmailService();
-      await emailService.sendEmail(newCyclist.email, 'Dados atualizados com sucesso');
+      await emailService.sendEmail(newCyclist?.email, 'Dados atualizados com sucesso');
 
       res.status(200).send(newCyclist);
     } catch (error) {
       let status = 400;
 
       if (error instanceof NotValidError) status = 422;
-
+      if(error instanceof NotFoundError) status = 404;
+      
       res.status(status).send({ error: error.message });
     }
   };
@@ -97,6 +98,11 @@ export class CyclistController {
     res.status(400).send({ error: 'Not implemented' });
   };
 
+  /**
+   *  Verify if email exists
+   * @Route GET /ciclista/email/:email
+   * @returns  true if exists, false otherwise
+   */
   public emailExists = async (req: Request, res: Response) => {
     const { email } = req.params;
 
@@ -124,7 +130,7 @@ export class CyclistController {
       const cyclist = await this.cyclistRepository.activate(id);
 
       const emailService = new FakeEmailService();
-      await emailService.sendEmail(cyclist.email, 'Conta ativada com sucesso');
+      await emailService.sendEmail(cyclist?.email, 'Conta ativada com sucesso');
 
       res.status(200).send(cyclist);
     } catch (error) {
