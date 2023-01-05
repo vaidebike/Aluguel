@@ -88,6 +88,21 @@ export class CyclistRepository implements RepositoryInterface {
       if (date > today) throw new NotValidError('A data de nascimento deve ser menor que a data atual.');
     }
 
+    this.validateNationality(cyclistData);
+    this.validateEmailForUpdate(cyclistData);
+
+
+    const urlRegex = /^(http(s?):)([/|.\w\s-])*\.(?:jpg|gif|png)$/g;
+    if (cyclistData.urlFotoDocumento && !urlRegex.test(cyclistData.urlFotoDocumento)) {
+      throw new NotValidError('A url da foto do documento é inválida.');
+    }
+
+    this.validatePassword(cyclistData);
+
+    return true;
+  }
+
+  private validateNationality(cyclistData: Ciclista) {
     if (cyclistData.nacionalidade && cyclistData.nacionalidade.length < 3) {
       throw new NotValidError('A nacionalidade deve ter no mínimo 3 caracteres.');
     }
@@ -102,7 +117,9 @@ export class CyclistRepository implements RepositoryInterface {
     if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte.numero) throw new NotValidError('O número do passaporte é obrigatório para estrangeiros.');
     if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte.validade) throw new NotValidError('A validade do passaporte é obrigatório para estrangeiros.');
     if (cyclistData.nacionalidade !== 'Brazil' && !cyclistData.passaporte.pais) throw new NotValidError('O país do passaporte é obrigatório para estrangeiros.');
+  }
 
+  private validateEmailForUpdate(cyclistData: Ciclista) {
     if (cyclistData.email && cyclistData.email.length < 6) {
       throw new NotValidError('O email deve ter no mínimo 6 caracteres.');
     }
@@ -111,20 +128,15 @@ export class CyclistRepository implements RepositoryInterface {
     if (cyclistData.email && !emailRegex.test(cyclistData.email)) {
       throw new NotValidError('O email é inválido.');
     }
+  }
 
-    const urlRegex = /^(http(s?):)([/|.\w\s-])*\.(?:jpg|gif|png)$/g;
-    if (cyclistData.urlFotoDocumento && !urlRegex.test(cyclistData.urlFotoDocumento)) {
-      throw new NotValidError('A url da foto do documento é inválida.');
-    }
-
+  private validatePassword(cyclistData: Ciclista) {
     if (cyclistData.senha && cyclistData.senha.length < 6) {
       throw new NotValidError('A senha deve ter no mínimo 6 caracteres.');
     }
     if (cyclistData.senha && cyclistData.senha !== cyclistData.confirma_senha) {
       throw new NotValidError('A senha e a confirmação da senha devem ser iguais.');
     }
-
-    return true;
   }
 
   public async findOne(id: string): Promise<Ciclista> {
@@ -161,7 +173,7 @@ export class CyclistRepository implements RepositoryInterface {
 
   public async activate(id: string): Promise<Ciclista> {
     const cyclist = await this.findOne(id);
-    
+
     if (cyclist.status === StatusEnum.Ativo) throw new AlreadyInUseError('Ciclista já está ativo.');
     cyclist.status = StatusEnum.Ativo;
 
