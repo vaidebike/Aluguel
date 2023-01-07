@@ -47,7 +47,7 @@ export class CyclistController {
     const creditCardService = new FakeCreditCardService();
     const validCreditCard = await creditCardService.validateCreditCard(meioDePagamento);
 
-    if (!validCreditCard) return res.status(422).send({ error: 'Invalid credit card' });
+    if (!validCreditCard) return res.status(422).send({ error: 'Cartão de crédito inválido.' });
 
     try {
       const newCyclist = await this.cyclistRepository.create(ciclista);

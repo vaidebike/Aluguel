@@ -1,5 +1,5 @@
-import { CreditCard } from '../../models/CreditCard';
+import { CartaoDeCredito } from '../../models/CartaoDeCredito';
 
 export interface CreditCardServiceInterface { 
-  validateCreditCard(creditCard: CreditCard): Promise<boolean>;
+  validateCreditCard(creditCard: CartaoDeCredito): Promise<boolean>;
 }

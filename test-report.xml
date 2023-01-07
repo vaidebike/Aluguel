@@ -1,39 +1,63 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <testExecutions version="1">
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\cyclistRoutes.test.ts">
-    <testCase name="Get one Cyclist Get a cyclist by id" duration="47"/>
-    <testCase name="Get one Cyclist Get a cyclist by id with invalid id" duration="7"/>
+    <testCase name="Get one Cyclist Get a cyclist by id" duration="45"/>
+    <testCase name="Get one Cyclist Get a cyclist by id with invalid id" duration="6"/>
     <testCase name="Get one Cyclist Get a cyclist by id with not found id" duration="4"/>
-    <testCase name="Create one cyclist Create a cyclist" duration="23"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing payment Method" duration="5"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte" duration="4"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing cpf" duration="4"/>
+    <testCase name="Create one cyclist Create a cyclist" duration="25"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing payment Method" duration="10">
+      <failure message="Error: expect(received).toEqual(expected) // deep equality"><![CDATA[Error: expect(received).toEqual(expected) // deep equality
+
+Expected: "Invalid credit card"
+Received: "Cartão de crédito inválido."
+    at C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\cyclistRoutes.test.ts:119:28
+    at Generator.next (<anonymous>)
+    at fulfilled (C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\cyclistRoutes.test.ts:5:58)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)]]></failure>
+    </testCase>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte" duration="5"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing cpf" duration="5"/>
     <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte numero" duration="4"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte validade" duration="5"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte coutry" duration="5"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte validade" duration="4"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with missing passaporte coutry" duration="8"/>
     <testCase name="Create a invalid cyclist Create a cyclist with no senha" duration="4"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with no confirma_senha" duration="5"/>
-    <testCase name="Create a invalid cyclist Create a cyclist with no equals senhas" duration="4"/>
-    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="4"/>
-    <testCase name="Update cyclist Update a cyclist with valid data" duration="9"/>
-    <testCase name="Update cyclist Update a cyclist with invalid id" duration="5"/>
-    <testCase name="Update cyclist Update a cyclist with a not found id" duration="4"/>
-    <testCase name="Verify if email exists Verify if email exists with valid and existing email" duration="3"/>
-    <testCase name="Verify if email exists Verify if email exists with valid and not existing email" duration="3"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with no confirma_senha" duration="4"/>
+    <testCase name="Create a invalid cyclist Create a cyclist with no equals senhas" duration="5"/>
+    <testCase name="Create a invalid cyclist Create a cyclist without data" duration="6"/>
+    <testCase name="Update cyclist Update a cyclist with valid data" duration="10"/>
+    <testCase name="Update cyclist Update a cyclist with invalid id" duration="4"/>
+    <testCase name="Update cyclist Update a cyclist with a not found id" duration="3"/>
+    <testCase name="Verify if email exists Verify if email exists with valid and existing email" duration="4"/>
+    <testCase name="Verify if email exists Verify if email exists with valid and not existing email" duration="5"/>
     <testCase name="Verify if email exists Verify if email exists with invalid email" duration="3"/>
     <testCase name="Delete a cyclist Delete a cyclist" duration="3"/>
     <testCase name="Activate a cyclist Activate a cyclist" duration="8"/>
     <testCase name="Activate a cyclist Activate a cyclist with invalid id" duration="4"/>
-    <testCase name="Activate a cyclist Activate a cyclist with a not found id" duration="3"/>
-    <testCase name="Activate a cyclist Activate a cyclist with a already activated id" duration="4"/>
+    <testCase name="Activate a cyclist Activate a cyclist with a not found id" duration="4"/>
+    <testCase name="Activate a cyclist Activate a cyclist with a already activated id" duration="3"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\employeeRoutes.test.ts">
+    <testCase name="Get one Employee Get one employee with id" duration="27"/>
+    <testCase name="Get one Employee Get one employee with not founded id" duration="3"/>
+    <testCase name="Get one Employee Get one employee with not valid id" duration="3"/>
+    <testCase name="Get all Employees Get all employees" duration="3"/>
+    <testCase name="Create an Employee Create an employee with valid data" duration="17"/>
+    <testCase name="Create an Employee Create an employee with invalid data" duration="4"/>
+    <testCase name="Create an Employee Create an employee with no data" duration="4"/>
+    <testCase name="Update an Employee Update an employee with valid data" duration="8"/>
+    <testCase name="Update an Employee Update an employee with invalid data" duration="4"/>
+    <testCase name="Update an Employee Update an employee with not found id" duration="4"/>
+    <testCase name="Delete an Employee Delete an employee with valid data" duration="7"/>
+    <testCase name="Delete an Employee Delete an employee with not found id" duration="4"/>
+    <testCase name="Delete an Employee Delete an employee with invalid id" duration="3"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\CyclistRepository.test.ts">
     <testCase name="CyclistRepository CyclistRepository instances should create a new cyclist repository" duration="3"/>
     <testCase name="CyclistRepository CyclistRepository instances should set a new db" duration="0"/>
-    <testCase name="CyclistRepository Create new cyclist should create a new cyclist" duration="27"/>
+    <testCase name="CyclistRepository Create new cyclist should create a new cyclist" duration="25"/>
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no nome" duration="1"/>
-    <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no email" duration="0"/>
-    <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no nascimento" duration="1"/>
+    <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no email" duration="1"/>
+    <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no nascimento" duration="0"/>
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no cpf" duration="1"/>
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no passaporte" duration="1"/>
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist with no status" duration="1"/>
@@ -43,100 +67,85 @@
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist without nacionalidade" duration="0"/>
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist without urlFotoDocumento" duration="0"/>
     <testCase name="CyclistRepository Create new cyclist should get a not valid error when try to create a cyclist without senha" duration="0"/>
-    <testCase name="CyclistRepository Find cyclist should return a cyclist finded by id" duration="89"/>
+    <testCase name="CyclistRepository Find cyclist should return a cyclist finded by id" duration="82"/>
     <testCase name="CyclistRepository Find cyclist should get a not found error when try to find a cyclist by id that does not exist" duration="7"/>
-    <testCase name="CyclistRepository Find cyclist should get a invalid id error when try to find a cyclist by id that is invalid" duration="0"/>
-    <testCase name="CyclistRepository Verify if email exists should return a true if email exists on database" duration="13"/>
+    <testCase name="CyclistRepository Find cyclist should get a invalid id error when try to find a cyclist by id that is invalid" duration="1"/>
+    <testCase name="CyclistRepository Verify if email exists should return a true if email exists on database" duration="12"/>
     <testCase name="CyclistRepository Verify if email exists should return a false if email does not exists on database" duration="7"/>
     <testCase name="CyclistRepository Verify if email exists should get a invalid email error when try to verify if email exists and email is invalid" duration="0"/>
-    <testCase name="CyclistRepository Find all cyclists should get a not implemented when try to findAll" duration="0"/>
-    <testCase name="CyclistRepository Update cyclist Should update a cyclist." duration="26"/>
+    <testCase name="CyclistRepository Find all cyclists should get a not implemented when try to findAll" duration="1"/>
+    <testCase name="CyclistRepository Update cyclist Should update a cyclist." duration="27"/>
     <testCase name="CyclistRepository Update cyclist should get a not valid id error when try to update a cyclist by id that is invalid" duration="1"/>
-    <testCase name="CyclistRepository Update cyclist should get a not found error when try to update a cyclist by id that does not exist" duration="14"/>
+    <testCase name="CyclistRepository Update cyclist should get a not found error when try to update a cyclist by id that does not exist" duration="13"/>
     <testCase name="CyclistRepository Update cyclist should get a invalid email error when try to update a cyclist and email is invalid" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid name error when try to update a cyclist and name is invalid" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid nascimento error when try to update a cyclist and nascimento is invalid" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid nacionalidade error when try to update a cyclist and nacionalidade is invalid" duration="8"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid name error when try to update a cyclist and name is invalid" duration="15"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid nascimento error when try to update a cyclist and nascimento is invalid" duration="12"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid nacionalidade error when try to update a cyclist and nacionalidade is invalid" duration="9"/>
     <testCase name="CyclistRepository Update cyclist should get a cpf error when try to update a brazilian cyclist with no cpf" duration="7"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid passport error when try to update a cyclist that is not a brazilian and have no passaporte" duration="7"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid passport number error when try to update a cyclist that is not a brazilian and have no passaporte number" duration="7"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid passport expiration date error when try to update a cyclist that is not a brazilian and have no passaporte expiration date" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid passport country error when try to update a cyclist that is not a brazilian and have no passaporte country" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid email error when try to update a cyclist with an email that have a length less than 6 characters" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid email error when try to update a cyclist with an email invalid" duration="9"/>
-    <testCase name="CyclistRepository Update cyclist shoudl get a invalid urlFotoDocumento when try to update a cyclist with an urlFotoDocumento invalid" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid password error when try to update a cyclist with a password length less than 6 characters" duration="8"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid confirmation password error when try to update a cyclist with no confirmation password." duration="6"/>
-    <testCase name="CyclistRepository Update cyclist should get a invalid confirmation password error when try to update a cyclist with a confirmation password different from password." duration="6"/>
-    <testCase name="CyclistRepository Delete cyclist should get a not implemented when try to delete" duration="0"/>
-    <testCase name="CyclistRepository Activate cyclist should activate a cyclist" duration="18"/>
-    <testCase name="CyclistRepository Activate cyclist should get a not found error when try to activate a cyclist that not exists" duration="7"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid passport error when try to update a cyclist that is not a brazilian and have no passaporte" duration="11"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid passport number error when try to update a cyclist that is not a brazilian and have no passaporte number" duration="12"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid passport expiration date error when try to update a cyclist that is not a brazilian and have no passaporte expiration date" duration="16"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid passport country error when try to update a cyclist that is not a brazilian and have no passaporte country" duration="14"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid email error when try to update a cyclist with an email that have a length less than 6 characters" duration="10"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid email error when try to update a cyclist with an email invalid" duration="8"/>
+    <testCase name="CyclistRepository Update cyclist shoudl get a invalid urlFotoDocumento when try to update a cyclist with an urlFotoDocumento invalid" duration="10"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid password error when try to update a cyclist with a password length less than 6 characters" duration="13"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid confirmation password error when try to update a cyclist with no confirmation password." duration="13"/>
+    <testCase name="CyclistRepository Update cyclist should get a invalid confirmation password error when try to update a cyclist with a confirmation password different from password." duration="14"/>
+    <testCase name="CyclistRepository Delete cyclist should get a not implemented when try to delete" duration="2"/>
+    <testCase name="CyclistRepository Activate cyclist should activate a cyclist" duration="23"/>
+    <testCase name="CyclistRepository Activate cyclist should get a not found error when try to activate a cyclist that not exists" duration="11"/>
     <testCase name="CyclistRepository Activate cyclist should get a already activated error when try to activate a cyclist that already activated" duration="7"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\employeeRoutes.test.ts">
-    <testCase name="Get one Employee Get one employee with id" duration="33"/>
-    <testCase name="Get one Employee Get one employee with not founded id" duration="4"/>
-    <testCase name="Get one Employee Get one employee with not valid id" duration="4"/>
-    <testCase name="Get all Employees Get all employees" duration="4"/>
-    <testCase name="Create an Employee Create an employee with valid data" duration="17"/>
-    <testCase name="Create an Employee Create an employee with invalid data" duration="4"/>
-    <testCase name="Create an Employee Create an employee with no data" duration="4"/>
-    <testCase name="Update an Employee Update an employee with valid data" duration="9"/>
-    <testCase name="Update an Employee Update an employee with invalid data" duration="4"/>
-    <testCase name="Update an Employee Update an employee with not found id" duration="3"/>
-    <testCase name="Delete an Employee Delete an employee with valid data" duration="8"/>
-    <testCase name="Delete an Employee Delete an employee with not found id" duration="4"/>
-    <testCase name="Delete an Employee Delete an employee with invalid id" duration="7"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeRepository.test.ts">
-    <testCase name="EmployeeRepository should create a new employee repository" duration="3"/>
-    <testCase name="EmployeeRepository should set a new db" duration="1"/>
-    <testCase name="EmployeeRepository should create a new employee" duration="25"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no nome" duration="0"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no email" duration="0"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cargo" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no idade" duration="0"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cpf" duration="1"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no senha" duration="1"/>
-    <testCase name="EmployeeRepository should get a no data error when try to create a employee without data" duration="1"/>
-    <testCase name="EmployeeRepository should remove an employee" duration="51"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to delete a employee with no valid uuid" duration="0"/>
-    <testCase name="EmployeeRepository should get a not found error when try to remove a employee not exists" duration="11"/>
-    <testCase name="EmployeeRepository should return all employees" duration="7"/>
-    <testCase name="EmployeeRepository should return employee by id" duration="7"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to find a employee with no valid uuid" duration="1"/>
-    <testCase name="EmployeeRepository should get a not found error when employee not exists" duration="12"/>
-    <testCase name="EmployeeRepository should update a employee" duration="12"/>
-    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with invalid id" duration="0"/>
-    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with no data" duration="0"/>
-    <testCase name="EmployeeRepository should get a not valid error when try to update a employee with invalid data" duration="18"/>
-    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="6"/>
-    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="7"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\app.test.ts">
-    <testCase name="Get Endpoint / Get /" duration="13"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
-    <testCase name="Get one Cyclist Get" duration="19"/>
-    <testCase name="Get one Cyclist with not founded id Get" duration="5"/>
-    <testCase name="Get one Cyclist with not nvalid id Get" duration="4"/>
-  </file>
-  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
-    <testCase name="Get Endpoints Get" duration="16"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\CyclistController.test.ts">
     <testCase name="CyclistController should return 200 if the cyclist is found" duration="5"/>
-    <testCase name="CyclistController should return 200 if the cyclist is created" duration="2"/>
+    <testCase name="CyclistController should return 200 if the cyclist is created" duration="5"/>
     <testCase name="CyclistController should return 200 if the cyclist is updated" duration="2"/>
-    <testCase name="CyclistController should return 200 if the email exists" duration="2"/>
-    <testCase name="CyclistController should return 200 if cyclist is activated successfully" duration="1"/>
+    <testCase name="CyclistController should return 200 if the email exists" duration="1"/>
+    <testCase name="CyclistController should return 200 if cyclist is activated successfully" duration="2"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\integration\app.test.ts">
+    <testCase name="Get Endpoint / Get /" duration="14"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeRepository.test.ts">
+    <testCase name="EmployeeRepository should create a new employee repository" duration="2"/>
+    <testCase name="EmployeeRepository should set a new db" duration="0"/>
+    <testCase name="EmployeeRepository should create a new employee" duration="27"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no nome" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no email" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cargo" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no idade" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no cpf" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to create a employee with no senha" duration="1"/>
+    <testCase name="EmployeeRepository should get a no data error when try to create a employee without data" duration="1"/>
+    <testCase name="EmployeeRepository should remove an employee" duration="54"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to delete a employee with no valid uuid" duration="1"/>
+    <testCase name="EmployeeRepository should get a not found error when try to remove a employee not exists" duration="12"/>
+    <testCase name="EmployeeRepository should return all employees" duration="6"/>
+    <testCase name="EmployeeRepository should return employee by id" duration="6"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to find a employee with no valid uuid" duration="1"/>
+    <testCase name="EmployeeRepository should get a not found error when employee not exists" duration="17"/>
+    <testCase name="EmployeeRepository should update a employee" duration="10"/>
+    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with invalid id" duration="1"/>
+    <testCase name="EmployeeRepository should get a not valid error when try tu update a employee with no data" duration="0"/>
+    <testCase name="EmployeeRepository should get a not valid error when try to update a employee with invalid data" duration="19"/>
+    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="10"/>
+    <testCase name="EmployeeRepository should get a not found error when try to update a employee not exists" duration="7"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\app.test.js">
+    <testCase name="Get Endpoints Get" duration="17"/>
+  </file>
+  <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\dist\tests\cyclistRoutes.test.js">
+    <testCase name="Get one Cyclist Get" duration="13"/>
+    <testCase name="Get one Cyclist with not founded id Get" duration="3"/>
+    <testCase name="Get one Cyclist with not nvalid id Get" duration="3"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\EmployeeController.test.ts">
     <testCase name="EmployeeController should return 200 if the employee is found" duration="5"/>
     <testCase name="EmployeeController should return 200 if the employee is created" duration="2"/>
-    <testCase name="EmployeeController should return 200 on read" duration="1"/>
-    <testCase name="EmployeeController should return 200 if the employee is updated" duration="1"/>
-    <testCase name="EmployeeController should return 200 if the employee is deleted" duration="1"/>
+    <testCase name="EmployeeController should return 200 on read" duration="2"/>
+    <testCase name="EmployeeController should return 200 if the employee is updated" duration="2"/>
+    <testCase name="EmployeeController should return 200 if the employee is deleted" duration="2"/>
   </file>
   <file path="C:\Users\cassi\Desktop\materiais faculdade\PM\vaidebike\Aluguel\src\tests\unit\Employee.test.ts">
     <testCase name="Employee model" duration="2"/>

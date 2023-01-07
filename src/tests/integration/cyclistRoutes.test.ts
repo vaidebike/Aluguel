@@ -116,7 +116,7 @@ describe('Create a invalid cyclist', () => {
 
     expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
-    expect(res.body.error).toEqual('Invalid credit card');
+    expect(res.body.error).toEqual('Cartão de crédito inválido.');
   });
 
   it('Create a cyclist with missing passaporte', async () => {
