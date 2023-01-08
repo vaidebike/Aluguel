@@ -11,6 +11,7 @@ router.get('/:id', cyclistController.getOne)
   .put('/:id', cyclistController.update)
   .delete('/:id', cyclistController.delete)
   .get('/existeEmail/:email', cyclistController.emailExists)
-  .post('/:id/ativar', cyclistController.activate);
+  .post('/:id/ativar', cyclistController.activate)
+  .get('/:id/permiteAluguel', cyclistController.canRent);
 
 export default router;

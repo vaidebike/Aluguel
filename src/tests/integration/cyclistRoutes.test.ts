@@ -578,4 +578,46 @@ describe('Activate a cyclist', () => {
   });
 });
 
+describe('Verify if cyclist can rent a bike', () => {
+  it('Verify if cyclist can rent a bike with valid and existing id', async () => {
+    const res = await request(server)
+      .get('/ciclista/d11dec00-ae9d-4e71-821f-a0d7ad3a8a7a/permiteAluguel');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toBe(true);
+  });
+
+  it('Verify if cyclist can rent a bike with valid and not existing id', async () => {
+    const res = await request(server)
+      .get('/ciclista/aa11111a-8d9d-41b8-91ad-fcba610ddd3b/permiteAluguel');
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Ciclista não encontrado.');
+  });
+
+  it('Verify if cyclist can rent a bike with invalid id', async () => {
+    const res = await request(server)
+      .get('/ciclista/invalid-id/permiteAluguel');
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('uuid inválido.');
+  });
+
+  it('verify if cyclist can rent a bike with a not activated id', async () => {
+    const res = await request(server)
+      .get('/ciclista/e11dec00-ae9d-4e71-821f-a0d7ad3a8a7a/permiteAluguel');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toEqual(false);
+  });
+
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
+  });
+});
+
 

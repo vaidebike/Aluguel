@@ -6,10 +6,12 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CreditCardRepository } from '../models/repositories/CreditCardRepository';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
+import { FakeBikeService } from '../services/bikeService/FakeBikeService';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
+
   private cyclistRepository: CyclistRepository;
   private creditCardRepository: CreditCardRepository;
 
@@ -59,12 +61,12 @@ export class CyclistController {
       const newCyclist = await this.cyclistRepository.create(ciclista);
 
       const emailService = new FakeEmailService();
-      
+
       const confirmEmailUrl = `${req.protocol}://${req.get('host')}/ciclista/${newCyclist?.id}/ativar`;
-      
+
       await emailService.sendEmail(newCyclist?.email, `Por favor, confirme o e-mail através do link: ${confirmEmailUrl}`);
 
-      res.status(200).send({ciclista: newCyclist, confirmEmailUrl});
+      res.status(200).send({ ciclista: newCyclist, confirmEmailUrl });
     } catch (error) {
       let status = 400;
 
@@ -94,8 +96,8 @@ export class CyclistController {
       let status = 400;
 
       if (error instanceof NotValidError) status = 422;
-      if(error instanceof NotFoundError) status = 404;
-      
+      if (error instanceof NotFoundError) status = 404;
+
       res.status(status).send({ error: error.message });
     }
   };
@@ -144,7 +146,37 @@ export class CyclistController {
 
       if (error instanceof NotFoundError) status = 404;
       if (error instanceof NotValidError) status = 422;
-      if(error instanceof AlreadyInUseError) status = 409;
+      if (error instanceof AlreadyInUseError) status = 409;
+
+      res.status(status).send({ error: error.message });
+    }
+  };
+
+  /**
+   *  Verify if the cyclist can rent a bike.
+   *  A cyclist can only rent a bike if the account is activated and
+   *  there is no active rent.
+   *  @Route GET /ciclista/:id/permiteAluguel
+   *  @returns  true if can rent, false otherwise
+   */
+  public canRent = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const cyclistActive = await this.cyclistRepository.verifyStatus(id);
+
+      const bikeService = new FakeBikeService();
+      
+      const bikeRented = await bikeService.getBikeRentedByCyclist((cyclistActive) ? id : null);
+
+      const canRent = cyclistActive && !bikeRented;
+      
+      res.status(200).send(canRent);
+    } catch (error) {
+      let status = 400;
+
+      if (error instanceof NotFoundError) status = 404;
+      if (error instanceof NotValidError) status = 422;
 
       res.status(status).send({ error: error.message });
     }

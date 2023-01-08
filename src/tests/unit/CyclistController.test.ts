@@ -27,7 +27,8 @@ jest.mock('../../models/repositories/CyclistRepository', () => {
       delete: jest.fn(),
       findAll: jest.fn(),
       verifyIfEmailExists: jest.fn(),
-      activate: jest.fn()
+      activate: jest.fn(),
+      verifyStatus: jest.fn().mockImplementation(() => true)
     }))
   };
 });
@@ -135,5 +136,15 @@ describe('CyclistController', () => {
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
+  it('should return 200 if cyclist can rent a bike', async () => {
+    const req = getMockReq();
+    req.params.id = 'd5446ea3-aa72-486f-9f11-203c5c04de67';
+
+    const { res } = getMockRes();
+
+    await cyclistController.canRent(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
 
 });

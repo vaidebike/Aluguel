@@ -8,6 +8,7 @@ import { Ciclista, StatusEnum } from '../Ciclista';
 import { RepositoryInterface } from './RepositoryInterface';
 
 export class CyclistRepository implements RepositoryInterface {
+
   private _db: JsonDB;
 
   constructor(db: JsonDB) {
@@ -182,5 +183,11 @@ export class CyclistRepository implements RepositoryInterface {
     await this.db.push(`/ciclistas[${cyclistIndex}]`, cyclist, true);
 
     return cyclist;
+  }
+
+  public async verifyStatus(id: string): Promise<boolean> {
+    const cyclist = await this.findOne(id);
+    
+    return cyclist.status === StatusEnum.Ativo;
   }
 }
