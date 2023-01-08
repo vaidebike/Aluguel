@@ -6,5 +6,6 @@ const router = expresss.Router();
 const creditCardController = new CreditCardController(jsonDBHandler);
 
 router.get('/:id', creditCardController.findByCyclist);
+router.put('/:id', creditCardController.update);
 
 export default router;

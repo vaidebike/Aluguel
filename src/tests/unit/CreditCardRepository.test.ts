@@ -71,12 +71,51 @@ describe('CreditCardRepository', () => {
     }
   });
 
-  it('should get a not implemented then try to update creditCard', async () => {
-    try {
-      await creditCardRepository.update('123', {});
-    } catch (e) {
-      expect(e.message).toBe('Method not implemented.');
-    }
+  describe('Update a credit card', () => {
+
+    it('should update a credit card', async () => {
+      const creditCard = new CartaoDeCredito();
+      creditCard.numero = '12345678911';
+      creditCard.validade = new Date('2020-01-01');
+      creditCard.cvv = '123';
+      creditCard.id = '2ab87bf4-bca5-4d00-971c-ca1ad4009401';
+      creditCard.nomeTitular = 'John Doe';
+
+      const updatedCreditCard = await creditCardRepository.update('2ab87bf4-bca5-4d00-971c-ca1ad4009401', creditCard);
+
+      expect(updatedCreditCard).toHaveProperty('id');
+      expect(updatedCreditCard.numero).toBe('12345678911');
+      expect(updatedCreditCard.cvv).toBe('123');
+    });
+
+    it('should get a id invalid error when try to update a credit card with invalid id', async () => {
+      try {
+        const creditCard = new CartaoDeCredito();
+        creditCard.numero = '12345678911';
+        creditCard.validade = new Date('2020-01-01');
+        creditCard.cvv = '123';
+        creditCard.nomeTitular = 'John Doe';
+
+        await creditCardRepository.update('12345', creditCard);
+      } catch (e) {
+        expect(e.message).toBe('Id não é válido');
+      }
+    });
+
+    it('should get a not found error when try to update a credit card with a id that does not exist', async () => {
+      try {
+        const creditCard = new CartaoDeCredito();
+        creditCard.numero = '12345678911';
+        creditCard.validade = new Date('2020-01-01');
+        creditCard.cvv = '123';
+        creditCard.nomeTitular = 'John Doe';
+
+        await creditCardRepository.update('2ab87bf4-bca5-4d00-971c-ca1ad4009400', creditCard);
+      } catch (e) {
+        expect(e.message).toBe('Cartão de crédito não encontrado.');
+      }
+    });
+
   });
 
   it('should get a not implemented then try to delete creditCard', async () => {
@@ -104,7 +143,8 @@ function prepareDatabaseForTests(db: JsonDB) {
         pais: 'Brazil',
       },
       status: StatusEnum.AguardandoConfirmacao,
-      id: 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b'
+      id: 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b',
+      id_cartao_de: '2ab87bf4-bca5-4d00-971c-ca1ad4009401'
     },
     {
       nome: 'John Doe 2',

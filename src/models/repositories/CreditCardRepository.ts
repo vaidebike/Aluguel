@@ -48,9 +48,17 @@ export class CreditCardRepository implements RepositoryInterface {
   findAll(): Promise<unknown> {
     throw new Error('Method not implemented.');
   }
-  update(id: string, data: unknown): Promise<unknown> {
-    throw new Error('Method not implemented.');
+  public async update(id: string, data: CartaoDeCredito): Promise<CartaoDeCredito> {
+    const validId = id.match(/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i);
+    if (!validId) throw new NotValidError('Id não é válido');
+    
+    const creditCardIndex = await this.db.getIndex('/cartoesDeCredito', id);
+    if (creditCardIndex === -1) throw new NotFoundError('Cartão de crédito não encontrado.');
+
+    await this.db.push(`/cartoesDeCredito[${creditCardIndex}]`, data, true);
+    return await this.findOne(id);
   }
+
   delete(id: string): Promise<unknown> {
     throw new Error('Method not implemented.');
   }

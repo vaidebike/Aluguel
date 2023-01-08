@@ -71,4 +71,21 @@ describe('CreditCardController', () => {
 
     expect(res.status).toHaveBeenCalledWith(200);
   });
+
+  it('should return a 200 if the credi card is updated', async () => {
+    const req = getMockReq();
+    req.params.id = 'd5446ea3-aa72-486f-9f11-203c5c04de67';
+    req.body = {
+      numero: '12345678910',
+      validade: '2020-01-01',
+      cvv: '123',
+      nomeTitular: 'John Doe'
+    };
+
+    const { res } = getMockRes();
+
+    await creditCardController.update(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
 });
