@@ -84,6 +84,21 @@ class JsonDBHandler implements DatabaseHandlerInterface {
         id: 'd11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
         nacionalidade: 'Brazil',
         urlFotoDocumento: 'https://www.google.com.br',
+      },
+      {
+        nome: 'John Doe 3',
+        nascimento: '1990-01-01',
+        cpf: '12345678911',
+        email: 'johndoe2@email.com',
+        passaporte: {
+          numero: '12345678911',
+          validade: '2020-01-01',
+          pais: 'Brazil',
+        },
+        status: StatusEnum.AguardandoConfirmacao,
+        id: 'e11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        nacionalidade: 'Brazil',
+        urlFotoDocumento: 'https://www.google.com.br',
       }
     ], true);
   }

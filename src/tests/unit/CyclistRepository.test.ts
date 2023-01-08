@@ -723,6 +723,22 @@ describe('CyclistRepository', () => {
     });
   });
 
+  describe('Verify if cyclist status is active', () => {
+    it('should return true when try to verify if a cyclist status is active', async () => {
+      const id = 'd11dec00-ae9d-4e71-821f-a0d7ad3a8a7a';
+      const cyclistStatus = await cyclistRepository.verifyStatus(id);
+
+      expect(cyclistStatus).toBe(true);
+    });
+
+    it('should return false when try to verify if a cyclist status is active with an inactive cyclist id', async () => {
+      const id = 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b';
+      const cyclistStatus = await cyclistRepository.verifyStatus(id);
+
+      expect(cyclistStatus).toBe(false);
+    });
+  });
+
 });
 
 function prepareDatabaseForTests(db: JsonDB) {
