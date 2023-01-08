@@ -26,7 +26,7 @@ describe('EmployeeController', () => {
 
   it('should return 200 if the employee is created', async () => {
     const req = getMockReq();
-  
+
     req.body = {
       funcionario: {
         nome: 'Fulano',

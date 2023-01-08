@@ -375,7 +375,7 @@ describe('Create a invalid cyclist', () => {
     const res = await request(server)
       .post('/ciclista').send({ ciclista, meioDePagamento });
 
-    expect(res.statusCode).toEqual(400);
+    expect(res.statusCode).toEqual(422);
     expect(res.body).toHaveProperty('error');
     expect(res.body.error).toEqual('Ciclista inválido.');
   });

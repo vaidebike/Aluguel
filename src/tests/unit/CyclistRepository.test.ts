@@ -334,6 +334,15 @@ describe('CyclistRepository', () => {
         expect(error.message).toBe('A senha é obrigatória.');
       }
     });
+
+    it('should get a invalid cyclist error when try to create a cyclist with no data', async () => {
+      try {
+        await cyclistRepository.create(null);
+      } catch (error) {
+        expect(error).toBeDefined();
+        expect(error.message).toBe('Ciclista inválido.');
+      }
+    });
   });
 
   describe('Find cyclist', () => {
