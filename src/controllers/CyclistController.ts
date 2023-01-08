@@ -4,15 +4,18 @@ import { DatabaseHandlerInterface } from '../database/DatabaseHandlerInterface';
 import { AlreadyInUseError } from '../errors/AlreadyInUseError';
 import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
+import { CreditCardRepository } from '../models/repositories/CreditCardRepository';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
   private cyclistRepository: CyclistRepository;
+  private creditCardRepository: CreditCardRepository;
 
   constructor(db: DatabaseHandlerInterface) {
     this.cyclistRepository = new CyclistRepository(db.db as JsonDB);
+    this.creditCardRepository = new CreditCardRepository(db.db as JsonDB);
   }
 
   /**
@@ -47,9 +50,12 @@ export class CyclistController {
     const creditCardService = new FakeCreditCardService();
     const validCreditCard = await creditCardService.validateCreditCard(meioDePagamento);
 
-    if (!validCreditCard) return res.status(422).send({ error: 'Invalid credit card' });
+    if (!ciclista) return res.status(422).send({ error: 'Ciclista inválido.' });
+    if (!validCreditCard) return res.status(422).send({ error: 'Cartão de crédito inválido.' });
 
     try {
+      const newCreditCard = await this.creditCardRepository.create(meioDePagamento);
+      ciclista.id_cartao = newCreditCard.id;
       const newCyclist = await this.cyclistRepository.create(ciclista);
 
       const emailService = new FakeEmailService();

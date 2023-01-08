@@ -14,6 +14,7 @@ export class Ciclista {
   urlFotoDocumento: string;
   senha: string;
   confirma_senha: string;
+  id_cartao?: string;
 }
 
 export enum StatusEnum {
