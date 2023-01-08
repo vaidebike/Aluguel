@@ -1,4 +1,5 @@
 import express from 'express';
+import creditCardRoutes from './routes/creditCardRoutes';
 import cyclistRoutes from './routes/cyclistRoutes';
 import employeeRoutes from './routes/employeeRoutes';
 
@@ -15,7 +16,7 @@ app.get('/', async (_, res) => {
 
 app.use('/ciclista', cyclistRoutes);
 app.use('/funcionario', employeeRoutes);
-
+app.use('/cartaoDeCredito', creditCardRoutes);
 
 const server = app.listen(port, () => console.log(`Running on port ${port}`));
 export default server;

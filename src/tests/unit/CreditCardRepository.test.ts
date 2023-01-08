@@ -35,13 +35,32 @@ describe('CreditCardRepository', () => {
       }
     });
 
-    it('should get a not implemented then try to findOne creditCard', async () => {
-      try {
-        await creditCardRepository.findOne('123');
-      } catch (e) {
-        expect(e.message).toBe('Method not implemented.');
-      }
+    describe('Find a credit card by id', () => {
+      it('should get a creditCard by id', async () => {
+        const creditCard = await creditCardRepository.findOne('2ab87bf4-bca5-4d00-971c-ca1ad4009401');
+
+        expect(creditCard).toHaveProperty('id');
+        expect(creditCard.numero).toBe('12345678910');
+        expect(creditCard.cvv).toBe('123');
+      });
+
+      it('should get a not found error when try to find a creditCard with a id that does not exist', async () => {
+        try {
+          await creditCardRepository.findOne('2ab87bf4-bca5-4d00-971c-ca1ad4009400');
+        } catch (e) {
+          expect(e.message).toBe('Cartão de crédito não encontrado.');
+        }
+      });
+
+      it('should get a invalid uuid then try to findOne creditCard with a id that is not valid', async () => {
+        try {
+          await creditCardRepository.findOne('123');
+        } catch (e) {
+          expect(e.message).toBe('uuid inválido.');
+        }
+      });
     });
+
   });
 
   it('should get a not implemented then try to findAll creditCard', async () => {
@@ -99,6 +118,16 @@ function prepareDatabaseForTests(db: JsonDB) {
       },
       status: StatusEnum.Ativo,
       id: 'd11dec00-ae9d-4e71-821f-a0d7ad3a8a7a'
+    }
+  ], true);
+
+  db.push('/cartoesDeCredito', [
+    {
+      numero: '12345678910',
+      validade: '2020-01-01',
+      cvv: '123',
+      nomeTitular: 'John Doe',
+      id: '2ab87bf4-bca5-4d00-971c-ca1ad4009401'
     }
   ], true);
 }

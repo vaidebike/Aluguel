@@ -21,7 +21,7 @@ class JsonDBHandler implements DatabaseHandlerInterface {
     if (process.env.NODE_ENV === 'test') {
       this.dbName = 'database-integration-test.json';
       this.db = new JsonDB(new Config(this.dbName, true, false, '/'));
-      
+
       this.prepareDatabaseForTests(this.db);
     }
 
@@ -43,6 +43,16 @@ class JsonDBHandler implements DatabaseHandlerInterface {
       }
     ]);
 
+    db.push('/cartoesDeCredito', [
+      {
+        numero: '12345678910',
+        validade: '2020-01-01',
+        cvv: '123',
+        nomeTitular: 'John Doe',
+        id: '2ab87bf4-bca5-4d00-971c-ca1ad4009401'
+      }
+    ], true);
+
     db.push('/ciclistas', [
       {
         nome: 'John Doe',
@@ -56,6 +66,7 @@ class JsonDBHandler implements DatabaseHandlerInterface {
         },
         status: StatusEnum.Ativo,
         id: 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b',
+        id_cartao: '2ab87bf4-bca5-4d00-971c-ca1ad4009401',
         nacionalidade: 'Brazil',
         urlFotoDocumento: 'https://www.google.com.br',
       },
