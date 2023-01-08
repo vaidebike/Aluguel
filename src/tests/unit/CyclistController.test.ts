@@ -147,4 +147,14 @@ describe('CyclistController', () => {
     expect(res.status).toHaveBeenCalledWith(200);
   });
 
+  it('should return 200 if the cyclist was notified about the already in progress rent', async ()=>{
+    const req = getMockReq();
+    req.params.id = 'd5446ea3-aa72-486f-9f11-203c5c04de67';
+
+    const { res } = getMockRes();
+
+    await cyclistController.notifyRentInProgress(req, res);
+
+    expect(res.status).toHaveBeenCalledWith(200);
+  });
 });

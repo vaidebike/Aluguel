@@ -12,6 +12,7 @@ import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CyclistController {
 
+
   private cyclistRepository: CyclistRepository;
   private creditCardRepository: CreditCardRepository;
 
@@ -166,12 +167,38 @@ export class CyclistController {
       const cyclistActive = await this.cyclistRepository.verifyStatus(id);
 
       const bikeService = new FakeBikeService();
-      
+
       const bikeRented = await bikeService.getBikeRentedByCyclist((cyclistActive) ? id : null);
 
       const canRent = cyclistActive && !bikeRented;
-      
+
       res.status(200).send(canRent);
+    } catch (error) {
+      let status = 400;
+
+      if (error instanceof NotFoundError) status = 404;
+      if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
+    }
+  };
+
+  /**
+   * Send a email message to the cyclist notifying that the rent is in progress
+   * and he cannot rent another bike.
+   * @Route POST /ciclista/:id/notificaAluguelEmCurso
+   * @returns  Cyclist updated
+   */
+  public notifyRentInProgress = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const cyclist = await this.cyclistRepository.findOne(id);
+
+      const emailService = new FakeEmailService();
+      await emailService.sendEmail(cyclist.email, 'Aluguel em andamento');
+
+      res.status(200).send(cyclist);
     } catch (error) {
       let status = 400;
 
