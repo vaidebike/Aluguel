@@ -12,6 +12,7 @@ router.get('/:id', cyclistController.getOne)
   .delete('/:id', cyclistController.delete)
   .get('/existeEmail/:email', cyclistController.emailExists)
   .post('/:id/ativar', cyclistController.activate)
-  .get('/:id/permiteAluguel', cyclistController.canRent);
+  .get('/:id/permiteAluguel', cyclistController.canRent)
+  .post('/:id/notificaAluguelEmCurso', cyclistController.notifyRentInProgress);
 
 export default router;

@@ -620,4 +620,38 @@ describe('Verify if cyclist can rent a bike', () => {
   });
 });
 
+describe('Notify cyclist about already in progress rent', () => {
+  it('Notify cyclist about already in progress rent with valid and existing id', async () => {
+    const res = await request(server)
+      .post('/ciclista/d11dec00-ae9d-4e71-821f-a0d7ad3a8a7a/notificaAluguelEmCurso');
+
+    expect(res.statusCode).toEqual(200);
+    expect(res.body).toHaveProperty('id');
+    expect(res.body).toHaveProperty('nome');
+  });
+
+  it('Notify cyclist about already in progress rent with valid and not existing id', async () => {
+    const res = await request(server)
+      .post('/ciclista/aa11111a-8d9d-41b8-91ad-fcba610ddd3b/notificaAluguelEmCurso');
+
+    expect(res.statusCode).toEqual(404);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('Ciclista não encontrado.');
+  });
+
+  it('Notify cyclist about already in progress rent with invalid id', async () => {
+    const res = await request(server)
+      .post('/ciclista/invalid-id/notificaAluguelEmCurso');
+
+    expect(res.statusCode).toEqual(422);
+    expect(res.body).toHaveProperty('error');
+    expect(res.body.error).toEqual('uuid inválido.');
+  });
+
+  afterEach(done => {
+    // close server conection
+    server.close();
+    done();
+  });
+});
 
