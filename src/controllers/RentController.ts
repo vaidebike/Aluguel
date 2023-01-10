@@ -17,7 +17,7 @@ export class RentController {
     this.rentRepository = new RentRepository(db.db as JsonDB);
   }
 
-  
+
   public rentBike = async (req: Request, res: Response) => {
     const { ciclista, trancaInicio } = req.body;
 
@@ -26,30 +26,33 @@ export class RentController {
 
     //check if the lock exists and has a bike
     const lock = await equipmentService.getLockById(trancaInicio);
-    if(!lock) return res.status(422).send({ error: 'Tranca inválida.' });
-    if(!lock.bike) return res.status(422).send({ error: 'Tranca sem bicicleta.' });
+    if (!lock) return res.status(422).send({ error: 'Tranca inválida.' });
+    if (!lock.bike) return res.status(422).send({ error: 'Tranca sem bicicleta.' });
 
     //check if the cyclist can rent a bike
     const canRent = await cyclistService.canRentBike(ciclista);
-    if(!canRent){
+    if (!canRent) {
       await cyclistService.notifyRentInProgress(ciclista);
       return res.status(422).send({ error: 'Ciclista não pode alugar.' });
-    } 
-    
+    }
+
+
     //send the carge for cardService
     const creditCardService = new FakeCreditCardService();
     const charge = await creditCardService.makeCharge(ciclista);
-    if(!charge) return res.status(422).send({ error: 'Cobrança não realizada.' });
+    if (!charge) return res.status(422).send({ error: 'Cobrança não realizada.' });
+
 
     const rent = new Aluguel();
     rent.ciclista = ciclista;
     rent.trancaInicio = trancaInicio;
     rent.horaInicio = new Date();
     rent.bicicleta = lock.bike;
+    rent.cobranca = charge.id;
 
     await equipmentService.makeBikeInUse(lock.bike);
     await equipmentService.unlockBike(lock.id);
-    
+
     try {
       const newRent = await this.rentRepository.create(rent);
 

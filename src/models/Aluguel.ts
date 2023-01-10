@@ -3,7 +3,7 @@ export class Aluguel{
   horaInicio?: Date;
   trancaFim?: string;
   horaFim?: Date;
-  cobranca?: number;
+  cobranca?: string;
   ciclista: string;
   trancaInicio: string;
   id?: string;

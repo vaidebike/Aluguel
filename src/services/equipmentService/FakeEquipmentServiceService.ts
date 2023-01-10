@@ -11,7 +11,7 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
   }
 
   public async getLockById(idLock: string): Promise<Lock> {
-    const lock = (idLock) ? null : new Lock();
+    const lock = (!idLock) ? null : new Lock();
     lock.bike = uuidv4();
 
     return Promise.resolve(lock);
