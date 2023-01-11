@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { Ciclista } from '../../models/Ciclista';
+import { CyclistServiceInterface } from './CyclistServiceInterface';
 
-export class CyclistService {
+export class CyclistService implements CyclistServiceInterface{
   private hostname: string;
 
   constructor() {
