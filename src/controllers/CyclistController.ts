@@ -6,9 +6,9 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CreditCardRepository } from '../models/repositories/CreditCardRepository';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
-import { FakeBikeService } from '../services/bikeService/FakeBikeService';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
+import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentServiceService';
 
 export class CyclistController {
 
@@ -166,7 +166,7 @@ export class CyclistController {
     try {
       const cyclistActive = await this.cyclistRepository.verifyStatus(id);
 
-      const bikeService = new FakeBikeService();
+      const bikeService = new FakeEquipmentService();
 
       const bikeRented = await bikeService.getBikeRentedByCyclist((cyclistActive) ? id : null);
 
