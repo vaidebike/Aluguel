@@ -20,7 +20,7 @@ export class FakeCreditCardService implements CreditCardServiceInterface {
 
     return Promise.resolve(cobranca);
   }
-}
+} 
 
 export class Cobranca{
   id?: string;

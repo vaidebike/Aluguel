@@ -25,13 +25,36 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
     return Promise.resolve(bike);
   }
 
+  public async makeBikeFree(idBike: string): Promise<Bike>{
+    const bike = new Bike();
+    bike.id = idBike;
+    bike.status = StatusBike.Available;
+
+    return Promise.resolve(bike);
+  }
+
   public async unlockBike(idLock: string): Promise<Lock>{
     const lock = (idLock) ? null : new Lock();
+    lock.status = StatusEnum.Available;
     lock.bike = uuidv4();
 
     return Promise.resolve(lock);
   }
 
+  public async lockBike(idLock: string): Promise<Lock>{
+    const lock = (idLock) ? null : new Lock();
+    lock.bike = null;
+    lock.status = StatusEnum.Locked;
+
+    return Promise.resolve(lock);
+  }
+
+  public async getBikeById(idBike: string): Promise<Bike>{
+    const bike = (!idBike) ? null : new Bike();
+    bike.id = idBike;
+
+    return Promise.resolve(bike);
+  }
 }
 
 export class Lock {
