@@ -38,7 +38,6 @@ export class RentController {
       this.cyclistService = new FakeCyclistService();
     }
 
-
     try {
 
       const lock = await this.checkIfLockExistsAndHasBike(trancaInicio, this.equipmentService);
@@ -68,8 +67,6 @@ export class RentController {
       if (error instanceof NotValidError) status = 422;
       if (error instanceof NotFoundError) status = 404;
 
-      console.log(error);
-
       res.status(status).send({ error: error.message });
     }
   };
@@ -82,7 +79,7 @@ export class RentController {
 
   private async checkIfLockExistsAndHasBike(lockId: string, service: EquipmentServiceInterface): Promise<Lock> {
     const lock = await service.getLockById(lockId);
-    if (!lock) throw new NotFoundError('Tranca não encontrada.');
+    if (lock === null) throw new NotFoundError('Tranca não encontrada.');
     if (!lock.bike) throw new NotFoundError('Tranca sem bicicleta.');
 
     return lock;
