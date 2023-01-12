@@ -105,9 +105,19 @@ class JsonDBHandler implements DatabaseHandlerInterface {
 
     db.push('/alugueis', [
       {
-        id: 'a11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
-        id_ciclista: 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b',
-        id_bicicleta: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        id: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        ciclista: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        bicicleta: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        horaInicio: '2020-01-01 00:00:00',
+        horaFim: '2020-01-01 00:00:00',
+        trancaInicio: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        trancaFim: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        cobranca: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a'
+      },
+      {
+        id: 'c11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        ciclista: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        bicicleta: 'c11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
         horaInicio: '2020-01-01 00:00:00',
         horaFim: '2020-01-01 00:00:00',
         trancaInicio: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',

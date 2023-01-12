@@ -174,7 +174,7 @@ function prepareDatabaseForTests(db: JsonDB) {
     horaFim: '2021-08-01T00:00:00.000Z',
     cobranca: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
     idCiclista: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
-    idBicicleta: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
+    bicicleta: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
     trancaInicio: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
     trancaFim: '7ef32b9a-2e22-46e6-a7f6-6297c28421bf',
   });

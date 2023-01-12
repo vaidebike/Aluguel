@@ -12,7 +12,7 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
 
   public async getLockById(idLock: string): Promise<Lock> {
     const lock = (idLock === '3fa85f64-5717-4562-b3fc-2c963f66afa6') ? new Lock() : null;
-    if(lock){
+    if (lock) {
       lock.bike = uuidv4();
     }
 
@@ -27,7 +27,7 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
     return Promise.resolve(bike);
   }
 
-  public async makeBikeFree(idBike: string): Promise<Bike>{
+  public async makeBikeFree(idBike: string): Promise<Bike> {
     const bike = new Bike();
     bike.id = idBike;
     bike.status = StatusBike.Available;
@@ -35,7 +35,7 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
     return Promise.resolve(bike);
   }
 
-  public async unlockBike(idLock: string): Promise<Lock>{
+  public async unlockBike(idLock: string): Promise<Lock> {
     const lock = (idLock) ? null : new Lock();
     lock.status = StatusEnum.Available;
     lock.bike = uuidv4();
@@ -43,15 +43,17 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
     return Promise.resolve(lock);
   }
 
-  public async lockBike(idLock: string): Promise<Lock>{
-    const lock = (idLock) ? null : new Lock();
-    lock.bike = null;
-    lock.status = StatusEnum.Locked;
+  public async lockBike(idLock: string): Promise<Lock> {
+    const lock = (!idLock) ? null : new Lock();
+    if (lock) {
+      lock.bike = null;
+      lock.status = StatusEnum.Locked;
+    }
 
     return Promise.resolve(lock);
   }
 
-  public async getBikeById(idBike: string): Promise<Bike>{
+  public async getBikeById(idBike: string): Promise<Bike> {
     const bike = (!idBike) ? null : new Bike();
     bike.id = idBike;
 

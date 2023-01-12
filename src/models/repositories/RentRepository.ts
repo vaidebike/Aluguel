@@ -32,11 +32,12 @@ export class RentRepository implements RepositoryInterface {
     return aluguel;
   }
 
-  public async getRentByBike(bicicleta: string) {
+  public async getRentByBike(bicicleta: string): Promise<Aluguel> {
     if(!bicicleta) throw new NoDataError('Bicicleta inválida.');
 
     try{
-      const rentIndex = await this.db.getIndex('/alugueis', bicicleta, 'idBicicleta');
+      const rentIndex = await this.db.getIndex('/alugueis', bicicleta, 'bicicleta');
+      //get all rents from db
       if(rentIndex === -1) throw new NotFoundError('Aluguel não encontrado.');
 
       const aluguel = await this.db.getData(`/alugueis[${rentIndex}]`);

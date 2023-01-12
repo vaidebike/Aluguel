@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { JsonDB } from 'node-json-db';
+import { NotFoundError } from '../errors/NotFoundError';
 import { DatabaseHandlerInterface } from '../database/DatabaseHandlerInterface';
 import { NotValidError } from '../errors/NotValidError';
 import { Aluguel } from '../models/Aluguel';
@@ -36,13 +37,13 @@ export class ReturnController {
       const valueToPay = await this.calculateValueToPay(rent);
       const cyclist = await this.cyclistRepository.findOne(rent.ciclista);
 
+      
       if (valueToPay > 0) {
         await this.sendMailWithCharge(valueToPay, cyclist, emailService);
         await this.chargeValue(cyclist, creditCardService);
       }
 
       await this.putBikeInLock(trancaFim, bicicleta, equipmentService);
-
       rent.trancaFim = trancaFim;
       rent.horaFim = new Date();
 
@@ -52,6 +53,7 @@ export class ReturnController {
     } catch (error) {
       let status = 400;
       if (error instanceof NotValidError) status = 422;
+      if (error instanceof NotFoundError) status = 404;
       
       return res.status(status).json({ error: error.message });
     }
@@ -72,7 +74,7 @@ export class ReturnController {
 
   private async getRentByBike(bicicleta: string): Promise<Aluguel> {
     const rent = await this.rentRepository.getRentByBike(bicicleta);
-    if (!rent) throw new NotValidError('Aluguel não encontrado.');
+    if (!rent) throw new NotFoundError('Aluguel não encontrado.');
     return rent;
   }
 
