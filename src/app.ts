@@ -3,6 +3,7 @@ import creditCardRoutes from './routes/creditCardRoutes';
 import cyclistRoutes from './routes/cyclistRoutes';
 import employeeRoutes from './routes/employeeRoutes';
 import rentRoutes from './routes/rentRoutes';
+import returnRoutes from './routes/returnRoutes';
 
 const app = express();
 app.disable('x-powered-by');
@@ -19,6 +20,7 @@ app.use('/ciclista', cyclistRoutes);
 app.use('/funcionario', employeeRoutes);
 app.use('/cartaoDeCredito', creditCardRoutes);
 app.use('/aluguel', rentRoutes);
+app.use('/devolucao', returnRoutes);
 
 const server = app.listen(port, () => console.log(`Running on port ${port}`));
 export default server;

@@ -1,10 +1,9 @@
 import { Request, Response } from 'express';
 import { JsonDB } from 'node-json-db';
-import { NotFoundError } from '../errors/NotFoundError';
 import { DatabaseHandlerInterface } from '../database/DatabaseHandlerInterface';
+import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { Aluguel } from '../models/Aluguel';
-import { Ciclista } from '../models/Ciclista';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { RentRepository } from '../models/repositories/RentRepository';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
@@ -33,28 +32,25 @@ export class ReturnController {
     try {
       await this.validateBike(bicicleta, equipmentService);
 
-      const rent = await this.getRentByBike(bicicleta);
-      const valueToPay = await this.calculateValueToPay(rent);
-      const cyclist = await this.cyclistRepository.findOne(rent.ciclista);
+      await this.getRentByBike(bicicleta).then(async (rent) => {
+        const valueToPay = await this.calculateValueToPay(rent);
 
-      
-      if (valueToPay > 0) {
-        await this.sendMailWithCharge(valueToPay, cyclist, emailService);
-        await this.chargeValue(cyclist, creditCardService);
-      }
+        await this.chargeValue(rent.ciclista, valueToPay, creditCardService, emailService);
 
-      await this.putBikeInLock(trancaFim, bicicleta, equipmentService);
-      rent.trancaFim = trancaFim;
-      rent.horaFim = new Date();
+        await this.putBikeInLock(trancaFim, bicicleta, equipmentService);
+        rent.trancaFim = trancaFim;
+        rent.horaFim = new Date();
 
-      await this.rentRepository.update(rent.id, rent);
+        await this.rentRepository.update(rent.id, rent);
 
-      return res.status(200).json(rent);
+        return res.status(200).json(rent);
+      });
+
     } catch (error) {
       let status = 400;
       if (error instanceof NotValidError) status = 422;
       if (error instanceof NotFoundError) status = 404;
-      
+
       return res.status(status).json({ error: error.message });
     }
   };
@@ -64,22 +60,27 @@ export class ReturnController {
     await equipmentService.lockBike(idLock);
   }
 
-  private async sendMailWithCharge(valueToPay: number, cyclist: Ciclista, emailService: EmailServiceInterface) {
-    return emailService.sendEmail(cyclist.email, `Você deve pagar R$ ${valueToPay} para finalizar o aluguel.`);
+  private async sendMailWithCharge(valueToPay: number, email: string, emailService: EmailServiceInterface) {
+    return emailService.sendEmail(email, `Você deve pagar R$ ${valueToPay} para finalizar o aluguel.`);
   }
 
-  private async chargeValue(cyclist: Ciclista, creditCardService: CreditCardServiceInterface) {
-    return creditCardService.makeCharge(cyclist.id_cartao);
+  private async chargeValue(cyclistId: string, valueToPay: number, creditCardService: CreditCardServiceInterface, emailService: EmailServiceInterface) {
+    await this.cyclistRepository.findOne(cyclistId).then(async (cyclist) => {
+      if (valueToPay > 0) {
+        await this.sendMailWithCharge(valueToPay, cyclist.email, emailService);
+        return creditCardService.makeCharge(cyclist.id_cartao);
+      }
+    });
   }
 
   private async getRentByBike(bicicleta: string): Promise<Aluguel> {
-    const rent = await this.rentRepository.getRentByBike(bicicleta);
-    if (!rent) throw new NotFoundError('Aluguel não encontrado.');
-    return rent;
+    return await this.rentRepository.getRentByBike(bicicleta);
   }
 
   private async calculateValueToPay(rent: Aluguel) {
-    const time = new Date().getTime() - rent.horaInicio.getTime();
+    const horaInicio = new Date(rent.horaInicio);
+
+    const time = new Date().getTime() - horaInicio.getTime();
     const hours = Math.ceil(time / (1000 * 60 * 60));
 
     return hours * 5;
@@ -90,7 +91,7 @@ export class ReturnController {
     if (!bicicleta) throw new NotValidError('Bicicleta não informada.');
 
     const bike = service.getBikeById(bicicleta);
-    if (!bike) throw new NotValidError('Bicicleta não encontrada.');
+    if (!bike) throw new NotFoundError('Bicicleta não encontrada.');
   }
 }
 

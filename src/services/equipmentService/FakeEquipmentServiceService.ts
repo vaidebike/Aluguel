@@ -54,8 +54,8 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
   }
 
   public async getBikeById(idBike: string): Promise<Bike> {
-    const bike = (!idBike) ? null : new Bike();
-    bike.id = idBike;
+    const bike = (idBike === 'a11dec00-ae9d-4e71-821f-a0d7ad3a8a7b') ? null : new Bike();
+    if(bike) bike.id = idBike;
 
     return Promise.resolve(bike);
   }

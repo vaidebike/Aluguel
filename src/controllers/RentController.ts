@@ -32,14 +32,13 @@ export class RentController {
 
     this.equipmentService = new FakeEquipmentService();
     this.creditCardService = new FakeCreditCardService();
-    this.cyclistService = new CyclistService();
+    this.cyclistService = new CyclistService(req.get('host'));
 
     if(process.env.NODE_ENV == 'test'){
       this.cyclistService = new FakeCyclistService();
     }
 
     try {
-
       const lock = await this.checkIfLockExistsAndHasBike(trancaInicio, this.equipmentService);
 
       await this.checkIfCyclistCanRentBike(ciclista, this.cyclistService);

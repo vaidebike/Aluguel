@@ -106,7 +106,7 @@ class JsonDBHandler implements DatabaseHandlerInterface {
     db.push('/alugueis', [
       {
         id: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
-        ciclista: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
+        ciclista: 'ca67326d-8d9d-41b8-91ad-fcba610ddd3b',
         bicicleta: 'b11dec00-ae9d-4e71-821f-a0d7ad3a8a7a',
         horaInicio: '2020-01-01 00:00:00',
         horaFim: '2020-01-01 00:00:00',

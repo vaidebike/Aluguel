@@ -40,7 +40,8 @@ export class RentRepository implements RepositoryInterface {
       //get all rents from db
       if(rentIndex === -1) throw new NotFoundError('Aluguel não encontrado.');
 
-      const aluguel = await this.db.getData(`/alugueis[${rentIndex}]`);
+      const aluguel = await this.db.getData(`/alugueis[${rentIndex}]`) as Aluguel;
+      
       return aluguel;
     }catch(error){
       throw new NotFoundError('Aluguel não encontrado.');
