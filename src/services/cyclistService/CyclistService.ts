@@ -9,8 +9,7 @@ export class CyclistService implements CyclistServiceInterface {
     this.hostname = host;
   }
   public async canRentBike(idCyclist: string): Promise<boolean> {
-    const canRent = await axios.get(`http://${this.hostname}/ciclista/${idCyclist}/permiteAluguel/`).then(data => data.data);
-    console.log(canRent);
+    const canRent = await (await axios.get(`http://${this.hostname}/ciclista/${idCyclist}/permiteAluguel/`)).data;
     
     return canRent;
   }
