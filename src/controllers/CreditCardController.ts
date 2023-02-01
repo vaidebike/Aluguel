@@ -5,6 +5,8 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CreditCardRepository } from '../models/repositories/CreditCardRepository';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
+import { CreditCardService } from '../services/creditCardService/CreditCardService';
+import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
@@ -12,6 +14,8 @@ export class CreditCardController {
 
   private creditCardRepository: CreditCardRepository;
   private cyclistRepository: CyclistRepository;
+  private creditCardService: CreditCardServiceInterface;
+
 
   constructor(db: DatabaseHandlerInterface) {
     this.creditCardRepository = new CreditCardRepository(db.db as JsonDB);
@@ -50,8 +54,13 @@ export class CreditCardController {
     const creditCard = req.body;
 
     try {
-      const creditCardService = new FakeCreditCardService();
-      const validCreditCard = await creditCardService.validateCreditCard(creditCard);
+
+      this.creditCardService = new CreditCardService();
+      if(process.env.NODE_ENV == 'test'){
+        this.creditCardService = new FakeCreditCardService();
+      }
+
+      const validCreditCard = await this.creditCardService.validateCreditCard(creditCard);
       if (!validCreditCard) throw new NotValidError('Cartão de crédito inválido');
 
       const cyclist = await this.cyclistRepository.findOne(id);

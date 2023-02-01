@@ -6,6 +6,8 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CreditCardRepository } from '../models/repositories/CreditCardRepository';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
+import { CreditCardService } from '../services/creditCardService/CreditCardService';
+import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentServiceService';
@@ -15,6 +17,7 @@ export class CyclistController {
 
   private cyclistRepository: CyclistRepository;
   private creditCardRepository: CreditCardRepository;
+  private creditCardService: CreditCardServiceInterface;
 
   constructor(db: DatabaseHandlerInterface) {
     this.cyclistRepository = new CyclistRepository(db.db as JsonDB);
@@ -50,8 +53,12 @@ export class CyclistController {
   public create = async (req: Request, res: Response) => {
     const { ciclista, meioDePagamento } = req.body;
 
-    const creditCardService = new FakeCreditCardService();
-    const validCreditCard = await creditCardService.validateCreditCard(meioDePagamento);
+    this.creditCardService = new CreditCardService();
+    if(process.env.NODE_ENV == 'test'){
+      this.creditCardService = new FakeCreditCardService();
+    }
+
+    const validCreditCard = await this.creditCardService.validateCreditCard(meioDePagamento);
 
     if (!ciclista) return res.status(422).send({ error: 'Ciclista inválido.' });
     if (!validCreditCard) return res.status(422).send({ error: 'Cartão de crédito inválido.' });

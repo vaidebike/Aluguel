@@ -6,6 +6,7 @@ import { NotValidError } from '../errors/NotValidError';
 import { Aluguel } from '../models/Aluguel';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { RentRepository } from '../models/repositories/RentRepository';
+import { CreditCardService } from '../services/creditCardService/CreditCardService';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
@@ -16,6 +17,7 @@ import { FakeEquipmentService } from '../services/equipmentService/FakeEquipment
 export class ReturnController {
   private rentRepository: RentRepository;
   private cyclistRepository: CyclistRepository;
+  private creditCardService: CreditCardServiceInterface;
 
   constructor(db: DatabaseHandlerInterface) {
     this.rentRepository = new RentRepository(db.db as JsonDB);
@@ -27,7 +29,11 @@ export class ReturnController {
 
     const equipmentService = new FakeEquipmentService();
     const emailService = new FakeEmailService();
-    const creditCardService = new FakeCreditCardService();
+    this.creditCardService = new CreditCardService();
+
+    if(process.env.NODE_ENV == 'test'){
+      this.creditCardService = new FakeCreditCardService();
+    }
 
     try {
       await this.validateBike(bicicleta, equipmentService);
@@ -35,7 +41,7 @@ export class ReturnController {
       await this.getRentByBike(bicicleta).then(async (rent) => {
         const valueToPay = await this.calculateValueToPay(rent);
 
-        await this.chargeValue(rent.ciclista, valueToPay, creditCardService, emailService);
+        await this.chargeValue(rent.ciclista, valueToPay, this.creditCardService, emailService);
 
         await this.putBikeInLock(trancaFim, bicicleta, equipmentService);
         rent.trancaFim = trancaFim;

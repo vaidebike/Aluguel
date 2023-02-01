@@ -5,6 +5,7 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { Aluguel } from '../models/Aluguel';
 import { RentRepository } from '../models/repositories/RentRepository';
+import { CreditCardService } from '../services/creditCardService/CreditCardService';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { CyclistService } from '../services/cyclistService/CyclistService';
@@ -31,11 +32,12 @@ export class RentController {
     const { ciclista, trancaInicio } = req.body;
 
     this.equipmentService = new FakeEquipmentService();
-    this.creditCardService = new FakeCreditCardService();
+    this.creditCardService = new CreditCardService();
     this.cyclistService = new CyclistService(req.get('host'));
 
     if(process.env.NODE_ENV == 'test'){
       this.cyclistService = new FakeCyclistService();
+      this.creditCardService = new FakeCreditCardService();
     }
 
     try {
