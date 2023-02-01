@@ -11,6 +11,7 @@ import { FakeCreditCardService } from '../services/creditCardService/FakeCreditC
 import { CyclistService } from '../services/cyclistService/CyclistService';
 import { CyclistServiceInterface } from '../services/cyclistService/CyclistServiceInterface';
 import { FakeCyclistService } from '../services/cyclistService/FakeCyclistService';
+import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
@@ -34,10 +35,13 @@ export class RentController {
     this.equipmentService = new FakeEquipmentService();
     this.creditCardService = new CreditCardService();
     this.cyclistService = new CyclistService(req.get('host'));
+    this.emailService = new EmailService();
 
     if(process.env.NODE_ENV == 'test'){
       this.cyclistService = new FakeCyclistService();
       this.creditCardService = new FakeCreditCardService();
+      this.emailService = new FakeEmailService();
+
     }
 
     try {
@@ -59,7 +63,6 @@ export class RentController {
 
       const newRent = await this.rentRepository.create(rent);
 
-      this.emailService = new FakeEmailService();
       await this.emailService.sendEmail(ciclista, 'Aluguel iniciado com sucesso.');
 
       res.status(201).send(newRent);

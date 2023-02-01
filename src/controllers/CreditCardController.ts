@@ -8,6 +8,8 @@ import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { CreditCardService } from '../services/creditCardService/CreditCardService';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
+import { EmailService } from '../services/emailService/EmailService';
+import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 
 export class CreditCardController {
@@ -15,6 +17,7 @@ export class CreditCardController {
   private creditCardRepository: CreditCardRepository;
   private cyclistRepository: CyclistRepository;
   private creditCardService: CreditCardServiceInterface;
+  private emailService: EmailServiceInterface;
 
 
   constructor(db: DatabaseHandlerInterface) {
@@ -56,8 +59,10 @@ export class CreditCardController {
     try {
 
       this.creditCardService = new CreditCardService();
+      this.emailService = new EmailService();
       if(process.env.NODE_ENV == 'test'){
         this.creditCardService = new FakeCreditCardService();
+        this.emailService = new FakeEmailService();
       }
 
       const validCreditCard = await this.creditCardService.validateCreditCard(creditCard);
@@ -68,8 +73,7 @@ export class CreditCardController {
 
       const creditCardUpdated = await this.creditCardRepository.update(cyclist.id_cartao, creditCard);
 
-      const fakeEmailService = new FakeEmailService();
-      fakeEmailService.sendEmail(cyclist.email, 'Seu cartão de crédito foi atualizado com sucesso');
+      this.emailService.sendEmail(cyclist.email, 'Seu cartão de crédito foi atualizado com sucesso');
       resp.status(200).send(creditCardUpdated);
     } catch (error) {
       let status = 400;

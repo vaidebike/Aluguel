@@ -9,15 +9,17 @@ import { CyclistRepository } from '../models/repositories/CyclistRepository';
 import { CreditCardService } from '../services/creditCardService/CreditCardService';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
+import { EmailService } from '../services/emailService/EmailService';
+import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentServiceService';
 
 export class CyclistController {
 
-
   private cyclistRepository: CyclistRepository;
   private creditCardRepository: CreditCardRepository;
   private creditCardService: CreditCardServiceInterface;
+  private emailService: EmailServiceInterface;
 
   constructor(db: DatabaseHandlerInterface) {
     this.cyclistRepository = new CyclistRepository(db.db as JsonDB);
@@ -54,8 +56,10 @@ export class CyclistController {
     const { ciclista, meioDePagamento } = req.body;
 
     this.creditCardService = new CreditCardService();
+    this.emailService = new EmailService();
     if(process.env.NODE_ENV == 'test'){
       this.creditCardService = new FakeCreditCardService();
+      this.emailService = new FakeEmailService();
     }
 
     const validCreditCard = await this.creditCardService.validateCreditCard(meioDePagamento);
@@ -67,12 +71,11 @@ export class CyclistController {
       const newCreditCard = await this.creditCardRepository.create(meioDePagamento);
       ciclista.id_cartao = newCreditCard.id;
       const newCyclist = await this.cyclistRepository.create(ciclista);
-
-      const emailService = new FakeEmailService();
+     
 
       const confirmEmailUrl = `${req.protocol}://${req.get('host')}/ciclista/${newCyclist?.id}/ativar`;
 
-      await emailService.sendEmail(newCyclist?.email, `Por favor, confirme o e-mail através do link: ${confirmEmailUrl}`);
+      await this.emailService.sendEmail(newCyclist?.email, `Por favor, confirme o e-mail através do link: ${confirmEmailUrl}`);
 
       res.status(200).send({ ciclista: newCyclist, confirmEmailUrl });
     } catch (error) {
@@ -93,11 +96,15 @@ export class CyclistController {
     const { ciclista } = req.body;
     const id = req.params.id;
 
+    this.emailService = new EmailService();
+    if(process.env.NODE_ENV == 'test'){
+      this.emailService = new FakeEmailService();
+    }
+
     try {
       const newCyclist = await this.cyclistRepository.update(id, ciclista);
 
-      const emailService = new FakeEmailService();
-      await emailService.sendEmail(newCyclist?.email, 'Dados atualizados com sucesso');
+      this.emailService.sendEmail(newCyclist?.email, 'Dados atualizados com sucesso');
 
       res.status(200).send(newCyclist);
     } catch (error) {
@@ -142,11 +149,15 @@ export class CyclistController {
   public activate = async (req: Request, res: Response) => {
     const { id } = req.params;
 
+    this.emailService = new EmailService();
+    if(process.env.NODE_ENV == 'test'){
+      this.emailService = new FakeEmailService();
+    }
+
     try {
       const cyclist = await this.cyclistRepository.activate(id);
 
-      const emailService = new FakeEmailService();
-      await emailService.sendEmail(cyclist?.email, 'Conta ativada com sucesso');
+      this.emailService.sendEmail(cyclist?.email, 'Conta ativada com sucesso');
 
       res.status(200).send(cyclist);
     } catch (error) {
@@ -199,11 +210,16 @@ export class CyclistController {
   public notifyRentInProgress = async (req: Request, res: Response) => {
     const { id } = req.params;
 
+
+    this.emailService = new EmailService();
+    if(process.env.NODE_ENV == 'test'){
+      this.emailService = new FakeEmailService();
+    }
+
     try {
       const cyclist = await this.cyclistRepository.findOne(id);
 
-      const emailService = new FakeEmailService();
-      await emailService.sendEmail(cyclist.email, 'Aluguel em andamento');
+      this.emailService.sendEmail(cyclist.email, 'Aluguel em andamento');
 
       res.status(200).send(cyclist);
     } catch (error) {

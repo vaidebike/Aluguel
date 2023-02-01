@@ -9,6 +9,7 @@ import { RentRepository } from '../models/repositories/RentRepository';
 import { CreditCardService } from '../services/creditCardService/CreditCardService';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
+import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
@@ -18,6 +19,7 @@ export class ReturnController {
   private rentRepository: RentRepository;
   private cyclistRepository: CyclistRepository;
   private creditCardService: CreditCardServiceInterface;
+  private emailService: EmailServiceInterface;
 
   constructor(db: DatabaseHandlerInterface) {
     this.rentRepository = new RentRepository(db.db as JsonDB);
@@ -28,11 +30,13 @@ export class ReturnController {
     const { bicicleta, trancaFim } = req.body;
 
     const equipmentService = new FakeEquipmentService();
-    const emailService = new FakeEmailService();
     this.creditCardService = new CreditCardService();
+    this.emailService = new EmailService();
 
     if(process.env.NODE_ENV == 'test'){
       this.creditCardService = new FakeCreditCardService();
+      this.emailService = new FakeEmailService();
+
     }
 
     try {
@@ -41,7 +45,7 @@ export class ReturnController {
       await this.getRentByBike(bicicleta).then(async (rent) => {
         const valueToPay = await this.calculateValueToPay(rent);
 
-        await this.chargeValue(rent.ciclista, valueToPay, this.creditCardService, emailService);
+        await this.chargeValue(rent.ciclista, valueToPay, this.creditCardService, this.emailService);
 
         await this.putBikeInLock(trancaFim, bicicleta, equipmentService);
         rent.trancaFim = trancaFim;
