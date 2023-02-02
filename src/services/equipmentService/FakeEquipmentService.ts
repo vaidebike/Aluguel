@@ -22,11 +22,14 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
   }
 
   public async unlockBike(idLock: string): Promise<Tranca> {
-    const lock = (idLock) ? null : new Tranca();
-    lock.status = StatusEnum.Disponivel;
-    lock.bicicleta = uuidv4();
-
-    return Promise.resolve(lock);
+    const lock = (!idLock) ? null : new Tranca();
+    if (lock){
+      lock.status = StatusEnum.Disponivel;
+      lock.bicicleta = uuidv4();
+  
+      return Promise.resolve(lock);
+    }
+    throw new NotValidError('Tranca não encontrada');
   }
 
   public async lockBike(idLock: string, idBike: string): Promise<Tranca> {

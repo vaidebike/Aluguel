@@ -39,7 +39,6 @@ export class ReturnController {
       this.creditCardService = new FakeCreditCardService();
       this.emailService = new FakeEmailService();
       this.equipmentService = new FakeEquipmentService();
-
     }
 
 
@@ -82,7 +81,7 @@ export class ReturnController {
     await this.cyclistRepository.findOne(cyclistId).then(async (cyclist) => {
       if (valueToPay > 0) {
         await this.sendMailWithCharge(valueToPay, cyclist.email, emailService);
-        return creditCardService.makeCharge(cyclist.id_cartao);
+        return await creditCardService.makeCharge(cyclist.id_cartao);
       }
     });
   }

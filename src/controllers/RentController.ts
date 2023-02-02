@@ -5,7 +5,6 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { Aluguel } from '../models/Aluguel';
 import { RentRepository } from '../models/repositories/RentRepository';
-import { Tranca } from '../models/Tranca';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { CyclistService } from '../services/cyclistService/CyclistService';
@@ -43,7 +42,6 @@ export class RentController {
       this.creditCardService = new FakeCreditCardService();
       this.emailService = new FakeEmailService();
       this.equipmentService = new FakeEquipmentService();
-
     }
 
     try {
@@ -78,14 +76,6 @@ export class RentController {
     const charge = await service.makeCharge(cyclistId);
     if (!charge) throw new NotValidError('Ciclista não pode alugar.');
     return charge;
-  }
-
-  private async checkIfLockExistsAndHasBike(lockId: string, service: EquipmentServiceInterface): Promise<Tranca> {
-    const lock = await service.getLockById(lockId);
-    if (lock === null) throw new NotFoundError('Tranca não encontrada.');
-    if (!lock.bicicleta) throw new NotFoundError('Tranca sem bicicleta.');
-
-    return lock;
   }
 
   private async checkIfCyclistCanRentBike(cyclistId: string, service: CyclistServiceInterface) {

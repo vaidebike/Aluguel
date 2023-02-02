@@ -29,7 +29,7 @@ describe('Rent controller', () => {
     rentController = new RentController(databaseStub);
   });
 
-  it('should return 200 if the rent is created', async () => {
+  it('should return 201 if the rent is created', async () => {
     const req = getMockReq();
 
     req.body = {
@@ -40,6 +40,6 @@ describe('Rent controller', () => {
 
     await rentController.rentBike(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.status).toHaveBeenCalledWith(201);
   });
 });
