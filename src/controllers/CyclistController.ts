@@ -6,24 +6,40 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { CreditCardRepository } from '../models/repositories/CreditCardRepository';
 import { CyclistRepository } from '../models/repositories/CyclistRepository';
+import { RentRepository } from '../models/repositories/RentRepository';
 import { CreditCardService } from '../services/creditCardService/CreditCardService';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
-import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentServiceService';
+import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
+import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentService';
 
 export class CyclistController {
 
   private cyclistRepository: CyclistRepository;
   private creditCardRepository: CreditCardRepository;
+  private rentRepository: RentRepository;
+
   private creditCardService: CreditCardServiceInterface;
   private emailService: EmailServiceInterface;
+  private equipmentService: EquipmentServiceInterface;
 
   constructor(db: DatabaseHandlerInterface) {
     this.cyclistRepository = new CyclistRepository(db.db as JsonDB);
     this.creditCardRepository = new CreditCardRepository(db.db as JsonDB);
+    this.rentRepository = new RentRepository(db.db as JsonDB);
+
+    this.creditCardService = new CreditCardService();
+    this.emailService = new EmailService();
+    this.equipmentService = new FakeEquipmentService();
+    if(process.env.NODE_ENV == 'test'){
+      this.creditCardService = new FakeCreditCardService();
+      this.emailService = new FakeEmailService();
+      this.equipmentService = new FakeEquipmentService();
+    }
+
   }
 
   /**
@@ -54,13 +70,6 @@ export class CyclistController {
  */
   public create = async (req: Request, res: Response) => {
     const { ciclista, meioDePagamento } = req.body;
-
-    this.creditCardService = new CreditCardService();
-    this.emailService = new EmailService();
-    if(process.env.NODE_ENV == 'test'){
-      this.creditCardService = new FakeCreditCardService();
-      this.emailService = new FakeEmailService();
-    }
 
     const validCreditCard = await this.creditCardService.validateCreditCard(meioDePagamento);
 
@@ -95,11 +104,6 @@ export class CyclistController {
   public update = async (req: Request, res: Response) => {
     const { ciclista } = req.body;
     const id = req.params.id;
-
-    this.emailService = new EmailService();
-    if(process.env.NODE_ENV == 'test'){
-      this.emailService = new FakeEmailService();
-    }
 
     try {
       const newCyclist = await this.cyclistRepository.update(id, ciclista);
@@ -149,11 +153,6 @@ export class CyclistController {
   public activate = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-    this.emailService = new EmailService();
-    if(process.env.NODE_ENV == 'test'){
-      this.emailService = new FakeEmailService();
-    }
-
     try {
       const cyclist = await this.cyclistRepository.activate(id);
 
@@ -184,9 +183,7 @@ export class CyclistController {
     try {
       const cyclistActive = await this.cyclistRepository.verifyStatus(id);
 
-      const bikeService = new FakeEquipmentService();
-
-      const bikeRented = await bikeService.getBikeRentedByCyclist((cyclistActive) ? id : null);
+      const bikeRented = await this.equipmentService.getBikeRentedByCyclist((cyclistActive) ? id : null);
 
       const canRent = cyclistActive && !bikeRented;
 
@@ -210,18 +207,33 @@ export class CyclistController {
   public notifyRentInProgress = async (req: Request, res: Response) => {
     const { id } = req.params;
 
-
-    this.emailService = new EmailService();
-    if(process.env.NODE_ENV == 'test'){
-      this.emailService = new FakeEmailService();
-    }
-
     try {
       const cyclist = await this.cyclistRepository.findOne(id);
 
       this.emailService.sendEmail(cyclist.email, 'Aluguel em andamento');
 
       res.status(200).send(cyclist);
+    } catch (error) {
+      let status = 400;
+
+      if (error instanceof NotFoundError) status = 404;
+      if (error instanceof NotValidError) status = 422;
+
+      res.status(status).send({ error: error.message });
+    }
+  };
+
+  /**
+   * Get the rent of a cyclist by id of the cyclist
+   * @Route GET /ciclista/aluguel/:idCiclista
+   */
+  public getRentByCyclist = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const rent = await this.rentRepository.getRentByCyclist(id);
+
+      res.status(200).send(rent);
     } catch (error) {
       let status = 400;
 

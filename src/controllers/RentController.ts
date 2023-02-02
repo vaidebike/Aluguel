@@ -5,7 +5,7 @@ import { NotFoundError } from '../errors/NotFoundError';
 import { NotValidError } from '../errors/NotValidError';
 import { Aluguel } from '../models/Aluguel';
 import { RentRepository } from '../models/repositories/RentRepository';
-import { CreditCardService } from '../services/creditCardService/CreditCardService';
+import { Tranca } from '../models/Tranca';
 import { CreditCardServiceInterface } from '../services/creditCardService/CreditCardServiceInterface';
 import { FakeCreditCardService } from '../services/creditCardService/FakeCreditCardService';
 import { CyclistService } from '../services/cyclistService/CyclistService';
@@ -15,7 +15,7 @@ import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
 import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
-import { FakeEquipmentService, Lock } from '../services/equipmentService/FakeEquipmentServiceService';
+import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentService';
 
 export class RentController {
   private rentRepository: RentRepository;
@@ -32,15 +32,16 @@ export class RentController {
   public rentBike = async (req: Request, res: Response) => {
     const { ciclista, trancaInicio } = req.body;
 
-    this.equipmentService = new FakeEquipmentService();
-    this.creditCardService = new CreditCardService();
+    this.creditCardService = new FakeCreditCardService();
     this.cyclistService = new CyclistService(req.get('host'));
     this.emailService = new EmailService();
+    this.equipmentService = new FakeEquipmentService();
 
     if(process.env.NODE_ENV == 'test'){
       this.cyclistService = new FakeCyclistService();
       this.creditCardService = new FakeCreditCardService();
       this.emailService = new FakeEmailService();
+      this.equipmentService = new FakeEquipmentService();
 
     }
 
@@ -55,10 +56,9 @@ export class RentController {
       rent.ciclista = ciclista;
       rent.trancaInicio = trancaInicio;
       rent.horaInicio = new Date();
-      rent.bicicleta = lock.bike;
+      rent.bicicleta = lock.bicicleta;
       rent.cobranca = charge.id;
 
-      await this.equipmentService.makeBikeInUse(lock.bike);
       await this.equipmentService.unlockBike(lock.id);
 
       const newRent = await this.rentRepository.create(rent);
@@ -81,10 +81,10 @@ export class RentController {
     return charge;
   }
 
-  private async checkIfLockExistsAndHasBike(lockId: string, service: EquipmentServiceInterface): Promise<Lock> {
+  private async checkIfLockExistsAndHasBike(lockId: string, service: EquipmentServiceInterface): Promise<Tranca> {
     const lock = await service.getLockById(lockId);
     if (lock === null) throw new NotFoundError('Tranca não encontrada.');
-    if (!lock.bike) throw new NotFoundError('Tranca sem bicicleta.');
+    if (!lock.bicicleta) throw new NotFoundError('Tranca sem bicicleta.');
 
     return lock;
   }

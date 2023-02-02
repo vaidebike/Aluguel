@@ -48,6 +48,26 @@ export class RentRepository implements RepositoryInterface {
     }
   }
 
+  public async getRentByCyclist(ciclista: string): Promise<Aluguel> {
+    if(!ciclista) throw new NoDataError('Ciclista inválido.');
+
+    try{
+      const allRents = await this.db.getData('/alugueis');
+
+      const rentsByCyclist = allRents.filter((rent: Aluguel) => rent.ciclista === ciclista);
+
+      if(rentsByCyclist.length === 0) throw new NotFoundError('Aluguel não encontrado.');
+
+      const currentRent = rentsByCyclist.find((rent: Aluguel) => rent.trancaFim === undefined);
+
+      if(currentRent === undefined) throw new NotFoundError('Aluguel não encontrado.');
+
+      return currentRent;
+    }catch(error){
+      throw new NotFoundError('Aluguel não encontrado.');
+    }
+  }
+
   findOne(id: string): Promise<unknown> {
     throw new Error('Method not implemented.');
   }

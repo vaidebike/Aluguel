@@ -1,5 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 import { Bike, StatusEnum as StatusBike } from '../../models/Bike';
+import { StatusEnum, Tranca } from '../../models/Tranca';
 import { EquipmentServiceInterface } from './EquipmentServiceInterface';
 
 export class FakeEquipmentService implements EquipmentServiceInterface {
@@ -10,10 +11,10 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
     return Promise.resolve(bike);
   }
 
-  public async getLockById(idLock: string): Promise<Lock> {
-    const lock = (idLock === '3fa85f64-5717-4562-b3fc-2c963f66afa6') ? new Lock() : null;
+  public async getLockById(idLock: string): Promise<Tranca> {
+    const lock = (idLock === '3fa85f64-5717-4562-b3fc-2c963f66afa6') ? new Tranca() : null;
     if (lock) {
-      lock.bike = uuidv4();
+      lock.bicicleta = uuidv4();
     }
 
     return Promise.resolve(lock);
@@ -22,7 +23,7 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
   public async makeBikeInUse(idBike: string): Promise<Bike> {
     const bike = new Bike();
     bike.id = idBike;
-    bike.status = StatusBike.InUse;
+    bike.status = StatusBike.EmUso;
 
     return Promise.resolve(bike);
   }
@@ -30,24 +31,24 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
   public async makeBikeFree(idBike: string): Promise<Bike> {
     const bike = new Bike();
     bike.id = idBike;
-    bike.status = StatusBike.Available;
+    bike.status = StatusBike.Disponivel;
 
     return Promise.resolve(bike);
   }
 
-  public async unlockBike(idLock: string): Promise<Lock> {
-    const lock = (idLock) ? null : new Lock();
-    lock.status = StatusEnum.Available;
-    lock.bike = uuidv4();
+  public async unlockBike(idLock: string): Promise<Tranca> {
+    const lock = (idLock) ? null : new Tranca();
+    lock.status = StatusEnum.Disponivel;
+    lock.bicicleta = uuidv4();
 
     return Promise.resolve(lock);
   }
 
-  public async lockBike(idLock: string): Promise<Lock> {
-    const lock = (!idLock) ? null : new Lock();
+  public async lockBike(idLock: string, idBike: string): Promise<Tranca> {
+    const lock = (!idLock) ? null : new Tranca();
     if (lock) {
-      lock.bike = null;
-      lock.status = StatusEnum.Locked;
+      lock.bicicleta = idBike;
+      lock.status = StatusEnum.Ocupada;
     }
 
     return Promise.resolve(lock);
@@ -59,22 +60,4 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
 
     return Promise.resolve(bike);
   }
-}
-
-export class Lock {
-  id: string;
-  model: string;
-  year: number;
-  status: string;
-  localization: string;
-  bike: string;
-}
-
-export enum StatusEnum {
-  Locked = 'OCUPADA', // OCUPADA VS DISPONÍVEL
-  Excluded = 'EXCLUIDA',
-  New = 'NOVA',
-  OnRepair = 'EM_REPARO',
-  Available = 'DISPONÍVEL',
-  ToBeRepaired = 'REPARO_SOLICITADO',
 }

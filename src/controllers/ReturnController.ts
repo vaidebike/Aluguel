@@ -12,14 +12,16 @@ import { FakeCreditCardService } from '../services/creditCardService/FakeCreditC
 import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
+import { EquipmentService } from '../services/equipmentService/EquipmentService';
 import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
-import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentServiceService';
+import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentService';
 
 export class ReturnController {
   private rentRepository: RentRepository;
   private cyclistRepository: CyclistRepository;
   private creditCardService: CreditCardServiceInterface;
   private emailService: EmailServiceInterface;
+  private equipmentService: EquipmentServiceInterface;
 
   constructor(db: DatabaseHandlerInterface) {
     this.rentRepository = new RentRepository(db.db as JsonDB);
@@ -29,25 +31,26 @@ export class ReturnController {
   public returnBike = async (req: Request, res: Response) => {
     const { bicicleta, trancaFim } = req.body;
 
-    const equipmentService = new FakeEquipmentService();
     this.creditCardService = new CreditCardService();
     this.emailService = new EmailService();
+    this.equipmentService = new EquipmentService();
 
     if(process.env.NODE_ENV == 'test'){
       this.creditCardService = new FakeCreditCardService();
       this.emailService = new FakeEmailService();
+      this.equipmentService = new FakeEquipmentService();
 
     }
 
     try {
-      await this.validateBike(bicicleta, equipmentService);
+      await this.validateBike(bicicleta, this.equipmentService);
 
       await this.getRentByBike(bicicleta).then(async (rent) => {
         const valueToPay = await this.calculateValueToPay(rent);
 
         await this.chargeValue(rent.ciclista, valueToPay, this.creditCardService, this.emailService);
 
-        await this.putBikeInLock(trancaFim, bicicleta, equipmentService);
+        await this.putBikeInLock(trancaFim, bicicleta, this.equipmentService);
         rent.trancaFim = trancaFim;
         rent.horaFim = new Date();
 
@@ -66,8 +69,7 @@ export class ReturnController {
   };
 
   private async putBikeInLock(idLock: string, idBike: string, equipmentService: EquipmentServiceInterface) {
-    await equipmentService.makeBikeFree(idBike);
-    await equipmentService.lockBike(idLock);
+    await equipmentService.lockBike(idLock, idBike);
   }
 
   private async sendMailWithCharge(valueToPay: number, email: string, emailService: EmailServiceInterface) {

@@ -1,12 +1,12 @@
 import { Bike } from '../../models/Bike';
-import { Lock } from './FakeEquipmentServiceService';
+import { Tranca } from '../../models/Tranca';
 
 export interface EquipmentServiceInterface {
   getBikeRentedByCyclist(cyclistId: string): Promise<Bike>;
-  getLockById(idLock: string): Promise<Lock>;
+  getLockById(idLock: string): Promise<Tranca>;
   makeBikeInUse(idBike: string): Promise<Bike>;
   makeBikeFree(idBike: string): Promise<Bike>;
-  unlockBike(idLock: string): Promise<Lock>;
-  lockBike(idLock: string): Promise<Lock>;
+  unlockBike(idLock: string): Promise<Tranca>;
+  lockBike(idLock: string, idBike: string): Promise<Tranca>;
   getBikeById(idBike: string): Promise<Bike>;
 }
