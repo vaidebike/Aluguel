@@ -34,7 +34,7 @@ export class RentRepository implements RepositoryInterface {
 
   public async getRentByBike(bicicleta: string): Promise<Aluguel> {
     if(!bicicleta) throw new NoDataError('Bicicleta inválida.');
-
+    
     try{
       const rentIndex = await this.db.getIndex('/alugueis', bicicleta, 'bicicleta');
       //get all rents from db

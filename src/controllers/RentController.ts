@@ -14,6 +14,7 @@ import { FakeCyclistService } from '../services/cyclistService/FakeCyclistServic
 import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
+import { EquipmentService } from '../services/equipmentService/EquipmentService';
 import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
 import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentService';
 
@@ -35,7 +36,7 @@ export class RentController {
     this.creditCardService = new FakeCreditCardService();
     this.cyclistService = new CyclistService(req.get('host'));
     this.emailService = new EmailService();
-    this.equipmentService = new FakeEquipmentService();
+    this.equipmentService = new EquipmentService();
 
     if(process.env.NODE_ENV == 'test'){
       this.cyclistService = new FakeCyclistService();
@@ -46,20 +47,18 @@ export class RentController {
     }
 
     try {
-      const lock = await this.checkIfLockExistsAndHasBike(trancaInicio, this.equipmentService);
-
       await this.checkIfCyclistCanRentBike(ciclista, this.cyclistService);
 
       const charge = await this.chargeCyclist(ciclista, this.creditCardService);
 
+      const lock = await this.equipmentService.unlockBike(trancaInicio);
+      
       const rent = new Aluguel();
       rent.ciclista = ciclista;
       rent.trancaInicio = trancaInicio;
       rent.horaInicio = new Date();
       rent.bicicleta = lock.bicicleta;
       rent.cobranca = charge.id;
-
-      await this.equipmentService.unlockBike(lock.id);
 
       const newRent = await this.rentRepository.create(rent);
 

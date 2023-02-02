@@ -13,6 +13,7 @@ import { FakeCreditCardService } from '../services/creditCardService/FakeCreditC
 import { EmailService } from '../services/emailService/EmailService';
 import { EmailServiceInterface } from '../services/emailService/EmailServiceInterface';
 import { FakeEmailService } from '../services/emailService/FakeEmailService';
+import { EquipmentService } from '../services/equipmentService/EquipmentService';
 import { EquipmentServiceInterface } from '../services/equipmentService/EquipmentServiceInterface';
 import { FakeEquipmentService } from '../services/equipmentService/FakeEquipmentService';
 
@@ -33,13 +34,13 @@ export class CyclistController {
 
     this.creditCardService = new CreditCardService();
     this.emailService = new EmailService();
-    this.equipmentService = new FakeEquipmentService();
-    if(process.env.NODE_ENV == 'test'){
+    this.equipmentService = new EquipmentService();
+
+    if (process.env.NODE_ENV == 'test') {
       this.creditCardService = new FakeCreditCardService();
       this.emailService = new FakeEmailService();
       this.equipmentService = new FakeEquipmentService();
     }
-
   }
 
   /**
@@ -80,7 +81,7 @@ export class CyclistController {
       const newCreditCard = await this.creditCardRepository.create(meioDePagamento);
       ciclista.id_cartao = newCreditCard.id;
       const newCyclist = await this.cyclistRepository.create(ciclista);
-     
+
 
       const confirmEmailUrl = `${req.protocol}://${req.get('host')}/ciclista/${newCyclist?.id}/ativar`;
 
@@ -184,8 +185,9 @@ export class CyclistController {
       const cyclistActive = await this.cyclistRepository.verifyStatus(id);
 
       const bikeRented = await this.equipmentService.getBikeRentedByCyclist((cyclistActive) ? id : null);
+      
 
-      const canRent = cyclistActive && !bikeRented;
+      const canRent = cyclistActive;
 
       res.status(200).send(canRent);
     } catch (error) {

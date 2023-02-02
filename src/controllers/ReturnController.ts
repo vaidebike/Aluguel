@@ -35,7 +35,7 @@ export class ReturnController {
     this.emailService = new EmailService();
     this.equipmentService = new EquipmentService();
 
-    if(process.env.NODE_ENV == 'test'){
+    if (process.env.NODE_ENV == 'test') {
       this.creditCardService = new FakeCreditCardService();
       this.emailService = new FakeEmailService();
       this.equipmentService = new FakeEquipmentService();
@@ -43,8 +43,6 @@ export class ReturnController {
     }
 
     try {
-      await this.validateBike(bicicleta, this.equipmentService);
-
       await this.getRentByBike(bicicleta).then(async (rent) => {
         const valueToPay = await this.calculateValueToPay(rent);
 
@@ -96,14 +94,6 @@ export class ReturnController {
     const hours = Math.ceil(time / (1000 * 60 * 60));
 
     return hours * 5;
-  }
-
-
-  private async validateBike(bicicleta: string, service: EquipmentServiceInterface) {
-    if (!bicicleta) throw new NotValidError('Bicicleta não informada.');
-
-    const bike = service.getBikeById(bicicleta);
-    if (!bike) throw new NotFoundError('Bicicleta não encontrada.');
   }
 }
 

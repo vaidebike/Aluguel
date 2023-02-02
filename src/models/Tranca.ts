@@ -5,6 +5,8 @@ export class Tranca {
   status: string;
   localizacao: string;
   bicicleta: string;
+  numero: number;
+  anoDeFabricacao: number;
 }
 
 export enum StatusEnum {
