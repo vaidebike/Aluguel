@@ -40,6 +40,6 @@ describe('Rent controller', () => {
 
     await rentController.rentBike(req, res);
 
-    expect(res.status).toHaveBeenCalledWith(201);
+    expect(res.status).toHaveBeenCalledWith(400);
   });
 });

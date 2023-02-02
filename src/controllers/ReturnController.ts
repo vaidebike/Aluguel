@@ -42,7 +42,10 @@ export class ReturnController {
 
     }
 
+
     try {
+      if(!bicicleta) throw new NotValidError('Bicicleta não informada');
+      
       await this.getRentByBike(bicicleta).then(async (rent) => {
         const valueToPay = await this.calculateValueToPay(rent);
 
@@ -59,6 +62,7 @@ export class ReturnController {
 
     } catch (error) {
       let status = 400;
+      
       if (error instanceof NotValidError) status = 422;
       if (error instanceof NotFoundError) status = 404;
 
