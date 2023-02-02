@@ -187,7 +187,7 @@ export class CyclistController {
       const bikeRented = await this.equipmentService.getBikeRentedByCyclist((cyclistActive) ? id : null);
       
 
-      const canRent = !bikeRented && cyclistActive;
+      const canRent = cyclistActive;
 
       res.status(200).send(canRent);
     } catch (error) {
