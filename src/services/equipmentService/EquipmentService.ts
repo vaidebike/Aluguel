@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Bike, StatusEnum as StatusBike } from '../../models/Bike';
+import { Bike } from '../../models/Bike';
 import { Tranca } from '../../models/Tranca';
 import { EquipmentServiceInterface } from './EquipmentServiceInterface';
 
@@ -48,49 +48,6 @@ export class EquipmentService implements EquipmentServiceInterface {
 
   }
 
-  public async makeBikeInUse(idBike: string): Promise<Bike> {
-    const endpoint = `${this.apiURL}bicicleta/${idBike}/status/${StatusBike.EmUso}`;
-
-    try{
-      const response = await axios.post(endpoint);
-
-      const {data} = response;
-
-      const bike = new Bike();
-      bike.id = data.content.id;
-      bike.marca = data.content.marca;
-      bike.modelo = data.content.modelo;
-      bike.ano = data.content.ano;
-      bike.numero = data.content.numero;
-      bike.status = data.content.status;
-
-      return bike;
-    }catch(error){
-      return null;
-    }
-  }
-
-  public async makeBikeFree(idBike: string): Promise<Bike> {
-    const endpoint = `${this.apiURL}bicicleta/${idBike}/status/${StatusBike.Disponivel}`;
-
-    try{
-      const response = await axios.post(endpoint);
-
-      const {data} = response;
-
-      const bike = new Bike();
-      bike.id = data.content.id;
-      bike.marca = data.content.marca;
-      bike.modelo = data.content.modelo;
-      bike.ano = data.content.ano;
-      bike.numero = data.content.numero;
-      bike.status = data.content.status;
-
-      return bike;
-    }catch(error){
-      return null;
-    }
-  }
 
   public async unlockBike(idLock: string): Promise<Tranca> {
     const endpoint = `${this.apiURL}tranca/${idLock}/destrancar`;

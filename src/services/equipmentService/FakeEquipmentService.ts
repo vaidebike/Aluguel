@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { Bike, StatusEnum as StatusBike } from '../../models/Bike';
+import { Bike } from '../../models/Bike';
 import { StatusEnum, Tranca } from '../../models/Tranca';
 import { EquipmentServiceInterface } from './EquipmentServiceInterface';
 
@@ -18,22 +18,6 @@ export class FakeEquipmentService implements EquipmentServiceInterface {
     }
 
     return Promise.resolve(lock);
-  }
-
-  public async makeBikeInUse(idBike: string): Promise<Bike> {
-    const bike = new Bike();
-    bike.id = idBike;
-    bike.status = StatusBike.EmUso;
-
-    return Promise.resolve(bike);
-  }
-
-  public async makeBikeFree(idBike: string): Promise<Bike> {
-    const bike = new Bike();
-    bike.id = idBike;
-    bike.status = StatusBike.Disponivel;
-
-    return Promise.resolve(bike);
   }
 
   public async unlockBike(idLock: string): Promise<Tranca> {
